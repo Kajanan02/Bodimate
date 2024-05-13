@@ -6,7 +6,7 @@ import Register from "./pages/auth-ui-components/register.jsx";
 import Home from "./pages/home/home.jsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import BoardingDetails from "./pages/boarding-details.jsx";
+import BoardingDetails from "./pages/boarding-details/boarding-details.jsx";
 
 function App() {
 
