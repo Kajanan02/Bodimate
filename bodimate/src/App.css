@@ -1,0 +1,80 @@
+/*footer*/
+.footer-logo {
+    width: 60px;
+    height: 60px;
+}
+
+.footer-logo-text {
+    font-family: Inter;
+    font-size: 25px;
+    margin-bottom: 0 !important;
+    color: #024950;
+}
+
+.footer-sub-text {
+    font-family: Inter;
+    font-size: 18px;
+    color: #024950;
+}
+
+.footer-text {
+    font-family: Inter;
+    font-size: 14px;
+    color: #848282;
+}
+
+.footer-icon-button {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: #024950;
+    width: 18px;
+    height: 18px;
+}
+
+.footer-icon-button:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+
+.footer-icon {
+    color: #024950;
+    width: 20px;
+    height: 20px;
+}
+
+.footer-sub-head {
+    color: #024950;
+    font-family: Inter;
+    font-size: 18px;
+}
+
+footer ul li a {
+    font-family: Inter;
+    font-size: 14px;
+    color: #848282;
+    transition: color 0.3s;
+}
+
+footer ul li:hover {
+    color: #024950;
+    transform: scale(1.01);
+    transition: transform 0.2s;
+}
+
+.footer-link:hover {
+    color: #024950;
+}
+
+.d-flex.align-items-center {
+    justify-content: flex-start;
+}
+
+.footer-icon-button {
+    margin-right: 20px !important;
+}
+
+.footer-hr {
+    margin: 0;
+    padding: 0;
+}
