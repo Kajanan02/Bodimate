@@ -1,12 +1,13 @@
 import React from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Col, Container, Row} from 'react-bootstrap';
 import FeatherIcon from "feather-icons-react";
 import logo from '../../src/assets/logo.png';
 import '../App.css'
+import {NavLink} from "react-router-dom";
 
 const Footer = () => {
     return (
-        <footer className="bg-light text-dark pt-4">
+        <footer className="bg-light text-dark pt-4 shadow-sm p-3 mb-5 bg-body rounded">
             <Container>
                 <Row className={"pb-3"}>
                     <Col md={3} className={"pb-4"}>
@@ -30,7 +31,7 @@ const Footer = () => {
                                 <FeatherIcon className="" icon={"mail"}/>
                             </button>
                             <button className="btn btn-transparent footer-icon-button me-2">
-                                <FeatherIcon className="" icon={"twittercd"}/>
+                                <FeatherIcon className="" icon={"twitter"}/>
                             </button>
                             <button className="btn btn-transparent footer-icon-button me-2">
                                 <FeatherIcon className="" icon={"youtube"}/>
@@ -40,34 +41,38 @@ const Footer = () => {
                     <Col md={3}>
                         <div className={"footer-sub-head fw-medium"}><p>Quick Links</p></div>
                         <ul className="list-unstyled">
-                            <li className={"pb-2"}><a href="#home"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Home</a>
+                            <li className={"pb-2"}><NavLink to={"/"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Home</NavLink>
                             </li>
-                            <li className={"pb-2"}><a href="#services"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Services</a>
+                            <li className={"pb-2"}><NavLink to={"/nearby-universities"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Explore
+                                nearby universities</NavLink>
                             </li>
-                            <li className={"pb-2"}><a href="#about"
-                                                      className={"footer-link text-decoration-none fw-medium"}>About</a>
+                            <li className={"pb-2"}><NavLink to={"/contact-us"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Contact
+                                Us</NavLink>
                             </li>
-                            <li className={"pb-2"}><a href="#contact"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Contact</a>
+                            <li className={"pb-2"}><NavLink to={"/boding-home"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Bodimate
+                                your home</NavLink>
                             </li>
                         </ul>
                     </Col>
                     <Col md={3}>
                         <div className={"footer-sub-head fw-medium"}><p>Reservation Information</p></div>
                         <ul className="list-unstyled">
-                            <li className={"pb-2"}><a href="#check-in"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Check-in</a>
+                            <li className={"pb-2"}><NavLink to={"/registe"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Register</NavLink>
                             </li>
-                            <li className={"pb-2"}><a href="#check-out"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Check-out</a>
+                            <li className={"pb-2"}><NavLink to={"/log-in"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Log
+                                In</NavLink>
                             </li>
-                            <li className={"pb-2"}><a href="#cancellation"
-                                                      className={"footer-link text-decoration-none fw-medium"}>Cancellation
-                                Policy</a></li>
-                            <li className={"pb-2"}><a href="#faq"
-                                                      className={"footer-link text-decoration-none fw-medium"}>FAQ</a>
+                            <li className={"pb-2"}><NavLink to={"/help-cente"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>Help
+                                Center</NavLink></li>
+                            <li className={"pb-2"}><NavLink to={"/faq"}
+                                                            className={"footer-link text-decoration-none fw-medium"}>FAQ</NavLink>
                             </li>
                         </ul>
                     </Col>
