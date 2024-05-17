@@ -7,6 +7,7 @@ import Home from "./pages/home/home.jsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import BoardingDetails from "./pages/boarding-details/boarding-details.jsx";
+import ForgotPassword from "./pages/auth-ui-components/forgot-password.jsx";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/boarding-details" element={<BoardingDetails/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
             </Routes>
             <ToastContainer/>
         </>

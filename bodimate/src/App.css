@@ -1,0 +1,419 @@
+:root {
+    --primary-color: #024950; /* Default primary color */
+    --secondary-color: #717171; /* Default secondary color */
+    --secondary-text-color: #848282; /* Default secondary color */
+}
+
+/*login*/
+.login-container {
+    height: 100vh;
+}
+
+.login-left {
+    padding: 40px;
+    background-color: #f9f9f9;
+}
+
+.login-right {
+    padding: 0;
+    padding-right: 11px;
+}
+
+.website-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.sign-in-text {
+    font-family: Inter;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.sign-in-para {
+    font-family: Inter;
+    font-size: 15px;
+    color: #000000;
+}
+
+.loginLink {
+    color: var(--primary-color);
+}
+
+.text-register {
+    color: var(--primary-color);
+}
+
+.login-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transition: box-shadow 0.3s ease;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login-btn:hover {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.login-btn:active {
+    background-color: var(--primary-color);
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bfbebe;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+}
+
+.icon-button {
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 10px;
+    margin: 0 10px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.icon-button:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.fw-normal {
+    font-family: Inter;
+}
+
+
+.signin-with {
+    margin-top: 20px;
+    color: #3c4343;
+    font-family: Inter;
+}
+
+.signin-with p {
+    margin-bottom: 10px;
+}
+
+.signin-with div button {
+    margin-right: 10px;
+}
+
+.remember-me {
+    margin-bottom: 15px;
+}
+
+.banner-image {
+    width: 100%;
+    max-height: 755px;
+    height: 100%;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.login-head {
+    text-align: center;
+    display: flow-root;
+    font-size: 30px;
+    font-family: Inter;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary-color);
+}
+
+.btn:active {
+    border: none !important;
+}
+
+@media (min-width: 1025px) {
+    .login-left {
+        padding: 40px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .login-left {
+        padding: 20px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .login-left {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 575px) {
+    .login-left {
+        padding: 5px;
+    }
+}
+
+/*forgot password*/
+.text-backToSign {
+    color: var(--primary-color);
+}
+
+/*boarding details*/
+.des-text {
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.des-sub-text {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: lighter;
+    color: var(--secondary-color);
+}
+
+.des-img {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    min-height: 400px !important;
+}
+
+.verified-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+}
+
+.col6-des-img {
+    height: 100%;
+}
+
+.btn-360-view {
+    bottom: 15px;
+    right: 25px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-360-view:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.owner-text {
+    font-family: Inter;
+    font-size: 24px;
+    padding: 0;
+}
+
+.owner-text-des {
+    font-family: Inter;
+    font-size: 18px;
+    color: var(--secondary-text-color);
+    padding: 0;
+}
+
+.owner-profile {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.detail-heading {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.detail-description {
+    font-size: 16px;
+    font-family: Inter;
+    color: var(--secondary-text-color);
+}
+
+.des-point {
+    margin-bottom: 10px;
+}
+
+.des-bullet {
+    margin-right: 5px;
+}
+
+.review-heading {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.review-category {
+    font-weight: bold;
+    padding-bottom: 0;
+}
+
+.para-margin {
+    margin-bottom: 0 !important;
+}
+
+.progress {
+    margin-bottom: 10px;
+}
+
+.review-rate-bar {
+    background-color: #e0e0e0;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.review-rate-fill {
+    background-color: var(--primary-color);
+    height: 100%;
+}
+
+.review-rate-text {
+    margin-top: 4px;
+    margin-bottom: 0 !important;
+    text-align: center;
+}
+
+.reviewer-profile {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    font-family: Inter;
+}
+
+.review-date {
+    font-family: Inter;
+}
+
+.reviewer-review {
+    max-height: 3.6em; /* Three lines of text */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2em;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-family: Inter;
+    color: var(--secondary-text-color);
+}
+
+.price-card {
+    height: 450px;
+    border-radius: 15px;
+}
+
+.price-card-text {
+    font-family: Inter;
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .pad-lg-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .padx-sm-3 {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+
+    .btn-360-view {
+        bottom: 10px;
+        right: 15px;
+        background-color: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-family: Inter;
+        font-size: 8px;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-360-view:hover {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        transform: scale(1.05);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .des-text {
+        font-size: 20px;
+    }
+
+    .verified-icon {
+        width: 18px;
+        height: 18px;
+        margin-left: 8px;
+    }
+
+    .action-icons {
+        width: 18px;
+        height: 18px;
+        font-weight: bolder;
+    }
+
+    .deg-icons {
+        width: 18px;
+        height: 18px;
+    }
+
+    .owner-text {
+        font-size: 18px;
+    }
+
+    .owner-text-des {
+        font-size: 14px;
+    }
+
+    .owner-profile {
+        width: 60px;
+        height: 60px;
+    }
+
+    .des-icons {
+        width: 28px;
+        height: 28px;
+    }
+
+    .detail-heading {
+        font-size: 14px;
+    }
+
+    .detail-description {
+        font-size: 12px;
+    }
+
+    .price-card-text {
+        font-size: 14px;
+    }
+
+    .price-card {
+        height: 540px;
+        border-radius: 15px;
+    }
+}
