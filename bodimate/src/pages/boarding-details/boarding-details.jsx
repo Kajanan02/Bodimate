@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import descriptionImg from "../../assets/boarding-details/description.jpg";
 import FeatherIcon from 'feather-icons-react';
 import verifiedIcon from "../../assets/boarding-details/verified.svg"

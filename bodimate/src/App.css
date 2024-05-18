@@ -65,6 +65,7 @@ footer ul li:hover {
 .footer-link:hover {
     color: #024950;
 }
+
 :root {
     --primary-color: #024950; /* Default primary color */
     --secondary-color: #717171; /* Default secondary color */
@@ -484,6 +485,7 @@ footer ul li:hover {
         border-radius: 15px;
     }
 }
+
 .footer-icon-button {
     margin-right: 20px !important;
 }

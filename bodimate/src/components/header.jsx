@@ -5,7 +5,7 @@ import FeatherIcon from "feather-icons-react";
 import {NavLink} from "react-router-dom";
 
 
-function NavBar() {
+function Header() {
     return (
 
         <nav className="contai navbar navbar-expand-lg navbar-light bg-light shadow-lg p-3 mb-5 bg-body rounded ">
@@ -81,4 +81,4 @@ function NavBar() {
     );
 }
 
-export default NavBar;
+export default Header;
