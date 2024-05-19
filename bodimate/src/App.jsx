@@ -7,7 +7,7 @@ import Home from "./pages/home/home.jsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import BoardingDetails from "./pages/boarding-details.jsx";
-
+import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
 function App() {
 
     return (
@@ -17,6 +17,8 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/boarding-details" element={<BoardingDetails/>}/>
+                <Route path="/add-boarding" element={<AddBoarding/>}/>
+
             </Routes>
             <ToastContainer/>
         </>

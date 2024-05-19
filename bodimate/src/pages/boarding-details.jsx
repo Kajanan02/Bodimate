@@ -2,7 +2,7 @@ import React from 'react';
 
 function BoardingDetails() {
     return (
-        <div></div>
+        <div>dgggg</div>
     );
 }
 
