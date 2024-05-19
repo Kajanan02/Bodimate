@@ -6,19 +6,29 @@ import Register from "./pages/auth-ui-components/register.jsx";
 import Home from "./pages/home/home.jsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import BoardingDetails from "./pages/boarding-details.jsx";
+import BoardingDetails from "./pages/boarding-details/boarding-details.jsx";
+import ForgotPassword from "./pages/auth-ui-components/forgot-password.jsx";
+import Layout from "./components/layout/layout.jsx";
+import AdminLayout from "./pages/admin/admin-layout.jsx";
 import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
+
 function App() {
 
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/register" element={<Register/>}/>
+                <Route path="/" element={<Layout/>}>
+                    <Route path="" element={<Home/>}/>
+                    <Route path="boarding-details" element={<BoardingDetails/>}/>
+                    <Route path="add-boarding" element={<AddBoarding/>}/>
+                </Route>
+                <Route path="/admin" element={<AdminLayout/>}>
+                    <Route path="home" element={<Home/>}/>
+                </Route>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/boarding-details" element={<BoardingDetails/>}/>
-                <Route path="/add-boarding" element={<AddBoarding/>}/>
-
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                <Route path="*" element={<h1 className={"text-center "}>404 Not Found</h1>}/>
             </Routes>
             <ToastContainer/>
         </>

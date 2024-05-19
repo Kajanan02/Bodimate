@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link} from "react-router-dom";
 
-function Register() {
+function ForgotPassword() {
     return (
         <div className="container-fluid align-middle">
             <div className="row align-items-center login-container">
@@ -18,14 +18,7 @@ function Register() {
                             </div>
                         </div>
                         <div className="sign-in-text text-left text-md-left">
-                            <p>Sign Up</p>
-                        </div>
-                        <div className="sign-in-para text-left text-md-left pb-3">
-                            <p className={"fw-normal"}>If you already have an account register</p>
-                            <p className={"fw-normal"}>You can
-                                <Link to="/login" className={"text-register text-decoration-none fw-semibold"}> Login
-                                    here!</Link>
-                            </p>
+                            <p>Forgot Password</p>
                         </div>
                         <form>
                             <div className="mb-3">
@@ -35,26 +28,19 @@ function Register() {
                                        placeholder={"Enter email"}
                                        aria-describedby="emailHelp"/>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="exampleInputEmail1"
-                                       className="form-label fw-normal login-font">Username</label>
-                                <input type="text" className="form-control fw-normal"
-                                       placeholder={"Enter username"}
-                                       aria-describedby="emailHelp"/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="exampleInputPassword1"
-                                       className="form-label fw-normal login-font">Password</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1"
-                                       placeholder="Enter password"/>
-                            </div>
-                            <div className="row">
+                            <div className="row pb-3">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2">Register
+                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2">Reset
+                                        Password
                                     </button>
                                 </div>
                             </div>
                         </form>
+                        <div>
+                            <Link to="/login"
+                                  className={"text-decoration-underline text-backToSign text-center d-flex justify-content-center pb-2 fw-normal"}>Back
+                                to Sign In</Link>
+                        </div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-12 login-right bg-white justify-content-center d-none d-sm-block">
@@ -65,4 +51,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default ForgotPassword;

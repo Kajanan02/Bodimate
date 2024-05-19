@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import loaderReducer from "./features/loaderSlice";
 
 const store = configureStore({
