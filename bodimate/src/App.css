@@ -412,10 +412,10 @@ footer ul li:hover {
     background-color: #e0e0e0;
 }
 
-.form-control {
-    font-size: 14px;
-    text-align: center;
-}
+/*.form-control {*/
+/*    font-size: 14px;*/
+/*    text-align: center;*/
+/*}*/
 
 .price-card-text {
     font-size: 16px;
