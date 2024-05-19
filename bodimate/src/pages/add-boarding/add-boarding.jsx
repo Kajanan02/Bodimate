@@ -115,7 +115,7 @@ function AddBoarding() {
 
                                                     </div>}
                                                     id="formHorizontalRadios2"
-                                                    className={"w-100"}
+                                                    className={"w-100 radio-form-check-label"}
                                                 />
                                             </div>
                                             <div className={"boarding-type-home-button"}>
@@ -223,14 +223,14 @@ function AddBoarding() {
                         </Row>
                     </div>
                     <div>
-                        <Row className="text-box-Container">
+                        <Row className="boarding-text-box-Container">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <div className={"pb-1"}>
                                     <h5 className={'mb-3 fw-semibold'}>Facilities Listing</h5>
 
                                     <Dropdown>
                                         <DropdownToggle variant="secondary" id="facilities-dropdown"
-                                                        className="input-border-color dropdown-btn">
+                                                        className="input-border-color addboarding-dropdown-btn">
                                             <div className={"facility-dropdown"}>
                                                 <div>
                                                     Select what are the Facilities available

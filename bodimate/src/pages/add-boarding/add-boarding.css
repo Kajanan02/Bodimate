@@ -38,7 +38,7 @@
 
 }
 
-.dropdown-btn {
+.addboarding-dropdown-btn {
     background-color: #ffffff !important;
     color: #212529 !important;
     opacity: 0.8 !important;
@@ -137,23 +137,24 @@
 
 .radio-circle {
     border: #024950 !important;
+
 }
 
-.form-check {
+.boarding-type-home-button .form-check {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.form-check-input {
+.boarding-type-home-button .form-check-input {
     border: 1px solid #024950;
 }
 
-.form-check-label {
+.boarding-type-home-button .form-check-label {
     width: 100%;
 }
 
-.dropdown-toggle::after {
+.boarding-text-box-Container .dropdown-toggle::after {
     display: none;
 }
 
@@ -161,8 +162,4 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.form-check-input::after {
-    background-color: #024950;
 }
