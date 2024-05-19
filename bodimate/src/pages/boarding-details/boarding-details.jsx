@@ -27,6 +27,15 @@ function BoardingDetails() {
 
     const [modalShow, setModalShow] = useState(false);
     const imageSrc = "https://via.placeholder.com/800x400";
+    const [guestCount, setGuestCount] = useState(0);
+
+    const incrementGuestCount = () => {
+        setGuestCount((prevCount) => Math.min(prevCount + 1, 20));
+    };
+
+    const decrementGuestCount = () => {
+        setGuestCount((prevCount) => Math.max(prevCount - 1, 0));
+    };
 
     return (
         <div className="container padx-sm-3 padx-md-4 pad-lg-20">
@@ -231,7 +240,31 @@ function BoardingDetails() {
                             <div className="col-md-12 mb-3">
                                 <label htmlFor="guestsSelect" className="form-label price-card-text">Number of
                                     Guests</label>
-
+                                <div className="input-group">
+                                    <div className="input-group-prepend pe-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn-decrease d-flex align-items-center justify-content-center"
+                                            onClick={decrementGuestCount}
+                                        >-
+                                        </button>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        className="form-control text-center rounded"
+                                        placeholder="Add guests"
+                                        value={guestCount === 0 ? '' : `${guestCount} Guest${guestCount > 1 ? 's' : ''}`}
+                                        readOnly
+                                    />
+                                    <div className="input-group-append ps-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn-increase d-flex align-items-center justify-content-center"
+                                            onClick={incrementGuestCount}
+                                        >+
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="col p-2">
