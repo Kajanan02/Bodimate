@@ -1,4 +1,14 @@
+
+:root {
+    --primary-color: #024950; /* Default primary color */
+    --secondary-color: #717171; /* Default secondary color */
+    --secondary-text-color: #848282; /* Default secondary color */
+}
+
 /*footer*/
+.footer-bgc{
+    background-color: rgba(2, 73, 80, 0.05) !important;
+}
 .footer-logo {
     width: 60px;
     height: 60px;
@@ -66,11 +76,6 @@ footer ul li:hover {
     color: #024950;
 }
 
-:root {
-    --primary-color: #024950; /* Default primary color */
-    --secondary-color: #717171; /* Default secondary color */
-    --secondary-text-color: #848282; /* Default secondary color */
-}
 
 /*login*/
 .login-container {
@@ -493,4 +498,7 @@ footer ul li:hover {
 .footer-hr {
     margin: 0;
     padding: 0;
+}
+.cursor-pointer {
+    cursor: pointer !important;
 }
