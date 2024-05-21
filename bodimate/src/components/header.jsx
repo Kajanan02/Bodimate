@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 function Header() {
     return (
 
-        <nav className="contai navbar navbar-expand-lg navbar-light bg-light shadow-lg p-3 mb-5 bg-body rounded ">
+        <nav className="contai navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-body rounded ">
             <div className="container ">
                 <a className="navbar-brand d-flex align-items-center" href="#">
                     <img src={logo} alt="logo" className="nav-logo"/>
