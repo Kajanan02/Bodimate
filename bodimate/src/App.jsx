@@ -10,6 +10,7 @@ import BoardingDetails from "./pages/boarding-details/boarding-details.jsx";
 import ForgotPassword from "./pages/auth-ui-components/forgot-password.jsx";
 import Layout from "./components/layout/layout.jsx";
 import AdminLayout from "./pages/admin/admin-layout.jsx";
+import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route path="" element={<Home/>}/>
                     <Route path="boarding-details" element={<BoardingDetails/>}/>
+                    <Route path="add-boarding" element={<AddBoarding/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="home" element={<Home/>}/>
