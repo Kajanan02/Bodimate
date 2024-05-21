@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/auth-ui-components/forgot-password.jsx";
 import Layout from "./components/layout/layout.jsx";
 import AdminLayout from "./pages/admin/admin-layout.jsx";
 import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
+import Settings from "./pages/settings/settings.jsx";
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
                     <Route path="" element={<Home/>}/>
                     <Route path="boarding-details" element={<BoardingDetails/>}/>
                     <Route path="add-boarding" element={<AddBoarding/>}/>
+                    <Route path="settings" element={<Settings/>}/>
+
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="home" element={<Home/>}/>

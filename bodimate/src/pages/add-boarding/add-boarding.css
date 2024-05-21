@@ -1,5 +1,5 @@
 .input-border-color {
-    border-color: #024950 !important;
+    border-color: #024950;
 }
 
 .addBoarding-Container {
@@ -162,4 +162,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.error-message{
+    font-size: 14px;
+    margin-bottom: 0px !important;
 }

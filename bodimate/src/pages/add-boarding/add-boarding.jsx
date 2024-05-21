@@ -8,10 +8,28 @@ import personIcon from "../../assets/person-svgrepo-com.svg"
 import maleIcon from "../../assets/male-student-5-svgrepo-com.svg"
 import femaleIcon from "../../assets/female-doctor-2-svgrepo-com.svg"
 import "./add-boarding.css"
+import {validateAddBoarding} from "../../utils/validation.js";"../../utils/validation.js"
 import addIcon from "../../assets/plus-circle.svg"
 import {Form, Row, Col, FormControl, FormCheck, DropdownMenu, Dropdown, DropdownToggle,} from "react-bootstrap";
+import formHandler from "../../utils/FormHandler.js";
+import {useState} from "react";
 
 function AddBoarding() {
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
+
+    const {
+        handleSubmit,
+        handleChange,
+        values,
+        errors,
+    } = formHandler(submitAddBoarding, validateAddBoarding)
+
+    console.log(errors)
+
+    function submitAddBoarding() {
+        setFormSubmitted(true)
+    }
 
     return (
         <div className={'addBoarding-Container'}>
@@ -23,43 +41,75 @@ function AddBoarding() {
                 <div className={'title ms-1 fw-bold'}>Boarding Details</div>
             </div>
             <div className={'add-details-form-container'}>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <div>
                         <h5 className={'mb-3 fw-semibold'}>Address</h5>
-                        <Row className="text-box-Container mb-3">
+                        <Row className="text-box-Container mb-lg-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="boardingName" className="">Boarding Name</label></h6>
-                                <FormControl id="boardingName" className={"input-border-color"}
-                                             placeholder="Enter Boarding Name"/>
+                                <FormControl id="boardingName"
+                                             className={`input-border-color ${errors.boardingName ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.boardingName || ""}
+                                             placeholder="Enter Boarding Name" name={"boardingName"}
+                                />
+                                {errors.boardingName && <p className={"error-message text-danger"}>{errors.boardingName}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="boardingNo" className="">Boarding No</label></h6>
-                                <FormControl id="boardingNo" className={"input-border-color"}
-                                             placeholder="Enter Boarding No"/>
+                                <FormControl id="boardingNo" name={"boardingNo"}
+                                             className={`input-border-color ${errors.boardingNo ? "border-danger" : ""}`}
+                                             placeholder="Enter Boarding No"
+                                             onChange={handleChange}
+                                             value={values.boardingNo || ""}
+                                />
+                                {errors.boardingNo && <p className={"error-message text-danger"}>{errors.boardingNo}</p>}
                             </Col>
                         </Row>
 
-                        <Row className="text-box-Container mb-3">
+                        <Row className="text-box-Container mb-lg-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="street" className="">Street</label></h6>
-                                <FormControl id="street" className={"input-border-color"} placeholder="Enter Street"/>
+                                <FormControl id="street" name={"street"}
+                                             className={`input-border-color ${errors.street ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.street}
+                                             placeholder="Enter Street"
+                                />
+                                {errors.street && <p className={"error-message text-danger"}>{errors.street}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="city" className="">City/Town/Village</label></h6>
-                                <FormControl id="city" className={"input-border-color"} placeholder="Enter City"/>
+                                <FormControl id="city" name={"city"}
+                                             className={`input-border-color ${errors.city  ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.city || ""}
+                                             placeholder="Enter City"
+                                />
+                                {errors.city && <p className={"error-message text-danger"}>{errors.city}</p>}
                             </Col>
                         </Row>
 
                         <Row className="text-box-Container mb-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="district" className="">District</label></h6>
-                                <FormControl id="district" className={"input-border-color"}
-                                             placeholder="Enter District"/>
+                                <FormControl id="district" name={"district"}
+                                             className={`input-border-color ${errors.district ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.district || ""}
+                                             placeholder="Enter District"
+                                />
+                                {errors.district && <p className={"error-message text-danger"}>{errors.district }</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="province" className="">Province</label></h6>
-                                <FormControl id="province" className={"input-border-color"}
-                                             placeholder="Enter Province"/>
+                                <FormControl id="province" name={"province"}
+                                             className={`input-border-color ${errors.province ? "border-danger" : ""}`}
+                                             placeholder="Enter Province"
+                                             onChange={handleChange}
+                                             value={values.province || ""}
+                                />
+                                {errors.province && <p className={"error-message text-danger"}>{errors.province}</p> }
                             </Col>
                         </Row>
                     </div>
@@ -75,9 +125,11 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button pb-2"}>
                                                 <Form.Check
                                                     type="radio"
-                                                    name="formHorizontalRadios"
-                                                    label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                    name="boardingType"
+                                                    // value={values.boardingType}
+                                                    onChange={handleChange}
+                                                    label={<div className={`boarding-type-home-container w-100 ps-3 `}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div> An Entire Home</div>
                                                                 <div className={"radio-btn"}>Students have whole place
@@ -98,18 +150,18 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button pb-2"} style={{width: "100%"}}>
                                                 <Form.Check
                                                     type="radio"
-                                                    name="formHorizontalRadios"
+                                                    name="boardingType"
+                                                    // value={values.boardingType}
+                                                    onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>A Room</div>
-                                                                <div className={"radio-btn"}>Students have their own
-                                                                    room.
-                                                                    themselves.
+                                                                <div className={"radio-btn"}>Students have their own room themselves.
                                                                 </div>
                                                             </div>
-                                                            <div className={"ps-5 pe-2"}><img src={roomIcon}
-                                                                                              alt={"home"}/>
+                                                            <div className={`ps-5 pe-2`}>
+                                                                <img src={roomIcon} alt={"home"}/>
                                                             </div>
                                                         </div>
 
@@ -121,11 +173,13 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button"}>
                                                 <FormCheck
                                                     type="radio"
-                                                    name="formHorizontalRadios"
+                                                    name="boardingType"
                                                     id="formHorizontalRadios3"
+                                                    // value={values.boardingType || ""}
+                                                    onChange={handleChange}
                                                     label={<div
                                                         className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>A Shared Room.</div>
                                                                 <div className={"radio-btn"}>Room can share more
@@ -142,6 +196,7 @@ function AddBoarding() {
                                                     className={"radio-circle"}
                                                 />
                                             </div>
+                                            {errors.boardingType && <p className={"error-message text-danger"}>{errors.boardingType}</p> }
                                         </Col>
                                     </Form.Group>
                                 </fieldset>
@@ -154,9 +209,10 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button pb-2"}>
                                                 <Form.Check
                                                     type="radio"
-                                                    name="formHorizontalRadios"
+                                                    name="stayPreference"
+                                                    onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>Male Only</div>
                                                                 <div className={"radio-btn"}>Only Boys can stay
@@ -176,9 +232,10 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button pb-2"} style={{width: "100%"}}>
                                                 <Form.Check
                                                     type="radio"
-                                                    name="formHorizontalRadios"
+                                                    name="stayPreference"
+                                                    onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>Female Only</div>
                                                                 <div className={"radio-btn"}>Only Girls can stay
@@ -197,11 +254,12 @@ function AddBoarding() {
                                             <div className={"boarding-type-home-button"}>
                                                 <FormCheck
                                                     type="radio"
-                                                    name="formHorizontalRadios"
+                                                    name="stayPreference"
                                                     id="formHorizontalRadios6"
+                                                    onChange={handleChange}
                                                     label={<div
                                                         className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={"boarding-type-home ps-3 fw-semibold"}>
+                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>No Gender Restriction</div>
                                                                 <div className={"radio-btn"}>Boys or Girls can stay
@@ -216,6 +274,7 @@ function AddBoarding() {
                                                     className={"radio-circle"}
                                                 />
                                             </div>
+                                            {errors.stayPreference && <p className={"error-message text-danger"}>{errors.stayPreference}</p> }
                                         </Col>
                                     </Form.Group>
                                 </fieldset>
@@ -230,7 +289,9 @@ function AddBoarding() {
 
                                     <Dropdown>
                                         <DropdownToggle variant="secondary" id="facilities-dropdown"
-                                                        className="input-border-color addboarding-dropdown-btn">
+                                                        onChange={handleChange}
+                                                        value={values.facilities || ""}
+                                                        className={`input-border-color addboarding-dropdown-btn ${errors.facilities ? "border-danger" : ""}`}>
                                             <div className={"facility-dropdown"}>
                                                 <div>
                                                     Select what are the Facilities available
@@ -241,23 +302,40 @@ function AddBoarding() {
                                             </div>
 
                                         </DropdownToggle>
+                                        {errors.facilities && <p className={"error-message text-danger"}>{errors.facilities}</p> }
+
                                         <DropdownMenu className={"w-100"}>
-                                            <FormCheck label={<div className={"ps-3"}>WiFi</div>}
-                                                       className="mx-3 my-1"/>
-                                            <FormCheck label={<div className={"ps-3"}>Water Heater</div>}
-                                                       className="mx-3 my-1"/>
-                                            <FormCheck label={<div className={"ps-3"}>Study Hall</div>}
-                                                       className="mx-3 my-1"/>
-                                            <FormCheck label={<div className={"ps-3"}>Kitchen</div>}
-                                                       className="mx-3 my-1"/>
-                                            <FormCheck label={<div className={"ps-3"}>Fan</div>}
-                                                       className="mx-3 my-1 "/>
-                                            <FormCheck label={<div className={"ps-3"}>Cooker</div>}
-                                                       className="mx-3 my-1"/>
-                                            <FormCheck label={<div className={"ps-3"}>Other Facilities</div>}
-                                                       className="mx-3 my-1"/>
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>WiFi</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Water Heater</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Study Hall</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Kitchen</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Fan</div>}
+                                                       className="mx-3 my-1 "
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Cooker</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
+                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Other Facilities</div>}
+                                                       className="mx-3 my-1"
+                                                       onChange={handleChange}
+                                            />
                                             <div className={"w-100 ps-3 pe-3 pt-3"}>
-                                                <FormControl id="boardingNo"
+                                                <FormControl name={"facilities"} id=""
+                                                             onChange={handleChange}
                                                              className={"input-border-color checkbox-input "}
                                                              placeholder="If other facilities specify here"/>
                                             </div>
@@ -269,37 +347,64 @@ function AddBoarding() {
 
                                 <div>
                                     <h5 className={'mb-3 fw-semibold'}>Members Count</h5>
-                                    <FormControl id="boardingName" className={"input-border-color"}
-                                                 placeholder="Enter How Many Members Can Stay" type={"number"}/>
+                                    <FormControl id="boardingName" name={"membersCount"}
+                                                 className={`input-border-color ${errors.membersCount ? "border-danger" : ""}`}
+                                                 onChange={handleChange}
+                                                 value={values.membersCount || ""}
+                                                 placeholder="Enter How Many Members Can Stay" type={"number"}
+                                    />
+                                    {errors.membersCount && <p className={"error-message text-danger"}>{errors.membersCount}</p>}
                                 </div>
                             </Col>
                         </Row>
                     </div>
                     <hr/>
                     <div>
-                        <Row className="text-box-Container mb-3">
+                        <Row className="text-box-Container mb-lg-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="rooms" className="">No.of Rooms</label></h6>
-                                <FormControl id="rooms" className={"input-border-color"}
-                                             placeholder="Enter No.of Rooms"/>
+                                <FormControl id="rooms"
+                                             name={"roomCount"}
+                                             className={`input-border-color ${errors.roomCount ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.roomCount || ""}
+                                             placeholder="Enter No.of Rooms"
+                                />
+                                {errors.roomCount && <p className={"error-message text-danger"}>{errors.roomCount}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
 
                                 <h6><label htmlFor="price" className="">Price per Month</label></h6>
-                                <FormControl id="price" className={"input-border-color"} placeholder="Enter Price"/>
+                                <FormControl id="price" name={"pricePerMonth"}
+                                             className={`input-border-color ${errors.pricePerMonth ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.pricePerMonth || ""}
+                                             placeholder="Enter Price"
+                                />
+                                {errors.pricePerMonth && <p className={"error-message text-danger"}>{errors.pricePerMonth}</p>}
                             </Col>
                         </Row>
 
-                        <Row className="text-box-Container mb-3">
+                        <Row className="text-box-Container mb-lg-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="distance" className="">Distance</label></h6>
-                                <FormControl id="distance" className={"input-border-color"}
-                                             placeholder="Enter Distance from University"/>
+                                <FormControl id="distance" name={"distance"}
+                                             className={`input-border-color ${errors.distance ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.distance || ""}
+                                             placeholder="Enter Distance from University"
+                                />
+                                {errors.distance && <p className={"error-message text-danger"}>{errors.distance}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="university" className="">Nearest University Name</label></h6>
-                                <FormControl id="university" className={"input-border-color"}
-                                             placeholder="Enter Nearest University"/>
+                                <FormControl id="university" name={"nearestUniversity"}
+                                             className={`input-border-color ${errors.nearestUniversity ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.nearestUniversity || ""}
+                                             placeholder="Enter Nearest University"
+                                />
+                                {errors.nearestUniversity && <p className={"error-message text-danger"}>{errors.nearestUniversity}</p>}
                             </Col>
                         </Row>
                     </div>
@@ -307,9 +412,13 @@ function AddBoarding() {
                         <Row className="text-box-Container mb-3">
                             <Col md={6} className="ps-3 pe-lg-5">
                                 <h6><label htmlFor="rooms" className="">Advance Payment</label></h6>
-                                <FormControl id="rooms" className={"input-border-color"}
-                                             placeholder="Enter Advance Payment"/>
-
+                                <FormControl id="rooms" name={"advancedPayment"}
+                                             className={`input-border-color ${errors.advancedPayment ? "border-danger" : ""}`}
+                                             onChange={handleChange}
+                                             value={values.advancedPayment || ""}
+                                             placeholder="Enter Advance Payment"
+                                />
+                                {errors.advancedPayment && <p className={"error-message text-danger"}>{errors.advancedPayment}</p>}
                             </Col>
                         </Row>
                     </div>
