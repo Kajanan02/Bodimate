@@ -4,8 +4,21 @@ import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import FeatherIcon from 'feather-icons-react';
 import {Link} from "react-router-dom";
+import {validateLogin} from "../../utils/validation.js";
+import formHandler from "../../utils/FormHandler";
 
 function Login() {
+
+    const {
+        handleChange,
+        handleSubmit,
+        errors,
+    } = formHandler(isLogin, validateLogin);
+
+    function isLogin() {
+
+    }
+
     return (
         <div className="container-fluid align-middle">
             <div className="row align-items-center login-container">
@@ -33,15 +46,19 @@ function Login() {
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Email</label>
-                                <input type="email" className="form-control fw-normal" id="exampleInputEmail1"
-                                       placeholder={"Enter email"}
+                                <input className={`form-control fw-normal ${errors.email ? "border-red" : ""}`}
+                                       id="exampleInputEmail1"
+                                       name={"email"} onChange={handleChange} placeholder="Enter Email"
                                        aria-describedby="emailHelp"/>
+                                {errors.email && <p className={"text-red"}>{errors.email}</p>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputPassword1"
                                        className="form-label fw-normal login-font">Password</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1"
-                                       placeholder="Enter password"/>
+                                <input className={`form-control fw-normal ${errors.password ? "border-red" : ""}`}
+                                       type="password"
+                                       name={"password"} onChange={handleChange} placeholder="Enter Password"/>
+                                {errors.password && <p className={"text-red"}>{errors.password}</p>}
                             </div>
                             <div className="row">
                                 <div className="col">
@@ -62,7 +79,8 @@ function Login() {
                             </div>
                             <div className="row">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2">Login
+                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2"
+                                            onClick={handleSubmit}>Login
                                     </button>
                                 </div>
                             </div>
@@ -72,10 +90,10 @@ function Login() {
                         </div>
                         <div className="icon-container pb-2">
                             <button className="icon-button">
-                                <FeatherIcon className="action-icons text-red" icon="mail"/>
+                                <FeatherIcon className="action-icons-color" icon="mail"/>
                             </button>
                             <button className="icon-button">
-                                <FeatherIcon className="action-icons text-red" icon="facebook"/>
+                                <FeatherIcon className="action-icons-color" icon="facebook"/>
                             </button>
                         </div>
                     </div>

@@ -3,8 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link} from "react-router-dom";
+import {validateRegister} from "../../utils/validation.js";
+import formHandler from "../../utils/FormHandler";
 
 function Register() {
+
+    const {
+        handleChange,
+        handleSubmit,
+        errors,
+    } = formHandler(isRegister, validateRegister);
+
+    function isRegister() {
+
+    }
+
     return (
         <div className="container-fluid align-middle">
             <div className="row align-items-center login-container">
@@ -31,26 +44,32 @@ function Register() {
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Email</label>
-                                <input type="email" className="form-control fw-normal" id="exampleInputEmail1"
-                                       placeholder={"Enter email"}
+                                <input className={`form-control fw-normal ${errors.email ? "border-red" : ""}`}
+                                       id="exampleInputEmail1"
+                                       name={"email"} onChange={handleChange} placeholder="Enter Email"
                                        aria-describedby="emailHelp"/>
+                                {errors.email && <p className={"text-red"}>{errors.email}</p>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Username</label>
-                                <input type="text" className="form-control fw-normal"
-                                       placeholder={"Enter username"}
-                                       aria-describedby="emailHelp"/>
+                                <input className={`form-control fw-normal ${errors.username ? "border-red" : ""}`}
+                                       type="text"
+                                       name={"username"} onChange={handleChange} placeholder="Enter Username"/>
+                                {errors.username && <p className={"text-red"}>{errors.username}</p>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputPassword1"
                                        className="form-label fw-normal login-font">Password</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1"
-                                       placeholder="Enter password"/>
+                                <input className={`form-control fw-normal ${errors.password ? "border-red" : ""}`}
+                                       type="password"
+                                       name={"password"} onChange={handleChange} placeholder="Enter Password"/>
+                                {errors.password && <p className={"text-red"}>{errors.password}</p>}
                             </div>
                             <div className="row">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2">Register
+                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2"
+                                            onClick={handleSubmit}>Register
                                     </button>
                                 </div>
                             </div>
