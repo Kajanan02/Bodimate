@@ -47,12 +47,75 @@ export function validateAddBoarding(values){
         errors.boardingType = "Boarding Type is Required";
     }
     if(!values.stayPreference) {
-        errors.stayPreference = "Stay is Required";
+        errors.stayPreference = "Stay Preference is Required";
     }
     if(!values.facilities){
         errors.facilities = "Facilities is Required";
     }
+    return errors;
+}
 
+export function validatePersonalSettings(values){
+    let errors = {};
 
+    if(!values.firstName){
+        errors.firstName = "First Name is Required";
+    }
+    if(!values.lastName){
+        errors.lastName = "Last Name is Required";
+    }
+    if(!values.userName){
+        errors.userName = "User Name is Required";
+    }
+    if(!values.email){
+        errors.email = "Email is Required";
+    }
+    else if(values.email && !/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email is not valid';
+    }
+    if(!values.nicNo){
+        errors.nicNo = "NIC No is Required";
+    }
+    if (!values.phoneNo) {
+        errors.phoneNo = 'Contact No is required';
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
+        errors.phoneNo = 'Contact No is not valid';
+    }
+    if(!values.dob){
+        errors.dob = "Date of Birth is Required";
+    }
+    if(!values.homeNo){
+        errors.homeNo = "Home No is Required";
+    }
+    if(!values.street){
+        errors.street = "Street is Required";
+    }
+    if(!values.city){
+        errors.city = "City is Required";
+    }
+    if(!values.district){
+        errors.district = "District is Required";
+    }
+    if(!values.province){
+        errors.province = "Province is Required";
+    }
+    if(!values.postalCode){
+        errors.postalCode = "Postal Code is Required";
+    }
+
+    return errors;
+}
+
+export function validatePasswordSettings(values){
+    let errors = {}
+    if(!values.currentPassword){
+        errors.currentPassword = "Current Password is Required";
+    }
+    if(!values.newPassword){
+        errors.newPassword = "New Password is Required";
+    }
+    if(!values.confirmPassword){
+        errors.confirmPassword = "Confirm Password is Required";
+    }
     return errors;
 }
