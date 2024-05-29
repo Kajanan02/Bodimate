@@ -44,7 +44,7 @@ function BoardingDetails() {
                     <h2 className="mt-4 mb-3 des-text pe-3 fw-bold">Nugegoda, Colombo</h2>
                     <img src={verifiedIcon} alt="Verified Icon" className="verified-icon mt-4 mb-3"/>
                     <button type="button" className="btn btn-heart ms-auto p-0">
-                        <FeatherIcon className="heart-icon text-red mt-4 mb-3" icon="heart"/>
+                        <FeatherIcon className="action-icons-color mt-4 mb-3" icon="heart"/>
                     </button>
                 </div>
             </div>

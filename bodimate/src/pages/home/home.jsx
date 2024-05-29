@@ -55,7 +55,7 @@ function Home() {
                     <img src={homeContact} alt="Main" className="Contact-image"/>
                     <div className="">
                         <h1 className="home-overlay-text">Questions <br/>about <br/>hosting?</h1>
-                        <button className="btn btn-light mt-3 p-2 home-overlay-btn">Contact us</button>
+                        <button className="btn btn-light mt-3 p-2 home-overlay-btn px-4">Contact us</button>
                     </div>
                 </div>
 

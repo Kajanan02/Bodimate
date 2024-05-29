@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import Login from "./pages/auth-ui-components/login.jsx";
 import Register from "./pages/auth-ui-components/register.jsx";
 import Home from "./pages/home/home.jsx";
@@ -12,8 +12,15 @@ import Layout from "./components/layout/layout.jsx";
 import AdminLayout from "./pages/admin/admin-layout.jsx";
 import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
 import Settings from "./pages/settings/settings.jsx";
+import {useEffect} from "react";
 
 function App() {
+
+    const location = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location.pathname])
 
     return (
         <>
@@ -23,7 +30,6 @@ function App() {
                     <Route path="boarding-details" element={<BoardingDetails/>}/>
                     <Route path="add-boarding" element={<AddBoarding/>}/>
                     <Route path="settings" element={<Settings/>}/>
-
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="home" element={<Home/>}/>
