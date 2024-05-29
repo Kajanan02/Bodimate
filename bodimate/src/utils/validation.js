@@ -1,3 +1,64 @@
+export function validateLogin(values) {
+    let errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (!emailRegex.test(values.email)) {
+        errors.email = "Invalid Email Format";
+    } else {
+        const rejectedEmails = ["example@rejected.com", "another@rejected.com"];
+        if (rejectedEmails.includes(values.email)) {
+            errors.email = "This Email address is Not Allowed";
+        }
+    }
+    if (!values.password) {
+        errors.password = "Password is Required"
+    }
+    return errors;
+}
+
+export function validateRegister(values) {
+    let errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (!emailRegex.test(values.email)) {
+        errors.email = "Invalid Email Format";
+    } else {
+        const rejectedEmails = ["example@rejected.com", "another@rejected.com"];
+        if (rejectedEmails.includes(values.email)) {
+            errors.email = "This Email address is Not Allowed";
+        }
+    }
+    if (!values.username) {
+        errors.username = "Username is Required";
+    }
+    if (!values.password) {
+        errors.password = "Password is Required"
+    }
+    return errors;
+}
+
+export function validateForgotPassword(values) {
+    let errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (!emailRegex.test(values.email)) {
+        errors.email = "Invalid Email Format";
+    } else {
+        const rejectedEmails = ["example@rejected.com", "another@rejected.com"];
+        if (rejectedEmails.includes(values.email)) {
+            errors.email = "This Email address is Not Allowed";
+        }
+    }
+
+    return errors;
+}
+
 export function validateAddBoarding(values){
     let errors = {};
 
