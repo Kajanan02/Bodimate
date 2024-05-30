@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/auth-ui-components/forgot-password.jsx";
 import Layout from "./components/layout/layout.jsx";
 import AdminLayout from "./pages/admin/admin-layout.jsx";
 import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
+import ExploreNearbyUniversities from "./pages/Explore nearby universities/explore-nearby-universities.jsx";
 import Settings from "./pages/settings/settings.jsx";
 import {useEffect} from "react";
 
@@ -25,10 +26,11 @@ function App() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route path="" element={<Home/>}/>
+                <Route  path="/" element={<Layout/>}>
+                    <Route  path="" element={<Home/>}/>
                     <Route path="boarding-details" element={<BoardingDetails/>}/>
                     <Route path="add-boarding" element={<AddBoarding/>}/>
+                    <Route path="nearby-universities" element={<ExploreNearbyUniversities/>}/>
                     <Route path="settings" element={<Settings/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>

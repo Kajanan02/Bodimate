@@ -1,0 +1,147 @@
+
+.collection-overlay-text {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    font-family: Inter, serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    @media (min-width: 576px) and (max-width: 768px) {
+        font-size: 0.9rem!important;
+        top: 30% !important;
+        left: 10%;
+
+    }
+    @media (max-width: 576px) {
+        font-size: 0.1rem !important;
+        top: 30%;
+        left: 10%;
+
+    }
+}
+
+.collection-overlay-btn {
+    position: absolute;
+    bottom: 1% !important;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    /*text-align: left;*/
+    /*padding: 5px 10px!important;*/
+
+}
+
+.university-overlay-btn {
+    position: absolute;
+    left: 10%;
+    top:10%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.50);
+    border-radius: 40px;
+
+}
+
+.collection-image {
+    width: 100%;
+    height: auto;
+    max-height: 315px;
+    max-width: 609px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.collection-subheading {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-light {
+    color: #024950;
+    background-color: #ffffff;
+    border-color: #ffffff;
+
+}
+
+.btn-light:hover {
+    color: #ffffff;
+    background-color: #024950;
+    border-color: #024950;
+}
+
+.btn-Collection {
+    color: #024950;
+    background-color:  rgba(255, 255, 255, 0.50);
+    border-color: rgba(255, 255, 255, 0.50);
+
+
+}
+
+.btn-Collection:hover {
+    color: #ffffff;
+    background-color: #024950;
+    border-color: #024950;
+}
+.collecton-text{
+    font-family: Inter, serif;
+    font-size: 12px;
+}
+
+
+@media (min-width: 768px) {
+    .pad-lg-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .university-overlay-btn b {
+        font-size: 1.0rem;
+    }
+
+    .university-overlay-btn {
+        font-size: 1.0rem;
+        padding: 4px 8px;
+    }
+    .collecton-text{
+
+        font-size: 10px;
+
+    }
+
+
+    @media (max-width: 576px) {
+        .padx-sm-3 {
+            padding-left: 30px !important;
+            padding-right: 30px !important;
+        }
+
+
+        .home-overlay-btn {
+            font-size: .8rem;
+            padding: 3px 6px;
+
+        }
+
+        .university-overlay-btn h6 {
+            font-size: 1.0rem;
+            top: 10% !important;
+            left: 10%;
+            transform: translateY(-50%);
+            line-height: 0.8;
+        }
+
+        .university-overlay-btn {
+            font-size: .8rem;
+            padding: 3px 6px;
+
+        }
+
+        .collecton-text {
+
+            font-size: 8px;
+        }
+
+    }
+}
