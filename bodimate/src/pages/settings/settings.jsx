@@ -1,18 +1,55 @@
 import React, {useState} from 'react';
+import {useRef} from "react";
 import home from "../../assets/home.svg";
 import "./settings.css"
 import profileImage from "../../assets/settings/profile.png"
-import camera from "../../assets/camera.svg";
 import {FileUploader} from "react-drag-drop-files";
 import {Col, FormControl, Row} from "react-bootstrap";
 import PasswordSettings from "./passwordSettings.jsx";
 import formHandler from "../../utils/FormHandler.js";
+import uploadIcon from "../../assets/uplod-icon.svg"
 import {validatePersonalSettings} from "../../utils/validation.js";
 
 
-
 function Settings() {
+    const inputRef = useRef(null)
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [nicFront, setNicFront] = useState(null);
+    const [nicBack, setNicBack] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleChangeNicFront = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setNicFront(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+        // imageUpload(file, "nicFront")
+    };
+
+    const handleChangeNicBack = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setNicBack(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleChangeSettingsProfileImage = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setSelectedImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    console.log(selectedImage)
+
     const {
         handleSubmit,
         handleChange,
@@ -25,6 +62,7 @@ function Settings() {
     function submitSettings() {
         setFormSubmitted(true)
     }
+
 
     return (
         <div className={"settings-container"}>
@@ -45,10 +83,13 @@ function Settings() {
                             <div className={"row mt-3"}>
                                 <div className={"col-md-6 px-0 profile-image"}>
                                     <div className={"settings-profile-photo"}>
-                                        <img src={profileImage} className={"w-25"}/>
+                                        {!selectedImage ? <img src={profileImage}
+                                                               className={"profileImageDisplay mb-1"}/> :
+                                            <img src={selectedImage}
+                                                 className={"profileImageDisplay mb-3"}/>}
                                     </div>
                                     <div className={"settings-image-uploader-container"}>
-                                        <FileUploader>
+                                        <FileUploader handleChange={handleChangeSettingsProfileImage}>
                                             <div className={"settings-image-uploader"}>
                                                 <button className={"profile-upload-button px-4 py-1"}>Change Photo
                                                 </button>
@@ -90,8 +131,8 @@ function Settings() {
                                     <h6><label htmlFor="userName" className="">User Name</label></h6>
                                     <FormControl id="userName"
                                                  className={`input-border-color ${errors.userName ? "border-danger" : ""}`}
-                                        onChange={handleChange}
-                                        value={values.userName || ""}
+                                                 onChange={handleChange}
+                                                 value={values.userName || ""}
                                                  placeholder="Enter User Name" name={"userName"}
                                     />
                                     {errors.userName &&
@@ -102,8 +143,8 @@ function Settings() {
                                     <FormControl id="email" name={"email"}
                                                  className={`input-border-color ${errors.email ? "border-danger" : ""}`}
                                                  placeholder="Enter Email"
-                                        onChange={handleChange}
-                                        value={values.email || ""}
+                                                 onChange={handleChange}
+                                                 value={values.email || ""}
                                     />
                                     {errors.email &&
                                         <p className={"error-message text-danger"}>{errors.email}</p>}
@@ -115,8 +156,8 @@ function Settings() {
                                     <FormControl id="nicNo" name={"nicNo"}
                                                  className={`input-border-color ${errors.nicNo ? "border-danger" : ""}`}
                                                  placeholder="Enter NIC No"
-                                        onChange={handleChange}
-                                        value={values.nicNo || ""}
+                                                 onChange={handleChange}
+                                                 value={values.nicNo || ""}
                                     />
                                     {errors.nicNo &&
                                         <p className={"error-message text-danger"}>{errors.nicNo}</p>}
@@ -125,8 +166,8 @@ function Settings() {
                                     <h6><label htmlFor="phoneNo" className="">Contact No</label></h6>
                                     <FormControl id="phoneNo"
                                                  className={`input-border-color ${errors.phoneNo ? "border-danger" : ""}`}
-                                        onChange={handleChange}
-                                        value={values.phoneNo || ""}
+                                                 onChange={handleChange}
+                                                 value={values.phoneNo || ""}
                                                  placeholder="Enter Phone No" name={"phoneNo"}
                                     />
                                     {errors.phoneNo &&
@@ -139,8 +180,8 @@ function Settings() {
                                     <FormControl id="dob"
                                                  type={"date"}
                                                  className={`input-border-color ${errors.dob ? "border-danger" : ""}`}
-                                        onChange={handleChange}
-                                        value={values.dob || ""}
+                                                 onChange={handleChange}
+                                                 value={values.dob || ""}
                                                  placeholder="Enter Date of Birth" name={"dob"}
                                     />
                                     {errors.dob &&
@@ -159,8 +200,8 @@ function Settings() {
                                         <FormControl id="homeNo" name={"homeNo"}
                                                      className={`input-border-color ${errors.homeNo ? "border-danger" : ""}`}
                                                      placeholder="Enter Home No"
-                                            onChange={handleChange}
-                                            value={values.homeNo || ""}
+                                                     onChange={handleChange}
+                                                     value={values.homeNo || ""}
                                         />
                                         {errors.homeNo &&
                                             <p className={"error-message text-danger"}>{errors.homeNo}</p>}
@@ -170,8 +211,8 @@ function Settings() {
                                         <FormControl id="street" name={"street"}
                                                      className={`input-border-color ${errors.street ? "border-danger" : ""}`}
                                                      placeholder="Enter Street"
-                                            onChange={handleChange}
-                                            value={values.street || ""}
+                                                     onChange={handleChange}
+                                                     value={values.street || ""}
                                         />
                                         {errors.street &&
                                             <p className={"error-message text-danger"}>{errors.street}</p>}
@@ -183,8 +224,8 @@ function Settings() {
                                         <FormControl id="city" name={"city"}
                                                      className={`input-border-color ${errors.city ? "border-danger" : ""}`}
                                                      placeholder="Enter City"
-                                            onChange={handleChange}
-                                            value={values.city || ""}
+                                                     onChange={handleChange}
+                                                     value={values.city || ""}
                                         />
                                         {errors.city &&
                                             <p className={"error-message text-danger"}>{errors.city}</p>}
@@ -194,8 +235,8 @@ function Settings() {
                                         <FormControl id="district" name={"district"}
                                                      className={`input-border-color ${errors.district ? "border-danger" : ""}`}
                                                      placeholder="Enter District"
-                                            onChange={handleChange}
-                                            value={values.district || ""}
+                                                     onChange={handleChange}
+                                                     value={values.district || ""}
                                         />
                                         {errors.district &&
                                             <p className={"error-message text-danger"}>{errors.district}</p>}
@@ -207,8 +248,8 @@ function Settings() {
                                         <FormControl id="province" name={"province"}
                                                      className={`input-border-color ${errors.province ? "border-danger" : ""}`}
                                                      placeholder="Enter Province"
-                                            onChange={handleChange}
-                                            value={values.province || ""}
+                                                     onChange={handleChange}
+                                                     value={values.province || ""}
                                         />
                                         {errors.province &&
                                             <p className={"error-message text-danger"}>{errors.province}</p>}
@@ -218,8 +259,8 @@ function Settings() {
                                         <FormControl id="postalCode" name={"postalCode"}
                                                      className={`input-border-color ${errors.postalCode ? "border-danger" : ""}`}
                                                      placeholder="Enter Postal Code"
-                                            onChange={handleChange}
-                                            value={values.postalCode || ""}
+                                                     onChange={handleChange}
+                                                     value={values.postalCode || ""}
                                         />
                                         {errors.postalCode &&
                                             <p className={"error-message text-danger"}>{errors.postalCode}</p>}
@@ -236,22 +277,42 @@ function Settings() {
                                 </div>
                                 <div className={"row mt-4"}>
                                     <div className={"col-md-6 px-0 pe-lg-3 pb-3 pb-lg-0 settings-nic-upload"}>
-                                        <FileUploader>
-                                            <div className={"file-uploader-container-main"}>
-                                                <img src={camera} alt={"camera"} width={"50px"}
-                                                     className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                        <FileUploader handleChange={handleChangeNicFront}>
+                                            <div className={"file-uploader-container-main nic-upload"}>
+                                                <div>
+                                                    {!nicFront ? <img src={uploadIcon} alt={"camera"} width={"50px"}
+                                                                     className={""}/> :
+                                                        <img src={nicFront} alt={"camera"} width={"50px"}
+                                                             className={"img-upload"}/>}
                                                 </div>
+                                                {!nicFront && <div>
+                                                    <div className={"fw-semibold my-2"}>Drop or Select file
+                                                    </div>
+                                                    <div className={""}>Drop files here or click <span
+                                                        className={"text-success text-decoration-underline mt-3"}>browse</span> thorough
+                                                        your machine
+                                                    </div>
+                                                </div>}
                                             </div>
                                         </FileUploader>
                                     </div>
                                     <div className={"col-md-6 px-0 pb-3 pb-lg-0 settings-nic-upload"}>
-                                        <FileUploader>
-                                            <div className={"file-uploader-container-main"}>
-                                                <img src={camera} alt={"camera"} width={"50px"}
-                                                     className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                        <FileUploader handleChange={handleChangeNicBack}>
+                                            <div className={"file-uploader-container-main nic-upload"}>
+                                                <div>
+                                                    {!nicBack ? <img src={uploadIcon} alt={"camera"} width={"50px"}
+                                                                     className={""}/> :
+                                                        <img src={nicBack} alt={"camera"} width={"50px"}
+                                                             className={"img-upload"}/>}
                                                 </div>
+                                                {!nicBack && <div>
+                                                    <div className={"fw-semibold my-2"}>Drop or Select file
+                                                    </div>
+                                                    <div className={""}>Drop files here or click <span
+                                                        className={"text-success text-decoration-underline mt-3"}>browse</span> thorough
+                                                        your machine
+                                                    </div>
+                                                </div>}
                                             </div>
                                         </FileUploader>
                                     </div>
@@ -259,7 +320,8 @@ function Settings() {
                             </div>
                         </div>
                         <div className={"modal-footer student-settings-btn"}>
-                            <button type="submit" className={"btn btn-secondary students-dropdown-btn "}
+                            <button type="submit"
+                                    className={"btn btn-secondary students-dropdown-btn "}
                                 // onClick={handleSubmit}
                             >Submit
                             </button>

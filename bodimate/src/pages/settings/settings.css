@@ -35,3 +35,17 @@
 .juBESy:focus-within{
     outline: none !important;
 }
+.nic-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profileImageDisplay{
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}
+.img-upload{
+    height: 160px;
+    width: 300px;
+}
