@@ -8,7 +8,9 @@ import personIcon from "../../assets/person-svgrepo-com.svg"
 import maleIcon from "../../assets/male-student-5-svgrepo-com.svg"
 import femaleIcon from "../../assets/female-doctor-2-svgrepo-com.svg"
 import "./add-boarding.css"
-import {validateAddBoarding} from "../../utils/validation.js";"../../utils/validation.js"
+import {validateAddBoarding} from "../../utils/validation.js";
+
+"../../utils/validation.js"
 import addIcon from "../../assets/plus-circle.svg"
 import {Form, Row, Col, FormControl, FormCheck, DropdownMenu, Dropdown, DropdownToggle,} from "react-bootstrap";
 import formHandler from "../../utils/FormHandler.js";
@@ -53,7 +55,8 @@ function AddBoarding() {
                                              value={values.boardingName || ""}
                                              placeholder="Enter Boarding Name" name={"boardingName"}
                                 />
-                                {errors.boardingName && <p className={"error-message text-danger"}>{errors.boardingName}</p>}
+                                {errors.boardingName &&
+                                    <p className={"error-message text-danger"}>{errors.boardingName}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="boardingNo" className="">Boarding No</label></h6>
@@ -63,7 +66,8 @@ function AddBoarding() {
                                              onChange={handleChange}
                                              value={values.boardingNo || ""}
                                 />
-                                {errors.boardingNo && <p className={"error-message text-danger"}>{errors.boardingNo}</p>}
+                                {errors.boardingNo &&
+                                    <p className={"error-message text-danger"}>{errors.boardingNo}</p>}
                             </Col>
                         </Row>
 
@@ -81,7 +85,7 @@ function AddBoarding() {
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="city" className="">City/Town/Village</label></h6>
                                 <FormControl id="city" name={"city"}
-                                             className={`input-border-color ${errors.city  ? "border-danger" : ""}`}
+                                             className={`input-border-color ${errors.city ? "border-danger" : ""}`}
                                              onChange={handleChange}
                                              value={values.city || ""}
                                              placeholder="Enter City"
@@ -99,7 +103,7 @@ function AddBoarding() {
                                              value={values.district || ""}
                                              placeholder="Enter District"
                                 />
-                                {errors.district && <p className={"error-message text-danger"}>{errors.district }</p>}
+                                {errors.district && <p className={"error-message text-danger"}>{errors.district}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="province" className="">Province</label></h6>
@@ -109,7 +113,7 @@ function AddBoarding() {
                                              onChange={handleChange}
                                              value={values.province || ""}
                                 />
-                                {errors.province && <p className={"error-message text-danger"}>{errors.province}</p> }
+                                {errors.province && <p className={"error-message text-danger"}>{errors.province}</p>}
                             </Col>
                         </Row>
                     </div>
@@ -129,7 +133,8 @@ function AddBoarding() {
                                                     // value={values.boardingType}
                                                     onChange={handleChange}
                                                     label={<div className={`boarding-type-home-container w-100 ps-3 `}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div> An Entire Home</div>
                                                                 <div className={"radio-btn"}>Students have whole place
@@ -154,10 +159,12 @@ function AddBoarding() {
                                                     // value={values.boardingType}
                                                     onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>A Room</div>
-                                                                <div className={"radio-btn"}>Students have their own room themselves.
+                                                                <div className={"radio-btn"}>Students have their own
+                                                                    room themselves.
                                                                 </div>
                                                             </div>
                                                             <div className={`ps-5 pe-2`}>
@@ -179,7 +186,8 @@ function AddBoarding() {
                                                     onChange={handleChange}
                                                     label={<div
                                                         className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>A Shared Room.</div>
                                                                 <div className={"radio-btn"}>Room can share more
@@ -196,7 +204,8 @@ function AddBoarding() {
                                                     className={"radio-circle"}
                                                 />
                                             </div>
-                                            {errors.boardingType && <p className={"error-message text-danger"}>{errors.boardingType}</p> }
+                                            {errors.boardingType &&
+                                                <p className={"error-message text-danger"}>{errors.boardingType}</p>}
                                         </Col>
                                     </Form.Group>
                                 </fieldset>
@@ -212,7 +221,8 @@ function AddBoarding() {
                                                     name="stayPreference"
                                                     onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>Male Only</div>
                                                                 <div className={"radio-btn"}>Only Boys can stay
@@ -235,7 +245,8 @@ function AddBoarding() {
                                                     name="stayPreference"
                                                     onChange={handleChange}
                                                     label={<div className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>Female Only</div>
                                                                 <div className={"radio-btn"}>Only Girls can stay
@@ -259,7 +270,8 @@ function AddBoarding() {
                                                     onChange={handleChange}
                                                     label={<div
                                                         className={"boarding-type-home-container w-100 ps-3"}>
-                                                        <div className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
+                                                        <div
+                                                            className={`boarding-type-home ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
                                                             <div>
                                                                 <div>No Gender Restriction</div>
                                                                 <div className={"radio-btn"}>Boys or Girls can stay
@@ -274,7 +286,8 @@ function AddBoarding() {
                                                     className={"radio-circle"}
                                                 />
                                             </div>
-                                            {errors.stayPreference && <p className={"error-message text-danger"}>{errors.stayPreference}</p> }
+                                            {errors.stayPreference &&
+                                                <p className={"error-message text-danger"}>{errors.stayPreference}</p>}
                                         </Col>
                                     </Form.Group>
                                 </fieldset>
@@ -302,18 +315,21 @@ function AddBoarding() {
                                             </div>
 
                                         </DropdownToggle>
-                                        {errors.facilities && <p className={"error-message text-danger"}>{errors.facilities}</p> }
+                                        {errors.facilities &&
+                                            <p className={"error-message text-danger"}>{errors.facilities}</p>}
 
                                         <DropdownMenu className={"w-100"}>
                                             <FormCheck name={"facilities"} label={<div className={"ps-3"}>WiFi</div>}
                                                        className="mx-3 my-1"
                                                        onChange={handleChange}
                                             />
-                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Water Heater</div>}
+                                            <FormCheck name={"facilities"}
+                                                       label={<div className={"ps-3"}>Water Heater</div>}
                                                        className="mx-3 my-1"
                                                        onChange={handleChange}
                                             />
-                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Study Hall</div>}
+                                            <FormCheck name={"facilities"}
+                                                       label={<div className={"ps-3"}>Study Hall</div>}
                                                        className="mx-3 my-1"
                                                        onChange={handleChange}
                                             />
@@ -329,7 +345,8 @@ function AddBoarding() {
                                                        className="mx-3 my-1"
                                                        onChange={handleChange}
                                             />
-                                            <FormCheck name={"facilities"} label={<div className={"ps-3"}>Other Facilities</div>}
+                                            <FormCheck name={"facilities"}
+                                                       label={<div className={"ps-3"}>Other Facilities</div>}
                                                        className="mx-3 my-1"
                                                        onChange={handleChange}
                                             />
@@ -353,7 +370,8 @@ function AddBoarding() {
                                                  value={values.membersCount || ""}
                                                  placeholder="Enter How Many Members Can Stay" type={"number"}
                                     />
-                                    {errors.membersCount && <p className={"error-message text-danger"}>{errors.membersCount}</p>}
+                                    {errors.membersCount &&
+                                        <p className={"error-message text-danger"}>{errors.membersCount}</p>}
                                 </div>
                             </Col>
                         </Row>
@@ -381,7 +399,8 @@ function AddBoarding() {
                                              value={values.pricePerMonth || ""}
                                              placeholder="Enter Price"
                                 />
-                                {errors.pricePerMonth && <p className={"error-message text-danger"}>{errors.pricePerMonth}</p>}
+                                {errors.pricePerMonth &&
+                                    <p className={"error-message text-danger"}>{errors.pricePerMonth}</p>}
                             </Col>
                         </Row>
 
@@ -404,7 +423,8 @@ function AddBoarding() {
                                              value={values.nearestUniversity || ""}
                                              placeholder="Enter Nearest University"
                                 />
-                                {errors.nearestUniversity && <p className={"error-message text-danger"}>{errors.nearestUniversity}</p>}
+                                {errors.nearestUniversity &&
+                                    <p className={"error-message text-danger"}>{errors.nearestUniversity}</p>}
                             </Col>
                         </Row>
                     </div>
@@ -418,11 +438,12 @@ function AddBoarding() {
                                              value={values.advancedPayment || ""}
                                              placeholder="Enter Advance Payment"
                                 />
-                                {errors.advancedPayment && <p className={"error-message text-danger"}>{errors.advancedPayment}</p>}
+                                {errors.advancedPayment &&
+                                    <p className={"error-message text-danger"}>{errors.advancedPayment}</p>}
                             </Col>
                         </Row>
                     </div>
-                    <div className="container-fluid my-5 pt-3 mb-3">
+                    <div className="container-fluid boading-image-uploader my-5 pt-3 mb-3">
                         <div className={""}>
                             <div className="fw-bold fs-5">Upload Boarding</div>
                             <div className={"fw-light fst-normal pt-2"}>Add 360 degree view Images of your Boarding
@@ -436,7 +457,6 @@ function AddBoarding() {
                                              className={"img-upload"}/>
                                         <div className={"fw-semibold my-2"}>
                                         </div>
-                                        {/*}*/}
                                     </div>
                                 </FileUploader>
                             </div>
@@ -449,7 +469,6 @@ function AddBoarding() {
                                                      className={"img-upload"}/>
                                                 <div className={"fw-semibold my-2"}>
                                                 </div>
-                                                {/*}*/}
                                             </div>
                                         </FileUploader>
                                     </div>
@@ -460,7 +479,6 @@ function AddBoarding() {
                                                      className={"img-upload"}/>
                                                 <div className={"fw-semibold my-2"}>
                                                 </div>
-                                                {/*}*/}
                                             </div>
                                         </FileUploader>
                                     </div>
@@ -484,15 +502,11 @@ function AddBoarding() {
                                             </div>
                                         </FileUploader>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-                    <div className="container-fluid my-0 pt-0 px-0 pb-3">
+                    <div className="container-fluid boading-image-uploader my-0 pt-0 px-0 pb-3">
                         <div>
                             <FileUploader>
                                 <div className={"file-uploader-container-main more-upload"}>
@@ -509,8 +523,6 @@ function AddBoarding() {
                     <div className="container-fluid my-5 pt-3 mb-3">
                         <div className={""}>
                             <div className="fw-bold fs-5">Boarding Location</div>
-                            {/*<div className={"fw-light fst-normal pt-2"}>Add 360 degree view Images of your Boarding*/}
-                            {/*</div>*/}
                         </div>
                     </div>
                     <div className={"modal-footer student-settings-btn"}>

@@ -90,19 +90,11 @@
     align-items: center;
 }
 
-.img-upload-content {
-    text-align: center;
-}
-
-.text-success {
-    text-align: center;
-}
-
 .img-upload {
     margin: auto;
 }
 
-.juBESy {
+.boading-image-uploader .juBESy {
     width: 100% !important;
     height: 100% !important;
 }
