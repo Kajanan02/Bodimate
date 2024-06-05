@@ -3,6 +3,12 @@
     --secondary-color: #717171; /* Default secondary color */
     --secondary-text-color: #848282; /* Default secondary color */
 }
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2) format('woff2');
+}
 
 /*footer*/
 .footer-bgc {
