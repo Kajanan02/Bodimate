@@ -1,9 +1,0 @@
-.settings-container{
-    margin: 80px 20px;
-}
-
-@media (min-width: 768px) {
-    .settings-container {
-        margin: 5rem 10rem;
-    }
-}
