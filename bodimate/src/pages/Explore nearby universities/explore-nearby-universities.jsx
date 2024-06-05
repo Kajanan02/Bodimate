@@ -4,7 +4,7 @@ import './explore-nearby-universities.css';
 
 function ExploreNearbyUniversities() {
     return (
-        <div className="explore-container mt-5 padx-sm-3 padx-md-4 pad-lg-20 my-5 py-5">
+        <div className="explore-container mt-5 padx-sm-3 padx-md-4 pad-lg-20 my-5 ">
             <div className="container">
                 <div className="collection-subheading mt-5">Explore nearby universities</div>
                 <div className="row">

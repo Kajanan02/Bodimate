@@ -1,0 +1,160 @@
+.nearby-container {
+    padding: 0 15px;
+}
+
+
+
+
+.subheading {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+
+place-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.place-buttons .btn {
+
+        justify-content: center;
+        align-items: center;
+        /*padding: 10px 12px;*/
+        flex-shrink: 0;
+        border-radius: 8px;
+        border: 1.5px solid #E6E6E6;
+        background: #E6E6E6;
+        color: #000;
+        font-family: Inter, sans-serif;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        white-space: nowrap; /* Ensure text stays in one line */
+        /*margin: 5px; !* Add consistent gap *!*/
+}
+.place-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-black {
+    background-color: black!important;
+    color: white!important;
+    border: none;
+}
+
+.btn-white {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+@media (max-width: 767.98px) {
+    .place-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .place-buttons .btn {
+        width: auto; /* Allow button to auto size based on text */
+        font-size: 14px; /* Smaller font size for mobile */
+        margin: 5px 0; /* Ensure vertical spacing on mobile */
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767.98px) {
+    .place-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .place-buttons .btn {
+        width: 100%;
+        font-size: 14px; /* Smaller font size for mobile */
+        margin: 5px 0; /* Ensure vertical spacing on mobile */
+    }
+}
+
+@media (min-width: 768px) {
+    .pad-lg-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .overlay-text h1 {
+        font-size: 2.3rem;
+    }
+
+    .btn-flexible {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+    .home-overlay-text h1 {
+        font-size: 2.0rem;
+    }
+
+    .home-overlay-btn {
+        font-size: 1.0rem;
+        padding: 4px 8px;
+    }
+
+
+}
+
+
+@media (max-width: 576px) {
+    .padx-sm-3 {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+
+    .bodimate-card {
+        width: 100%;
+        max-width: none;
+        margin: 0px;
+    }
+
+    .review-rating {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 1rem;
+    }
+
+    .per-night {
+        font-size: 0.8rem;
+    }
+
+    .overlay-text h1 {
+        font-size: 1.3rem;
+    }
+
+    .btn-flexible {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+    .home-overlay-text h1 {
+        font-size: 1.0rem;
+        top: 20% !important;
+        left: 10%;
+        transform: translateY(-50%);
+        line-height: 0.8;
+    }
+
+    .home-overlay-btn {
+        font-size: .8rem;
+        padding: 3px 6px;
+
+    }
+
+}
+
+
