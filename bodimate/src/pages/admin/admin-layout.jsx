@@ -163,7 +163,7 @@ function AdminLayout({children}) {
                                         </a>
                                     </li>
                                     <li className="admin-nav-item px-2">
-                                        <a className="admin-nav-link position-relative p-0" aria-current="page"
+                                        <a className="position-relative p-0" aria-current="page"
                                            href="#">
                                             <img src={ProfilePic} className="rounded-circle user-profile mr-2"
                                                  alt="Profile"/>
