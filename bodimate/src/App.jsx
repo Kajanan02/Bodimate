@@ -13,6 +13,7 @@ import AdminLayout from "./pages/admin/admin-layout.jsx";
 import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
 import Settings from "./pages/settings/settings.jsx";
 import {useEffect} from "react";
+import ChatBox from "./pages/admin/chatbox/chat-box.jsx";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="home" element={<Home/>}/>
                 </Route>
+                <Route path="/admin/chat-box" element={<ChatBox/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>

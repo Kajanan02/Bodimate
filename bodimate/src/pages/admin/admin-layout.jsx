@@ -59,7 +59,7 @@ function AdminLayout({children}) {
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to="/admin">
+                                to="/admin" end>
                                 <div className={'d-flex'}>
                                     <FeatherIcon icon="home" className={!toggle ? 'me-2' : "ms-1"}/>
                                     {!toggle && <div className={'trans-1'}>Home</div>}
