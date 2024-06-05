@@ -1,0 +1,282 @@
+.home-container {
+    padding: 0 15px;
+}
+
+.main-image-container {
+    position: relative;
+    text-align: center;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    max-height: 640px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+/** contact**/
+.home-overlay-text {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    text-align: left;
+}
+
+.home-overlay-btn {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    text-align: left;
+}
+
+
+.hosting-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hosting-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hosting-text {
+    text-align: center;
+    color: white;
+}
+
+.Contact-image-container {
+    position: relative;
+    text-align: center;
+}
+
+.Contact-image {
+    width: 100%;
+    height: auto;
+    max-height: 640px;
+    object-fit: cover;
+    border-radius: 6px;
+
+}
+
+.subheading {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.more-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.explore-container,
+.hosting-container {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.hosting-container {
+    background-size: cover;
+    color: white;
+}
+
+
+.university-card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.university-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+
+.university-name {
+    margin: 0;
+    font-weight: 700;
+    color: #000;
+    font-family: Inter, serif;
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
+}
+
+.university-drive {
+    color: gray;
+    margin: 0;
+    color: #777;
+    font-family: Inter, serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+.btn-flexible {
+    color: #024950;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.btn-flexible:hover {
+    color: #ffffff;
+    background-color: #024950;
+    border-color: #024950;
+}
+
+.btn-light {
+    color: #024950;
+    background-color: #ffffff;
+    border-color: #ffffff;
+    margin-top: 20px !important
+
+}
+
+.btn-light:hover {
+    color: #ffffff;
+    background-color: #024950;
+    border-color: #024950;
+}
+
+
+.hosting-container {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+.hosting-text {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+}
+
+.hosting-text h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.hosting-text .btn {
+    color: black;
+    background-color: white;
+    border-color: white;
+    font-weight: bold;
+}
+
+.hosting-text {
+    font-family: Inter, serif;
+    font-size: 96px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 96px;
+    /*margin-top: 80px;*/
+}
+
+
+@media (min-width: 768px) {
+    .pad-lg-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .overlay-text h1 {
+        font-size: 2.3rem;
+    }
+
+    .btn-flexible {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+    .home-overlay-text h1 {
+        font-size: 2.0rem;
+    }
+
+    .home-overlay-btn {
+        font-size: 1.0rem;
+        padding: 4px 8px;
+    }
+
+
+}
+
+
+@media (max-width: 576px) {
+    .padx-sm-3 {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+
+    .bodimate-card {
+        width: 100%;
+        max-width: none;
+        margin: 0px;
+    }
+
+    .review-rating {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 1rem;
+    }
+
+    .per-night {
+        font-size: 0.8rem;
+    }
+
+    .overlay-text h1 {
+        font-size: 1.3rem;
+    }
+
+    .btn-flexible {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+    .home-overlay-text h1 {
+        font-size: 1.0rem;
+        top: 20% !important;
+        left: 10%;
+        transform: translateY(-50%);
+        line-height: 0.8;
+    }
+
+    .home-overlay-btn {
+        font-size: .8rem;
+        padding: 3px 6px;
+
+    }
+}
