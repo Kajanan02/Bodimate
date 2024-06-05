@@ -9,12 +9,12 @@ import maleIcon from "../../assets/male-student-5-svgrepo-com.svg"
 import femaleIcon from "../../assets/female-doctor-2-svgrepo-com.svg"
 import "./add-boarding.css"
 import {validateAddBoarding} from "../../utils/validation.js";
-
-"../../utils/validation.js"
 import addIcon from "../../assets/plus-circle.svg"
-import {Form, Row, Col, FormControl, FormCheck, DropdownMenu, Dropdown, DropdownToggle,} from "react-bootstrap";
+import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Row,} from "react-bootstrap";
 import formHandler from "../../utils/FormHandler.js";
 import {useState} from "react";
+
+"../../utils/validation.js"
 
 function AddBoarding() {
     const [formSubmitted, setFormSubmitted] = useState(false);

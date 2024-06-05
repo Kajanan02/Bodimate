@@ -1,12 +1,17 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg height="25px" width="25px" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve" fill="#024950" transform="rotate(270)" stroke="#024950">
+<svg height="25px" width="25px" version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 40 40" enable-background="new 0 0 40 40"
+     xml:space="preserve" fill="#024950" transform="rotate(270)" stroke="#024950">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
 
-<g id="SVGRepo_iconCarrier"> <g> <g> <g> <path fill="#024950" d="M20,28.5c-4.7,0-8.5-3.8-8.5-8.5s3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5S24.7,28.5,20,28.5z M20,12.5 c-4.1,0-7.5,3.4-7.5,7.5s3.4,7.5,7.5,7.5s7.5-3.4,7.5-7.5S24.1,12.5,20,12.5z"/> </g> <g> <path fill="#024950" d="M20.6,23c-0.1,0-0.3,0-0.4-0.1l-1.9-1.9c-0.5-0.5-0.5-1.4,0-1.9l1.9-1.9c0.2-0.2,0.5-0.2,0.7,0 s0.2,0.5,0,0.7L19,19.8c-0.1,0.1-0.1,0.3,0,0.5l1.9,1.9c0.2,0.2,0.2,0.5,0,0.7C20.8,23,20.7,23,20.6,23z"/> </g> </g> </g> </g>
+    <g id="SVGRepo_iconCarrier"> <g> <g> <g> <path fill="#024950"
+                                                   d="M20,28.5c-4.7,0-8.5-3.8-8.5-8.5s3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5S24.7,28.5,20,28.5z M20,12.5 c-4.1,0-7.5,3.4-7.5,7.5s3.4,7.5,7.5,7.5s7.5-3.4,7.5-7.5S24.1,12.5,20,12.5z"/> </g>
+        <g> <path fill="#024950"
+                  d="M20.6,23c-0.1,0-0.3,0-0.4-0.1l-1.9-1.9c-0.5-0.5-0.5-1.4,0-1.9l1.9-1.9c0.2-0.2,0.5-0.2,0.7,0 s0.2,0.5,0,0.7L19,19.8c-0.1,0.1-0.1,0.3,0,0.5l1.9,1.9c0.2,0.2,0.2,0.5,0,0.7C20.8,23,20.7,23,20.6,23z"/> </g> </g> </g> </g>
 
 </svg>

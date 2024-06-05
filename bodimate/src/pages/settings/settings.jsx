@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {useRef} from "react";
+import React, {useRef, useState} from 'react';
 import home from "../../assets/home.svg";
 import "./settings.css"
 import profileImage from "../../assets/settings/profile.png"
@@ -281,7 +280,7 @@ function Settings() {
                                             <div className={"file-uploader-container-main nic-upload"}>
                                                 <div>
                                                     {!nicFront ? <img src={uploadIcon} alt={"camera"} width={"50px"}
-                                                                     className={""}/> :
+                                                                      className={""}/> :
                                                         <img src={nicFront} alt={"camera"} width={"50px"}
                                                              className={"img-upload"}/>}
                                                 </div>

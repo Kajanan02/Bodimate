@@ -5,9 +5,10 @@
 }
 
 /*footer*/
-.footer-bgc{
+.footer-bgc {
     background-color: rgba(2, 73, 80, 0.05) !important;
 }
+
 .footer-logo {
     width: 60px;
     height: 60px;
@@ -521,6 +522,7 @@ footer ul li:hover {
     margin: 0;
     padding: 0;
 }
+
 .cursor-pointer {
     cursor: pointer !important;
 }
@@ -968,6 +970,7 @@ footer ul li:hover {
 /*admin-chatbox*/
 .admin-chatbox-user-list-container {
     border-right: 1px solid #ddd;
+    height: calc(100vh - 75px);
 }
 
 .chat-search-box .form-control {
@@ -982,7 +985,7 @@ footer ul li:hover {
 .chat-user-list {
     list-style: none;
     padding: 0;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px);
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -1196,4 +1199,9 @@ footer ul li:hover {
     .admin-chatbox-container {
         overflow: hidden;
     }
+}
+
+.chat-container {
+    height: calc(100vh - 100px) !important;
+    justify-content: space-between;
 }

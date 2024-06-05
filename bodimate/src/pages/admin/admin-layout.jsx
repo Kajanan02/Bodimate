@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import Logo from "../../assets/logo.svg";
 import FeatherIcon from 'feather-icons-react';
-import {NavLink} from "react-router-dom";
+import {NavLink, Outlet} from "react-router-dom";
 import SideClose from "../../assets/admin-layout/carbon_side-panel-close.svg";
 import ProfilePic from "../../assets/admin-layout/DefaultProfile.jpg";
 import Msg from "../../assets/admin-layout/msg-icon.svg";
 import Bell from "../../assets/admin-layout/bell-icon.svg";
 import NotificationBox from './NotificationBox.jsx';
 
-function AdminLayout({children}) {
+function AdminLayout() {
     const [show, setShow] = useState(false);
     const [toggle, setToggle] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
@@ -192,7 +192,7 @@ function AdminLayout({children}) {
                                 onClick={handleBackdropClick}
                             />
                         )}
-                        {children}
+                        <Outlet/>
                     </div>
                 </div>
             </div>

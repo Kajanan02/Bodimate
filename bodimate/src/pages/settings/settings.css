@@ -1,4 +1,4 @@
-.settings-container{
+.settings-container {
     margin: 80px 20px;
 }
 
@@ -6,46 +6,55 @@
     .settings-container {
         margin: 5rem 10rem;
     }
-    .settings-form-container{
+
+    .settings-form-container {
         margin: 0 3rem;
     }
 }
+
 /*.settings-profile-photo{*/
 /*    background-color: #777777;*/
 /*    border: 1px solid #024950;*/
 /*    border-radius: 100%;*/
 /*}*/
-.profile-upload-button{
+.profile-upload-button {
     border: none;
     background-color: #024950;
     color: #ffffff;
     border-radius: 6px;
 }
-.settings-image-uploader-container .juBESy{
+
+.settings-image-uploader-container .juBESy {
     /*width: 0;*/
     border: none !important;
 }
-.profile-image{
+
+.profile-image {
     display: flex;
     flex-direction: column;
 }
-.settings-nic-upload{
+
+.settings-nic-upload {
     min-height: 250px;
 }
-.juBESy:focus-within{
+
+.juBESy:focus-within {
     outline: none !important;
 }
-.nic-upload{
+
+.nic-upload {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.profileImageDisplay{
+
+.profileImageDisplay {
     height: 150px;
     width: 150px;
     border-radius: 100%;
 }
-.img-upload{
+
+.img-upload {
     height: 160px;
     width: 300px;
 }

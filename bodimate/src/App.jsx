@@ -33,9 +33,8 @@ function App() {
                     <Route path="settings" element={<Settings/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
-                    <Route path="home" element={<Home/>}/>
+                    <Route path="chat-box" element={<ChatBox/>}/>
                 </Route>
-                <Route path="/admin/chat-box" element={<ChatBox/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>

@@ -32,6 +32,7 @@
     .addBoarding-Container {
         margin: 5rem 10rem;
     }
+
     .add-details-form-container {
         margin: 0 3rem;
     }
@@ -155,7 +156,8 @@
     align-items: center;
     justify-content: space-between;
 }
-.error-message{
+
+.error-message {
     font-size: 14px;
     margin-bottom: 0px !important;
 }

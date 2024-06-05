@@ -16,6 +16,7 @@ function PasswordSettings() {
     function submitSettings() {
         setFormSubmitted(true)
     }
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -43,8 +44,8 @@ function PasswordSettings() {
                                 <FormControl id="city" name={"newPassword"}
                                              className={`input-border-color ${errors.newPassword ? "border-danger" : ""}`}
                                              placeholder="Enter New Password"
-                                    onChange={handleChange}
-                                    value={values.newPassword || ""}
+                                             onChange={handleChange}
+                                             value={values.newPassword || ""}
                                 />
                                 {errors.newPassword &&
                                     <p className={"error-message text-danger"}>{errors.newPassword}</p>}
@@ -56,8 +57,8 @@ function PasswordSettings() {
                                 <FormControl id="city" name={"confirmPassword"}
                                              className={`input-border-color ${errors.confirmPassword ? "border-danger" : ""}`}
                                              placeholder="Enter Confirm Password"
-                                    onChange={handleChange}
-                                    value={values.confirmPassword || ""}
+                                             onChange={handleChange}
+                                             value={values.confirmPassword || ""}
                                 />
                                 {errors.confirmPassword &&
                                     <p className={"error-message text-danger"}>{errors.confirmPassword}</p>}

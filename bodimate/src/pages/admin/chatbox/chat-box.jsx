@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import AdminLayout from "../admin-layout.jsx";
 import DefaultProfilePic from "../../../assets/admin-chatbox/DefaultProfile.jpg";
 import FeatherIcon from 'feather-icons-react';
 
@@ -134,68 +133,69 @@ function ChatBox() {
     );
 
     return (
-        <AdminLayout>
-            <div className="container-fluid admin-chatbox-container d-flex flex-column vh-100">
-                <div className="row">
-                    <div className="col-md-4 admin-chatbox-user-list-container flex-grow-1">
-                        <div className="chat-search-box py-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Search by name"
-                            />
-                        </div>
-                        <ul className="chat-user-list px-3 overflow-y-auto">
-                            {filteredUsers.length === 0 && searchQuery && (
-                                <li className="text-muted">No matching results</li>
-                            )}
-                            {filteredUsers.map((user) => (
-                                <li
-                                    key={user.id}
-                                    className={`chat-user-item row ${user.unread ? 'unread-message' : ''}`}
-                                    onClick={() => handleSelectUser(user)}
-                                >
-                                    <div className="d-flex px-2 py-2">
-                                        <div className="col-2 d-flex align-items-center">
-                                            <img
-                                                src={user.profilePic}
-                                                className="rounded-circle chat-user-profile"
-                                                alt="Profile"
-                                            />
+        <div className="container-fluid admin-chatbox-container d-flex flex-column">
+            <div className="row">
+                <div className="col-md-4 admin-chatbox-user-list-container flex-grow-1">
+                    <div className="chat-search-box py-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search by name"
+                        />
+                    </div>
+                    <ul className="chat-user-list px-3 overflow-y-auto">
+                        {filteredUsers.length === 0 && searchQuery && (
+                            <li className="text-muted">No matching results</li>
+                        )}
+                        {filteredUsers.map((user) => (
+                            <li
+                                key={user.id}
+                                className={`chat-user-item row ${user.unread ? 'unread-message' : ''}`}
+                                onClick={() => handleSelectUser(user)}
+                            >
+                                <div className="d-flex px-2 py-2">
+                                    <div className="col-2 d-flex align-items-center">
+                                        <img
+                                            src={user.profilePic}
+                                            className="rounded-circle chat-user-profile"
+                                            alt="Profile"
+                                        />
+                                    </div>
+                                    <div className="col-10 d-flex flex-column">
+                                        <div className="d-flex justify-content-between">
+                                            <p className="chat-user-heading m-0 fw-medium">{user.name}</p>
+                                            <p className="chat-user-time m-0 fw-medium">{user.time}</p>
                                         </div>
-                                        <div className="col-10 d-flex flex-column">
-                                            <div className="d-flex justify-content-between">
-                                                <p className="chat-user-heading m-0 fw-medium">{user.name}</p>
-                                                <p className="chat-user-time m-0 fw-medium">{user.time}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <div className="chat-user-text fw-medium">
+                                                {user.lastMessage.length > 30 ? `${user.lastMessage.slice(0, 35)}...` : user.lastMessage}
                                             </div>
-                                            <div className="d-flex justify-content-between">
-                                                <div className="chat-user-text fw-medium">
-                                                    {user.lastMessage.length > 30 ? `${user.lastMessage.slice(0, 35)}...` : user.lastMessage}
-                                                </div>
-                                                {user.unread && (
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <div
-                                                            className="message-count-circle text-center text-white p-2">1
-                                                        </div>
+                                            {user.unread && (
+                                                <div className="d-flex align-items-center justify-content-center">
+                                                    <div
+                                                        className="message-count-circle text-center text-white p-2">1
                                                     </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div
-                        className="col-md-8 admin-chatbox-messages-container d-flex flex-column h-100 pt-2 flex-grow-1 overflow-hidden">
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div
+                    className="col-md-8 admin-chatbox-messages-container d-flex flex-column h-100 pt-2 flex-grow-1 overflow-hidden chat-container">
+                    <div>
                         <div
                             className="chat-messages-header d-flex align-items-center justify-content-between position-sticky">
                             <div className="d-flex align-items-center">
                                 <img src={selectedUser.profilePic} className="rounded-circle chat-profile-pic"
                                      alt="Profile"/>
-                                <div className="chat-messages-header-text fw-semibold ps-3">{selectedUser.name}</div>
+                                <div
+                                    className="chat-messages-header-text fw-semibold ps-3">{selectedUser.name}</div>
                             </div>
                         </div>
                         <div className="chat-messages-body d-flex flex-column overflow-y-auto flex-grow-1">
@@ -245,36 +245,36 @@ function ChatBox() {
                                 </div>
                             )}
                         </div>
-                        <div className="chat-messages-footer d-flex align-items-center position-sticky bg-white">
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="form-control chat-type-input border-none"
-                                    value={newMessage}
-                                    onChange={(e) => setNewMessage(e.target.value)}
-                                    placeholder="Type a message"
-                                />
-                                <input
-                                    type="file"
-                                    id="fileInput"
-                                    style={{display: 'none'}}
-                                    onChange={handleFileChange}
-                                />
-                                <button className="btn border-none"
-                                        onClick={() => document.getElementById('fileInput').click()}>
-                                    <FeatherIcon icon="paperclip" color="#024950"/>
-                                </button>
-                            </div>
-                            <div className="input-group-append ps-4">
-                                <button className="btn chat-send-btn" onClick={handleSendMessage}>
-                                    <FeatherIcon icon="send"/>
-                                </button>
-                            </div>
+                    </div>
+                    <div className="chat-messages-footer d-flex align-items-center position-sticky bg-white">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control chat-type-input border-none"
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                placeholder="Type a message"
+                            />
+                            <input
+                                type="file"
+                                id="fileInput"
+                                style={{display: 'none'}}
+                                onChange={handleFileChange}
+                            />
+                            <button className="btn border-none"
+                                    onClick={() => document.getElementById('fileInput').click()}>
+                                <FeatherIcon icon="paperclip" color="#024950"/>
+                            </button>
+                        </div>
+                        <div className="input-group-append ps-4">
+                            <button className="btn chat-send-btn" onClick={handleSendMessage}>
+                                <FeatherIcon icon="send"/>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        </div>
     );
 }
 
