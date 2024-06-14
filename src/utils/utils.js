@@ -14,3 +14,13 @@ export function isEmpty(obj) {
 export function isFunction(functionToCheck) {
     return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
+
+export function filterDataByKey(array,nearByUniversity,key="nearByUniversity"){
+    let filteredData = []
+    if(nearByUniversity === "All") {
+        filteredData = array
+    }else {
+        filteredData = array.filter((item) => item[key] === nearByUniversity)
+    }
+    return filteredData
+}

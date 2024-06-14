@@ -179,3 +179,61 @@ export function validatePasswordSettings(values) {
     }
     return errors;
 }
+
+export function validateListings(values) {
+    console.log(values)
+    let errors = {};
+
+    if (!values.boardingName) {
+        errors.boardingName = "Boarding Name is Required"
+    }
+    if (!values.boardingRegNo) {
+        errors.boardingRegNo = "Boarding Registration No is Required"
+    }
+    if (!values.boardingOwnerName) {
+        errors.boardingOwnerName = "Boarding Owner Name is Required"
+    }
+    if (!values.boardingOwnerNicNo) {
+        errors.boardingOwnerNicNo = "Boarding Owner NIC No is Required"
+    }
+    if (!values.streetAddress) {
+        errors.streetAddress = "Street Address is Required"
+    }
+    if (!values.city) {
+        errors.city = "City is Required"
+    }
+    if (!values.district) {
+        errors.district = "District is Required"
+    }
+    if (!values.province) {
+        errors.province = "Province is Required"
+    }
+    if (!values.nearByUniversity) {
+        errors.nearByUniversity = "Near By University is Required"
+    }
+    if (!values.boardingType) {
+        errors.boardingType = "Boarding Type is Required"
+    }
+    if (!values.stayPreference) {
+        errors.stayPreference = "Stay Preference is Required"
+    }
+    if (!values.facilities) {
+        errors.facilities = "Facilities is Required"
+    }
+    if (!values.membersCount) {
+        errors.membersCount = "Members Count is Required"
+    }
+    if (!values.noOfRooms) {
+        errors.noOfRooms = "No of Rooms is Required"
+    }
+    if (!values.distance) {
+        errors.distance = "Distance is Required"
+    }
+    if (!values.advancePayment) {
+        errors.advancePayment = "Advance Payment is Required"
+    }
+    if (!values.pricePerMonth) {
+        errors.pricePerMonth = "Price Per Month is Required"
+    }
+    return errors;
+}
