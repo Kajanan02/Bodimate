@@ -16,6 +16,8 @@ import Settings from "./pages/settings/settings.jsx";
 import {useEffect} from "react";
 import ChatBox from "./pages/admin/chatbox/chat-box.jsx";
 import NearbyUniversity from "./pages/nearby-university/nearby-university.jsx";
+import AdminHome from "./pages/admin/home/admin-home.jsx";
+import AdminListings from "./pages/admin/listings/admin-listings.jsx";
 
 function App() {
 
@@ -37,6 +39,8 @@ function App() {
                     <Route path="settings" element={<Settings/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
+                    <Route path="" element={<AdminHome/>}/>
+                    <Route path="listings" element={<AdminListings/>}/>
                     <Route path="chat-box" element={<ChatBox/>}/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
