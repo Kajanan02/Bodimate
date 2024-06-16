@@ -179,3 +179,55 @@ export function validatePasswordSettings(values) {
     }
     return errors;
 }
+
+
+export function validateAdminSettings(values) {
+    let errors = {};
+
+    if (!values.firstName) {
+        errors.firstName = "First Name is Required";
+    }
+    if (!values.lastName) {
+        errors.lastName = "Last Name is Required";
+    }
+    if (!values.userName) {
+        errors.userName = "User Name is Required";
+    }
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (values.email && !/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email is not valid';
+    }
+    if (!values.nicNo) {
+        errors.nicNo = "NIC No is Required";
+    }
+    if (!values.phoneNo) {
+        errors.phoneNo = 'Contact No is required';
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
+        errors.phoneNo = 'Contact No is not valid';
+    }
+    if (!values.dob) {
+        errors.dob = "Date of Birth is Required";
+    }
+    if (!values.address) {
+        errors.address = "Address is Required";
+    }
+    if (!values.gender) {
+        errors.gender = "Gender is Required";
+    }
+
+
+    return errors;
+}
+
+export function validateAdminPasswordSettings(values) {
+    let errors = {}
+    if (!values.currentPassword) {
+        errors.currentPassword = "Current Password is Required";
+    }
+    if (!values.newPassword) {
+        errors.newPassword = "New Password is Required";
+    }
+
+    return errors;
+}

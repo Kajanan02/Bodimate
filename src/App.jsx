@@ -16,6 +16,8 @@ import Settings from "./pages/settings/settings.jsx";
 import {useEffect} from "react";
 import ChatBox from "./pages/admin/chatbox/chat-box.jsx";
 import NearbyUniversity from "./pages/nearby-university/nearby-university.jsx";
+import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
+
 
 function App() {
 
@@ -38,6 +40,7 @@ function App() {
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="chat-box" element={<ChatBox/>}/>
+                    <Route path="settings" element={<AdminSetting/>}/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>

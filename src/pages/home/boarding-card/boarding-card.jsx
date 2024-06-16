@@ -10,7 +10,7 @@ const BoardingCard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="card bodimate-card cursor-pointer" onClick={() => navigate("/nearby-university")}>
+        <div className="card bodimate-card cursor-pointer" onClick={() => navigate("/boarding-details")}>
             <div className="position-relative">
                 <img src={bording} alt="Listing" className="img-fluid w-100 h-auto"/>
                 <div className="heart-icon">
