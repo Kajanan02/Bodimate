@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16" fill="none" stroke="#ebff00" stroke-linecap="round"
+     stroke-linejoin="round" id="Home-Plus--Streamline-Tabler" height="50" width="50">
+    <desc>Home Plus Streamline Icon: https://streamlinehq.com</desc>
+    <path d="M12.645 7.5H14.115L7.5 0.885L0.885 7.5H2.355V12.645C2.355 13.456875 3.0131249999999996 14.1150625 3.825 14.115H7.8675"
+          stroke-width="1"></path>
+    <path d="M5.295 14.115V9.705C5.295 8.893125 5.953125 8.234937500000001 6.765 8.235H8.235C9.0468125 8.2350625 9.705 8.8931875 9.705 9.705"
+          stroke-width="1"></path>
+    <path d="M10.440000000000001 12.645H14.850000000000001" stroke-width="1"></path>
+    <path d="M12.645 10.440000000000001V14.850000000000001" stroke-width="1"></path>
+</svg>
