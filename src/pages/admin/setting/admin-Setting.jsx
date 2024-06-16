@@ -42,9 +42,11 @@ function AdminSetting() {
 
 
     return (
-        <div className={"container-fluid admin-setting-container d-flex flex-column"}>
+        <div className={"container mb-4 p-5"}>
+            <div className={""}>
+
             <div>
-                <h3 className={'mb-5 main-title'}>User Management</h3>
+                <h3 className={'content-heading'}>User Management</h3>
             </div>
 
             <div className={"settings-form-container"}>
@@ -238,6 +240,7 @@ function AdminSetting() {
                     </div>
                 </form>
                 <PasswordSetting/>
+            </div>
             </div>
         </div>
     );
