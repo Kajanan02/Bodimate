@@ -18,8 +18,8 @@ import {useState} from "react";
 
 function AddBoarding() {
     const [formSubmitted, setFormSubmitted] = useState(false);
-
-
+    const [moreBoardingImages, setMoreBoardingImages] = useState([]);
+    const [boardingImages, setBoardingImages] = useState([]);
     const {
         handleSubmit,
         handleChange,
@@ -27,11 +27,40 @@ function AddBoarding() {
         errors,
     } = formHandler(submitAddBoarding, validateAddBoarding)
 
-    console.log(errors)
-
     function submitAddBoarding() {
         setFormSubmitted(true)
     }
+
+
+    const handleChangeMoreBoardingImages = (files) => {
+        const fileArray = Array.from(files);
+
+        Promise.all(fileArray.map(file => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        })).then(newImages => {
+            setMoreBoardingImages(prevImages => [...prevImages, ...newImages]);
+        }).catch(error => {
+            console.error("Error reading files: ", error);
+        });
+    };
+    console.log(moreBoardingImages)
+
+    const handleChangeBoardingImage = (files) => {
+        console.log('Files received in handleChangeBoardingImage:', files);
+        if (!Array.isArray(files)) {
+            console.error('Received files is not an array:', files);
+            return;
+        }
+        const updatedImages = files.map(file => URL.createObjectURL(file));
+        setBoardingImages(prevImages => [...prevImages, ...updatedImages]);
+    };
+    console.log(boardingImages)
+
 
     return (
         <div className={'addBoarding-Container'}>
@@ -451,10 +480,13 @@ function AddBoarding() {
                         </div>
                         <div className={"row mt-4"}>
                             <div className={"col-md-6 px-0 pe-lg-3 pb-3 pb-lg-0 "}>
-                                <FileUploader>
+                                <FileUploader handleChange={handleChangeBoardingImage}>
                                     <div className={"file-uploader-container-main"}>
-                                        <img src={camera} alt={"camera"} width={"50px"}
-                                             className={"img-upload"}/>
+                                        {boardingImages[0] ? (
+                                            <img src={boardingImages[0]} alt={`Uploaded ${0}`} width={"50px"} className={"img-upload"} />
+                                        ) : (
+                                            <img src={camera} alt={"camera"} width={"50px"} className={"img-upload"} />
+                                        )}
                                         <div className={"fw-semibold my-2"}>
                                         </div>
                                     </div>
@@ -508,14 +540,16 @@ function AddBoarding() {
                     </div>
                     <div className="container-fluid boading-image-uploader my-0 pt-0 px-0 pb-3">
                         <div>
-                            <FileUploader>
-                                <div className={"file-uploader-container-main more-upload"}>
-                                    <img src={addIcon} alt={"camera"} width={"50px"}
-                                         className={"more-image-upload"}/>
-                                    <div className={"fw-semibold my-2"}>Add More Images Here
-                                    </div>
-                                    <div className={"fw-semibold my-2"}>
-                                    </div>
+                            <FileUploader handleChange={handleChangeMoreBoardingImages} multiple>
+                                <div className="file-uploader-container-main more-upload">
+                                    {moreBoardingImages.length === 0 ? (
+                                        <img src={addIcon} alt="" width="50px" className="more-image-upload"/>
+                                    ) : (moreBoardingImages.map((image, index) => (
+                                            <img key={index} src={image} alt="" width="50px"
+                                                 className="after-more-image-upload"/>
+                                        ))
+                                    )}
+                                    <div className="fw-semibold my-2">Add More Images Here</div>
                                 </div>
                             </FileUploader>
                         </div>

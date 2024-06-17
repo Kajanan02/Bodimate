@@ -65,24 +65,6 @@
     transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, padding 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
-.file-uploader-container-sub {
-    padding: 19px;
-    outline: none;
-    border-radius: 8px;
-    font-family: "Public Sans", sans-serif;
-    font-weight: 400;
-    color: rgb(99, 115, 129);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-    background-color: rgba(145, 158, 171, 0.08);
-    border: 1px dashed rgba(145, 158, 171, 0.2);
-    transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, padding 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-}
-
 .more-upload {
     min-height: 300px;
     height: 100%;
@@ -160,4 +142,14 @@
 .error-message {
     font-size: 14px;
     margin-bottom: 0px !important;
+}
+.after-more-image-upload{
+    height: 160px;
+    width: 300px;
+
+}
+.after-more-image-upload-contain{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

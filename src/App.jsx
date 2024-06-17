@@ -14,6 +14,7 @@ import AddBoarding from "./pages/add-boarding/add-boarding.jsx";
 import Settings from "./pages/settings/settings.jsx";
 import {useEffect} from "react";
 import ChatBox from "./pages/admin/chatbox/chat-box.jsx";
+import ContactUs from "./pages/contact-us/contact-us.jsx";
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
                     <Route path="boarding-details" element={<BoardingDetails/>}/>
                     <Route path="add-boarding" element={<AddBoarding/>}/>
                     <Route path="settings" element={<Settings/>}/>
+                    <Route path="contact-us" element={<ContactUs/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="chat-box" element={<ChatBox/>}/>

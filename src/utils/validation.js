@@ -179,3 +179,28 @@ export function validatePasswordSettings(values) {
     }
     return errors;
 }
+
+export function validateContactUs(values){
+    let errors = {}
+
+    if (!values.name) {
+        errors.name = "Name is Required";
+    }
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (values.email && !/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email is not valid';
+    }
+    if (!values.phoneNo) {
+        errors.phoneNo = 'Contact No is required';
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
+        errors.phoneNo = 'Contact No is not valid';
+    }
+    if (!values.topic) {
+        errors.topic = "Message Topic is Required";
+    }
+    if (!values.message) {
+        errors.message = "Message is Required";
+    }
+    return errors;
+}
