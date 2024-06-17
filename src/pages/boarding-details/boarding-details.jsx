@@ -240,7 +240,7 @@ function BoardingDetails() {
                             <div className="col-md-12 mb-3">
                                 <label htmlFor="guestsSelect" className="form-label price-card-text">Number of
                                     Guests</label>
-                                <div className="input-group">
+                                <div className="details-input-group d-flex">
                                     <div className="input-group-prepend pe-2">
                                         <button
                                             type="button"

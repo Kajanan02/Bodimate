@@ -13,6 +13,7 @@ function AdminLayout() {
     const [toggle, setToggle] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [notifications, setNotifications] = useState([]);
+    const [usersDropdown, setUsersDropdown] = useState(false);
 
     const toggleNotification = () => setShowNotification(!showNotification);
 
@@ -39,6 +40,8 @@ function AdminLayout() {
             setShow(false);
         }
     };
+
+    const toggleUsersDropdown = () => setUsersDropdown(!usersDropdown);
 
     return (
         <div className="container-fluid">
@@ -87,14 +90,54 @@ function AdminLayout() {
                             </NavLink>
                         </div>
                         <div className={"w-100 px-sm-2"}>
-                            <NavLink
-                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/admin/users"}>
-                                <div className={'d-flex'}>
+                            <div
+                                className="side-menu-item d-flex justify-content-between align-items-center"
+                                onClick={toggleUsersDropdown}
+                                style={{cursor: "pointer"}}
+                            >
+                                <div className={'d-flex align-items-center'}>
                                     <FeatherIcon icon="users" className={!toggle ? 'me-2' : "ms-1"}/>
                                     {!toggle && <div className={''}>Users</div>}
                                 </div>
-                            </NavLink>
+                                <FeatherIcon className={"users-navlink"}
+                                             icon={usersDropdown ? "chevron-down" : "chevron-right"} size={18}/>
+                            </div>
+                            {usersDropdown && !toggle && (
+                                <div className="w-100">
+                                    <NavLink
+                                        className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
+                                        to={"/admin/users/boarding-owners"}>
+                                        <div className={'d-flex'}>
+                                            <div className={!toggle ? 'ms-4 ps-2' : "ms-1"}>Boarding Owners</div>
+                                        </div>
+                                    </NavLink>
+                                    <NavLink
+                                        className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
+                                        to={"/admin/users/students"}>
+                                        <div className={'d-flex'}>
+                                            <div className={!toggle ? 'ms-4 ps-2' : "ms-1"}>Students</div>
+                                        </div>
+                                    </NavLink>
+                                </div>
+                            )}
+                            {toggle && (
+                                <div className="hover-dropdown">
+                                    <NavLink
+                                        className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
+                                        to={"/admin/users/boarding-owners"}>
+                                        <div className={'d-flex'}>
+                                            <div className={'ms-1'}>Boarding Owners</div>
+                                        </div>
+                                    </NavLink>
+                                    <NavLink
+                                        className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
+                                        to={"/admin/users/students"}>
+                                        <div className={'d-flex'}>
+                                            <div className={'ms-1'}>Students</div>
+                                        </div>
+                                    </NavLink>
+                                </div>
+                            )}
                         </div>
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
