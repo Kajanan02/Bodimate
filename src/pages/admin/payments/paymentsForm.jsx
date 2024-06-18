@@ -149,7 +149,6 @@ function PaymentsForm(props) {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div className={"pop-up-form-container"}>
-                            <h5 className={'mb-3 admin-form-head fw-semibold'}>Student</h5>
                             <div className={"row"}>
                                 <div className={"col-md-6"}>
                                     <div className="mb-3">
