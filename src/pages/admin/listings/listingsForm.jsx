@@ -216,6 +216,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail1"
                                                onChange={handleChange}
                                                value={values.boardingName || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.boardingName &&
                                             <p className={"admin-text-red"}>{errors.boardingName}</p>}
@@ -231,6 +232,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.boardingRegNo || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.boardingRegNo &&
                                             <p className={"admin-text-red"}>{errors.boardingRegNo}</p>}
@@ -246,6 +248,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.boardingOwnerName || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.boardingOwnerName &&
                                             <p className={"admin-text-red"}>{errors.boardingOwnerName}</p>}
@@ -261,6 +264,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.boardingOwnerNicNo || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.boardingOwnerNicNo &&
                                             <p className={"admin-text-red"}>{errors.boardingOwnerNicNo}</p>}
@@ -276,6 +280,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.streetAddress || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.streetAddress &&
                                             <p className={"admin-text-red"}>{errors.streetAddress}</p>}
@@ -290,6 +295,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.city || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.city && <p className={"admin-text-red"}>{errors.city}</p>}
                                     </div>
@@ -302,6 +308,7 @@ function ListingsForm(props) {
                                             className={`form-control ${errors.district ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
                                             onChange={handleChange}
                                             value={values.district || ""}
+                                            disabled={["View", "State"].includes(props.type)}
                                             name={"district"}
                                             aria-label="Default select example">
                                             <option hidden>Select District</option>
@@ -322,6 +329,7 @@ function ListingsForm(props) {
                                             className={`form-control ${errors.province ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
                                             onChange={handleChange}
                                             value={values.province || ""}
+                                            disabled={["View", "State"].includes(props.type)}
                                             name={"province"}
                                             aria-label="Default select example">
                                             <option hidden>Select Province</option>
@@ -340,9 +348,10 @@ function ListingsForm(props) {
                                                className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Near
                                             By University</label>
                                         <select
-                                            className={`form-control ${errors.province ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                            className={`form-control ${errors.nearByUniversity ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
                                             onChange={handleChange}
                                             value={values.nearByUniversity || ""}
+                                            disabled={["View", "State"].includes(props.type)}
                                             name={"nearByUniversity"}
                                             aria-label="Default select example">
                                             <option hidden>Select Near By University</option>
@@ -548,6 +557,7 @@ function ListingsForm(props) {
                                             <DropdownToggle variant="secondary" id="facilities-dropdown"
                                                             onChange={handleChange}
                                                             value={values.facilities || ""}
+                                                            disabled={["View", "State"].includes(props.type)}
                                                             className={`admin-input-border-color admin-form-dropdown-btn ${errors.facilities ? "border-danger" : ""}`}>
                                                 <div
                                                     className={"admin-form-facility-dropdown d-flex align-items-center justify-content-between"}>
@@ -611,13 +621,14 @@ function ListingsForm(props) {
                                         <label htmlFor="exampleInputEmail1"
                                                className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Members
                                             Count</label>
-                                        <FormControl id="boardingName" name={"membersCount"}
+                                        <FormControl id="membersCount" name={"membersCount"}
                                                      className={`admin-input-border-color ${errors.membersCount ? "border-danger" : ""}`}
                                                      onChange={handleChange}
                                                      value={values.membersCount || ""}
+                                                     disabled={["View", "State"].includes(props.type)}
                                                      placeholder="Enter How Many Members Can Stay"
                                                      type={"number"}
-                                                     min="0"
+                                                     min="1"
                                                      max="50"
                                         />
                                         {errors.membersCount &&
@@ -634,6 +645,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.noOfRooms || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.noOfRooms &&
                                             <p className={"admin-text-red"}>{errors.noOfRooms}</p>}
@@ -648,6 +660,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.distance || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.distance &&
                                             <p className={"admin-text-red"}>{errors.distance}</p>}
@@ -663,6 +676,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.advancePayment || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.advancePayment &&
                                             <p className={"admin-text-red"}>{errors.advancePayment}</p>}
@@ -678,6 +692,7 @@ function ListingsForm(props) {
                                                id="exampleInputEmail5"
                                                onChange={handleChange}
                                                value={values.pricePerMonth || ""}
+                                               disabled={["View", "State"].includes(props.type)}
                                         />
                                         {errors.pricePerMonth &&
                                             <p className={"admin-text-red"}>{errors.pricePerMonth}</p>}
