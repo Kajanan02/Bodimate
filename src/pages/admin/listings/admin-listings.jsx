@@ -19,96 +19,96 @@ function AdminListings() {
     const [listingsList, setListingsList] = useState([
         {
             no: 0o1,
-            boardingRegNo: "UWU/CST/23/001",
+            boardingRegNo: "BOR/BAD/UWU/001",
             boardingOwnerName: "Kavindu Rathnayake",
             nearByUniversity: "Uva Wellassa University of Sri Lanka (UWU)",
             pricePerMonth: 4000
         },
         {
             no: 0o2,
-            boardingRegNo: "CBO/ENG/24/002",
+            boardingRegNo: "BOR/COL/CBO/002",
             boardingOwnerName: "Dhanusha Madurawela",
             nearByUniversity: "University of Colombo (CBO)",
             pricePerMonth: 4500
         },
         {
             no: 0o3,
-            boardingRegNo: "PDN/MED/22/003",
+            boardingRegNo: "BOR/KAN/PDN/003",
             boardingOwnerName: "Chandika Perera",
             nearByUniversity: "University of Peradeniya (PDN)",
             pricePerMonth: 5000
         },
         {
             no: 0o4,
-            boardingRegNo: "SJP/IT/21/004",
+            boardingRegNo: "BOR/GAM/SJP/004",
             boardingOwnerName: "Nirmala Kumari",
             nearByUniversity: "University of Sri Jayewardenepura (SJP)",
             pricePerMonth: 5500
         },
         {
             no: 0o5,
-            boardingRegNo: "KLN/BIO/20/005",
+            boardingRegNo: "BOR/KLN/KLN/005",
             boardingOwnerName: "Chathura Bandara",
             nearByUniversity: "University of Kelaniya (KLN)",
             pricePerMonth: 6000
         },
         {
             no: 0o6,
-            boardingRegNo: "MRT/ARC/23/006",
+            boardingRegNo: "BOR/RAT/MRT/006",
             boardingOwnerName: "Supun Mendis",
             nearByUniversity: "University of Moratuwa (MRT)",
             pricePerMonth: 6500
         },
         {
             no: 0o7,
-            boardingRegNo: "UJA/LAW/22/007",
+            boardingRegNo: "BOR/JAF/UJA/007",
             boardingOwnerName: "Priyadarshana Jayasinghe",
             nearByUniversity: "University of Jaffna (UJA)",
             pricePerMonth: 7000
         },
         {
             no: 0o10,
-            boardingRegNo: "OUSL/ECO/24/008",
-            boardingOwnerName: "Madushani Kumari",
-            nearByUniversity: "The Open University of Sri Lanka (OUSL)",
-            pricePerMonth: 4000
-        },
-        {
-            no: 0o11,
-            boardingRegNo: "RUH/SOC/21/009",
-            boardingOwnerName: "Kamala Silva",
-            nearByUniversity: "University of Ruhuna (RUH)",
-            pricePerMonth: 4500
-        },
-        {
-            no: 0o12,
-            boardingRegNo: "EUSL/ART/20/010",
+            boardingRegNo: "BOR/BAT/EUSL/010",
             boardingOwnerName: "Nirmali Fernando",
             nearByUniversity: "Eastern University, Sri Lanka (EUSL)",
             pricePerMonth: 5000
         },
         {
-            no: 0o13,
-            boardingRegNo: "RUSL/BUS/23/011",
+            no: 0o11,
+            boardingRegNo: "BOR/ANU/RUSL/011",
             boardingOwnerName: "Dhanuka Kumara",
             nearByUniversity: "Rajarata University of Sri Lanka (RUSL)",
             pricePerMonth: 5500
         },
         {
-            no: 0o14,
-            boardingRegNo: "SUSL/ENG/22/012",
+            no: 0o12,
+            boardingRegNo: "BOR/RAT/SUSL/012",
             boardingOwnerName: "Manjula Priyadarshana",
             nearByUniversity: "Sabaragamuwa University of Sri Lanka (SUSL)",
             pricePerMonth: 6000
         },
         {
-            no: 0o15,
-            boardingRegNo: "SEUSL/IT/21/013",
+            no: 0o13,
+            boardingRegNo: "BOR/TRI/SEUSL/013",
             boardingOwnerName: "Kanchana Mendis",
             nearByUniversity: "South Eastern University of Sri Lanka (SEUSL)",
             pricePerMonth: 6500
         },
-    ])
+        {
+            no: 0o14,
+            boardingRegNo: "BOR/KUR/WUSL/014",
+            boardingOwnerName: "Rashmi de Silva",
+            nearByUniversity: "Wayamba University of Sri Lanka (WUSL)",
+            pricePerMonth: 7000
+        },
+        {
+            no: 0o15,
+            boardingRegNo: "BOR/GAL/UVPA/015",
+            boardingOwnerName: "Sachithra Fernando",
+            nearByUniversity: "University of the Visual and Performing Arts (UVPA)",
+            pricePerMonth: 7500
+        }
+    ]);
 
 
     // const confirmationDialog = useSelector(state => {
