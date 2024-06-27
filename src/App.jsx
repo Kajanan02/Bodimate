@@ -19,6 +19,7 @@ import NearbyUniversity from "./pages/nearby-university/nearby-university.jsx";
 import AdminHome from "./pages/admin/home/admin-home.jsx";
 import AdminListings from "./pages/admin/listings/admin-listings.jsx";
 import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
+import Analytics from "./pages/admin/analytics/analytics.jsx";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
                     <Route path="listings" element={<AdminListings/>}/>
                     <Route path="chat-box" element={<ChatBox/>}/>
                     <Route path="settings" element={<AdminSetting/>}/>
+                    <Route path="analytics" element={<Analytics/>}/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>

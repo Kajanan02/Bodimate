@@ -22,10 +22,15 @@
 }
 
 
-.admin-profileImageDisplay {
-    max-width: 300px;
-    max-height: 250px;
-    border-radius: 5px;
+/*.admin-profileImageDisplay {*/
+/*    max-width: 300px;*/
+/*    max-height: 250px;*/
+/*    border-radius: 5px;*/
 
+/*}*/
+.admin-profileImageDisplay {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
 }
 

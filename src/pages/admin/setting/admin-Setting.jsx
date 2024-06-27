@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import "./admin-Setting.css"
-import profileImage from "../../../assets/admin-setting/profile.png"
+import profileImage from "../../../assets/admin-setting/admin-profile.png"
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Form, FormControl, Row} from "react-bootstrap";
 import PasswordSetting from "./password-Setting.jsx";
@@ -54,6 +54,28 @@ function AdminSetting() {
                     <div>
                         <div>
                             <h5 className={"mb-3 fw-semibold"}>Profile</h5>
+                        </div>
+                        <div className={"container-fluid"}>
+                            <div className={"row mt-3"}>
+                                <div className={"col-md-6 px-0 profile-image"}>
+                                    <div className={"settings-profile-photo"}>
+                                        {!selectedImage ? <img src={profileImage}
+                                                               className={"admin-profileImageDisplay mb-1"}/> :
+                                            <img src={selectedImage}
+                                                 className={"admin-profileImageDisplay mb-3"}/>}
+                                    </div>
+                                    <div className={"settings-image-uploader-container"}>
+                                        <FileUploader handleChange={handleChangeSettingsProfileImage}>
+                                            <div className={"settings-image-uploader"}>
+                                                <button className={"profile-upload-button px-4 py-1"}>Change Photo
+                                                </button>
+                                                <div className={"fw-semibold my-2"}>
+                                                </div>
+                                            </div>
+                                        </FileUploader>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className={"mt-3"}>
@@ -204,28 +226,6 @@ function AdminSetting() {
 
 
                             </Row>
-                            <div className={"container-fluid"}>
-                                <div className={"row mt-3"}>
-                                    <div className={"col-md-6 px-0 profile-image"}>
-                                        <div className={"settings-profile-photo"}>
-                                            {!selectedImage ? <img src={profileImage}
-                                                                   className={"admin-profileImageDisplay mb-1"}/> :
-                                                <img src={selectedImage}
-                                                     className={"admin-profileImageDisplay mb-3"}/>}
-                                        </div>
-                                        <div className={"settings-image-uploader-container"}>
-                                            <FileUploader handleChange={handleChangeSettingsProfileImage}>
-                                                <div className={"settings-image-uploader"}>
-                                                    <button className={"profile-upload-button px-4 py-1"}>Change Photo
-                                                    </button>
-                                                    <div className={"fw-semibold my-2"}>
-                                                    </div>
-                                                </div>
-                                            </FileUploader>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
 
                         </div>
