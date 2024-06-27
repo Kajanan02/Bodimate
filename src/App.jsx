@@ -18,6 +18,7 @@ import ChatBox from "./pages/admin/chatbox/chat-box.jsx";
 import NearbyUniversity from "./pages/nearby-university/nearby-university.jsx";
 import AdminHome from "./pages/admin/home/admin-home.jsx";
 import AdminListings from "./pages/admin/listings/admin-listings.jsx";
+import ContactUs from "./pages/contact-us/contact-us.jsx";
 import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
 import Analytics from "./pages/admin/analytics/analytics.jsx";
 
@@ -40,6 +41,7 @@ function App() {
                     <Route path="nearby-universities" element={<ExploreNearbyUniversities/>}/>
                     <Route path="nearby-university" element={<NearbyUniversity/>}/>
                     <Route path="settings" element={<Settings/>}/>
+                    <Route path="contact-us" element={<ContactUs/>}/>
                 </Route>
                 <Route path="/admin" element={<AdminLayout/>}>
                     <Route path="" element={<AdminHome/>}/>

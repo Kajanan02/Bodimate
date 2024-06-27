@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import home from "../../assets/home.svg";
 import "./settings.css"
 import profileImage from "../../assets/settings/profile.png"
@@ -11,7 +11,6 @@ import {validatePersonalSettings} from "../../utils/validation.js";
 
 
 function Settings() {
-    const inputRef = useRef(null)
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [nicFront, setNicFront] = useState(null);
     const [nicBack, setNicBack] = useState(null);
@@ -46,6 +45,7 @@ function Settings() {
             };
             reader.readAsDataURL(file);
         }
+
     }
     console.log(selectedImage)
 
@@ -56,7 +56,6 @@ function Settings() {
         errors,
     } = formHandler(submitSettings, validatePersonalSettings)
 
-    console.log(errors)
 
     function submitSettings() {
         setFormSubmitted(true)
