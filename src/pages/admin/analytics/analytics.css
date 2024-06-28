@@ -1,0 +1,77 @@
+.analytics-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.analytics-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.analytics-card-header, .analytics-card-body {
+    background-color: #fff;
+    border: none;
+}
+
+.analytics-card-header {
+    font-weight: bold;
+    color: #024950;
+}
+
+.analytics-card-body {
+    border-top: 1px solid #dee2e6;
+}
+
+.analytics-image-rounded {
+    border-radius: 5px;
+}
+
+.analytics-progress-bar {
+    background-color: rgba(2, 73, 80, 0.2);
+}
+
+.custom-progress-bar .progress-bar {
+    background-color: #024950 !important;
+}
+
+.analytics-button-group .btn {
+    background: #FFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #024950;
+    border: 1px solid #024950;
+    flex-shrink: 0;
+}
+
+.analytics-button-group .btn.active {
+    background-color: #024950;
+    color: #fff;
+}
+
+.analytics-button-group .btn:hover {
+    background-color: #024950;
+    color: #fff;
+}
+
+.uni-percentage {
+    font-weight: bold;
+    font-family: Inter, serif;
+    font-size: 13px;
+    font-style: normal;
+}
+
+.correct {
+    color: #6c757d;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+.custom-dropdown-item {
+    color: #024950;
+}
+
+.custom-dropdown-item:hover {
+    background-color: #024950;
+    color: #fff;
+}
