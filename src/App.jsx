@@ -23,6 +23,7 @@ import AdminBookings from "./pages/admin/bookings/admin-bookings.jsx";
 import AdminBoardingOwners from "./pages/admin/users/admin-boarding-owners/admin-boarding-owners.jsx";
 import AdminStudents from "./pages/admin/users/admin-students/admin-students.jsx";
 import AdminPayments from "./pages/admin/payments/admin-payments.jsx";
+import Loader from "./components/loader.jsx";
 
 function App() {
 
@@ -59,6 +60,7 @@ function App() {
                 <Route path="*" element={<h1 className={"text-center "}>404 Not Found</h1>}/>
             </Routes>
             <ToastContainer/>
+            <Loader/>
         </>
     )
 }

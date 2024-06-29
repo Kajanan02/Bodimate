@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, NavLink, Outlet} from 'react-router-dom';
+import {NavLink, Outlet, useLocation} from 'react-router-dom';
 import Logo from "../../assets/logo.svg";
 import FeatherIcon from 'feather-icons-react';
 import SideClose from "../../assets/admin-layout/carbon_side-panel-close.svg";
