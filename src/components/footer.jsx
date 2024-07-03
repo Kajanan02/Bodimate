@@ -61,10 +61,10 @@ const Footer = () => {
                     <Col md={3}>
                         <div className={"footer-sub-head fw-medium"}><p>Reservation Information</p></div>
                         <ul className="list-unstyled">
-                            <li className={"pb-2"}><NavLink to={"/registe"}
+                            <li className={"pb-2"}><NavLink to={"/register"}
                                                             className={"footer-link text-decoration-none fw-medium"}>Register</NavLink>
                             </li>
-                            <li className={"pb-2"}><NavLink to={"/log-in"}
+                            <li className={"pb-2"}><NavLink to={"/login"}
                                                             className={"footer-link text-decoration-none fw-medium"}>Log
                                 In</NavLink>
                             </li>
