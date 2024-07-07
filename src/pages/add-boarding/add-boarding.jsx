@@ -12,14 +12,19 @@ import {validateAddBoarding} from "../../utils/validation.js";
 import addIcon from "../../assets/plus-circle.svg"
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Row,} from "react-bootstrap";
 import formHandler from "../../utils/FormHandler.js";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {toast} from "react-toastify";
+import {toggleLoader} from "../../redux/action.js";
+import {useDispatch} from "react-redux";
 
 "../../utils/validation.js"
 
-function AddBoarding() {
+function AddBoarding(props) {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [moreBoardingImages, setMoreBoardingImages] = useState([]);
-    const [boardingImages, setBoardingImages] = useState([]);
+    const dispatch = useDispatch();
+    const [selectedBoardingImages, setSelectedBoardingImages] = useState(null);
     const {
         handleSubmit,
         handleChange,
@@ -30,6 +35,32 @@ function AddBoarding() {
     function submitAddBoarding() {
         setFormSubmitted(true)
     }
+
+    useEffect(() => {
+        if (!formSubmitted) {
+            return
+        }
+
+        //router.route('/:instituteId/broadcast').post(createBroadcast);
+        axios.post(`http://localhost:5002/api/boardings/createBoarding`, values)
+            .then((res) => {
+                console.log(res.data)
+                //props.update()
+                //props.onHide();
+                toast.success(`Successfully Boarding is Added`)
+            }).catch((err) => {
+            toast.error("Something went wrong")
+        }).finally(() => {
+            dispatch(toggleLoader(false))
+            setFormSubmitted(false);
+            // resetForm()
+            // if (parentSubmit) {
+            //     setStudentId(null);
+            //     props.onHide()
+
+            // }
+        })
+    }, [formSubmitted]);
 
 
     const handleChangeMoreBoardingImages = (files) => {
@@ -50,16 +81,86 @@ function AddBoarding() {
     };
     console.log(moreBoardingImages)
 
-    const handleChangeBoardingImage = (files) => {
-        console.log('Files received in handleChangeBoardingImage:', files);
-        if (!Array.isArray(files)) {
-            console.error('Received files is not an array:', files);
-            return;
+    // const handleChangeBoardingImage = (files) => {
+    //     console.log('Files received in handleChangeBoardingImage:', files);
+    //     if (!Array.isArray(files)) {
+    //         console.error('Received files is not an array:', files);
+    //         return;
+    //     }
+    //     const updatedImages = files.map(file => URL.createObjectURL(file));
+    //     setBoardingImages(prevImages => [...prevImages, ...updatedImages]);
+    // };
+
+    const handleChangeBoardingImage = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setSelectedBoardingImages(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
-        const updatedImages = files.map(file => URL.createObjectURL(file));
-        setBoardingImages(prevImages => [...prevImages, ...updatedImages]);
+        // imageUpload(file, "nicFront")
     };
-    console.log(boardingImages)
+    console.log(selectedBoardingImages)
+
+
+    const provinces = [
+        "Central Province",
+        "Eastern Province",
+        "Northern Province",
+        "North Central Province",
+        "North Western Province",
+        "Sabaragamuwa Province",
+        "Southern Province",
+        "Uva Province",
+        "Western Province"
+    ];
+
+    const districts = [
+        "Ampara",
+        "Anuradhapura",
+        "Badulla",
+        "Batticaloa",
+        "Colombo",
+        "Galle",
+        "Gampaha",
+        "Hambantota",
+        "Jaffna",
+        "Kalutara",
+        "Kandy",
+        "Kegalle",
+        "Kilinochchi",
+        "Kurunegala",
+        "Mannar",
+        "Matale",
+        "Matara",
+        "Monaragala",
+        "Mullativu",
+        "Nuwara Eliya",
+        "Polonnaruwa",
+        "Puttalam",
+        "Ratnapura",
+        "Trincomalee",
+        "Vavuniya"
+    ];
+
+    const nearByUniversities = [
+        "Eastern University, Sri Lanka (EUSL)",
+        "Open University of Sri Lanka, The (OUSL)",
+        "Rajarata University of Sri Lanka (RUSL)",
+        "Sabaragamuwa University of Sri Lanka (SUSL)",
+        "South Eastern University of Sri Lanka (SEUSL)",
+        "University of Colombo (CBO)",
+        "University of Jaffna (UJA)",
+        "University of Kelaniya (KLN)",
+        "University of Moratuwa (MRT)",
+        "University of Peradeniya (PDN)",
+        "University of Ruhuna (RUH)",
+        "University of Sri Jayewardenepura (SJP)",
+        "University of the Visual and Performing Arts (UVPA)",
+        "Uva Wellassa University of Sri Lanka (UWU)",
+        "Wayamba University of Sri Lanka (WUSL)"
+    ];
 
 
     return (
@@ -126,22 +227,50 @@ function AddBoarding() {
                         <Row className="text-box-Container mb-3">
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="district" className="">District</label></h6>
-                                <FormControl id="district" name={"district"}
-                                             className={`input-border-color ${errors.district ? "border-danger" : ""}`}
-                                             onChange={handleChange}
-                                             value={values.district || ""}
-                                             placeholder="Enter District"
-                                />
+                                {/*<FormControl id="district" name={"district"}*/}
+                                {/*             className={`input-border-color ${errors.district ? "border-danger" : ""}`}*/}
+                                {/*             onChange={handleChange}*/}
+                                {/*             value={values.district || ""}*/}
+                                {/*             placeholder="Enter District"*/}
+                                {/*/>*/}
+                                <select
+                                    className={`form-control input-border-color ${errors.district ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                    onChange={handleChange}
+                                    value={values.district || ""}
+                                    name={"district"}
+                                    aria-label="Default select example">
+                                    <option hidden>Select District</option>
+                                    {districts.map((district) => (
+                                        <option key={district} value={district}>
+                                            {district}
+                                        </option>
+                                    ))}
+                                </select>
                                 {errors.district && <p className={"error-message text-danger"}>{errors.district}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="province" className="">Province</label></h6>
-                                <FormControl id="province" name={"province"}
-                                             className={`input-border-color ${errors.province ? "border-danger" : ""}`}
-                                             placeholder="Enter Province"
-                                             onChange={handleChange}
-                                             value={values.province || ""}
-                                />
+                                {/*<FormControl id="province" name={"province"}*/}
+                                {/*             className={`input-border-color ${errors.province ? "border-danger" : ""}`}*/}
+                                {/*             placeholder="Enter Province"*/}
+                                {/*             onChange={handleChange}*/}
+                                {/*             value={values.province || ""}*/}
+                                {/*/>*/}
+                                {/*<label htmlFor="exampleInputEmail1"*/}
+                                {/*       className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Province</label>*/}
+                                <select
+                                    className={`form-control input-border-color ${errors.province ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                    onChange={handleChange}
+                                    value={values.province || ""}
+                                    name={"province"}
+                                    aria-label="Default select example">
+                                    <option hidden>Select Province</option>
+                                    {provinces.map((province) => (
+                                        <option key={province} value={province}>
+                                            {province}
+                                        </option>
+                                    ))}
+                                </select>
                                 {errors.province && <p className={"error-message text-danger"}>{errors.province}</p>}
                             </Col>
                         </Row>
@@ -218,7 +347,7 @@ function AddBoarding() {
                                                         <div
                                                             className={`boarding-type-home ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
                                                             <div>
-                                                                <div>A Shared Room.</div>
+                                                                <div>A Shared Room</div>
                                                                 <div className={"radio-btn"}>Room can share more
                                                                     than one
                                                                     student.
@@ -411,13 +540,13 @@ function AddBoarding() {
                             <Col md={6} className={"ps-3 pe-lg-5"}>
                                 <h6><label htmlFor="rooms" className="">No.of Rooms</label></h6>
                                 <FormControl id="rooms"
-                                             name={"roomCount"}
-                                             className={`input-border-color ${errors.roomCount ? "border-danger" : ""}`}
+                                             name={"noOfRooms"}
+                                             className={`input-border-color ${errors.noOfRooms ? "border-danger" : ""}`}
                                              onChange={handleChange}
-                                             value={values.roomCount || ""}
+                                             value={values.noOfRooms || ""}
                                              placeholder="Enter No.of Rooms"
                                 />
-                                {errors.roomCount && <p className={"error-message text-danger"}>{errors.roomCount}</p>}
+                                {errors.noOfRooms && <p className={"error-message text-danger"}>{errors.noOfRooms}</p>}
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
 
@@ -446,12 +575,25 @@ function AddBoarding() {
                             </Col>
                             <Col md={6} className={"ps-3 ps-lg-5"}>
                                 <h6><label htmlFor="university" className="">Nearest University Name</label></h6>
-                                <FormControl id="university" name={"nearestUniversity"}
-                                             className={`input-border-color ${errors.nearestUniversity ? "border-danger" : ""}`}
-                                             onChange={handleChange}
-                                             value={values.nearestUniversity || ""}
-                                             placeholder="Enter Nearest University"
-                                />
+                                {/*<FormControl id="university" name={"nearestUniversity"}*/}
+                                {/*             className={`input-border-color ${errors.nearestUniversity ? "border-danger" : ""}`}*/}
+                                {/*             onChange={handleChange}*/}
+                                {/*             value={values.nearestUniversity || ""}*/}
+                                {/*             placeholder="Enter Nearest University"*/}
+                                {/*/>*/}
+                                <select
+                                    className={`form-control input-border-color ${errors.nearestUniversity ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                    onChange={handleChange}
+                                    value={values.nearestUniversity || ""}
+                                    name={"nearestUniversity"}
+                                    aria-label="Default select example">
+                                    <option hidden>Select Nearest University</option>
+                                    {nearByUniversities.map((nearestUniversity) => (
+                                        <option key={nearestUniversity} value={nearestUniversity}>
+                                            {nearestUniversity}
+                                        </option>
+                                    ))}
+                                </select>
                                 {errors.nearestUniversity &&
                                     <p className={"error-message text-danger"}>{errors.nearestUniversity}</p>}
                             </Col>
@@ -480,56 +622,75 @@ function AddBoarding() {
                         </div>
                         <div className={"row mt-4"}>
                             <div className={"col-md-6 px-0 pe-lg-3 pb-3 pb-lg-0 "}>
-                                <FileUploader handleChange={handleChangeBoardingImage}>
+                                <FileUploader handleChange={handleChangeBoardingImage} name={"boardingImage"}
+                                              // value={values.boardingImage || ""}
+                                              className={`input-border-color ${errors.boardingImage ? "border-danger" : ""}`}>
                                     <div className={"file-uploader-container-main"}>
-                                        {boardingImages[0] ? (
-                                            <img src={boardingImages[0]} alt={`Uploaded ${0}`} width={"50px"} className={"img-upload"} />
-                                        ) : (
-                                            <img src={camera} alt={"camera"} width={"50px"} className={"img-upload"} />
-                                        )}
-                                        <div className={"fw-semibold my-2"}>
+                                        {!selectedBoardingImages ? <img src={camera} alt={"camera"} width={"50px"}
+                                                                className={"img-upload"}/>: <img src={selectedBoardingImages} alt={"camera"} width={""}
+                                                                                                 className={"img-upload selected-img-upload"}/>}
+                                        <div className={"my-2"}>
+                                            {/*{errors.boardingImage &&*/}
+                                            {/*    <p className={"error-message text-danger"}>{errors.boardingImage}</p>}*/}
                                         </div>
                                     </div>
                                 </FileUploader>
+
                             </div>
                             <div className={"col-md-6 pe-0 px-0"}>
                                 <div className={"row m-0"}>
                                     <div className={"col-md-6 pe-0 pe-lg-3 pb-3 ps-0"}>
-                                        <FileUploader>
+                                        <FileUploader name={"boardingImage2"}
+                                                      // value={values.boardingImage || ""}
+                                                      className={`input-border-color ${errors.boardingImage ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main"}>
                                                 <img src={camera} alt={"camera"} width={"50px"}
                                                      className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                                <div className={"my-2"}>
+                                                    {/*{errors.boardingImage &&*/}
+                                                    {/*    <p className={"error-message text-danger"}>{errors.boardingImage}</p>}*/}
                                                 </div>
                                             </div>
                                         </FileUploader>
                                     </div>
                                     <div className={"col-md-6 px-0 pb-3"}>
-                                        <FileUploader>
+                                        <FileUploader name={"boardingImage3"}
+                                                      // value={values.boardingImage || ""}
+                                                      className={`input-border-color ${errors.boardingImage ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main"}>
                                                 <img src={camera} alt={"camera"} width={"50px"}
                                                      className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                                <div className={"my-2"}>
+                                                    {/*{errors.boardingImage &&*/}
+                                                    {/*    <p className={"error-message text-danger"}>{errors.boardingImage}</p>}*/}
                                                 </div>
                                             </div>
                                         </FileUploader>
                                     </div>
                                     <div className={"col-md-6 px-0 pe-lg-3 pb-3 pb-lg-0"}>
-                                        <FileUploader>
+                                        <FileUploader name={"boardingImage4"}
+                                                      // value={values.boardingImage || ""}
+                                                      className={`input-border-color ${errors.boardingImage ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main"}>
                                                 <img src={camera} alt={"camera"} width={"50px"}
                                                      className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                                <div className={"my-2"}>
+                                                    {/*{errors.boardingImage &&*/}
+                                                    {/*    <p className={"error-message text-danger"}>{errors.boardingImage}</p>}*/}
                                                 </div>
                                             </div>
                                         </FileUploader>
                                     </div>
                                     <div className={"col-md-6 px-0"}>
-                                        <FileUploader>
+                                        <FileUploader name={"boardingImage5"}
+                                                      value={values.boardingImage || ""}
+                                                      className={`input-border-color ${errors.boardingImage ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main"}>
                                                 <img src={camera} alt={"camera"} width={"50px"}
                                                      className={"img-upload"}/>
-                                                <div className={"fw-semibold my-2"}>
+                                                <div className={"my-2"}>
+                                                    {/*{errors.boardingImage &&*/}
+                                                    {/*    <p className={"error-message text-danger"}>{errors.boardingImage}</p>}*/}
                                                 </div>
                                             </div>
                                         </FileUploader>
