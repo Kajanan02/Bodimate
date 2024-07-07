@@ -27,6 +27,10 @@
 .add-details-form-container {
     margin: 0 1rem;
 }
+.selected-img-upload{
+    max-width: fit-content;
+    width: 400px;
+}
 
 @media (min-width: 768px) {
     .addBoarding-Container {

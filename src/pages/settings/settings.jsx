@@ -275,7 +275,9 @@ function Settings() {
                                 </div>
                                 <div className={"row mt-4"}>
                                     <div className={"col-md-6 px-0 pe-lg-3 pb-3 pb-lg-0 settings-nic-upload"}>
-                                        <FileUploader handleChange={handleChangeNicFront}>
+                                        <FileUploader handleChange={handleChangeNicFront} name={"nicFront"}
+                                                      value={values.nicFront || ""}
+                                                      className={`input-border-color ${errors.nicFront ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main nic-upload"}>
                                                 <div>
                                                     {!nicFront ? <img src={uploadIcon} alt={"camera"} width={"50px"}
@@ -291,11 +293,19 @@ function Settings() {
                                                         your machine
                                                     </div>
                                                 </div>}
+
+                                            </div>
+                                            <div className={"my-2"}>
+                                                {errors.nicFront &&
+                                                    <p className={"error-message text-danger"}>{errors.nicFront}</p>}
                                             </div>
                                         </FileUploader>
+
                                     </div>
                                     <div className={"col-md-6 px-0 pb-3 pb-lg-0 settings-nic-upload"}>
-                                        <FileUploader handleChange={handleChangeNicBack}>
+                                        <FileUploader handleChange={handleChangeNicBack} name={"nicBack"}
+                                                      value={values.nicBack || ""}
+                                                      className={`input-border-color ${errors.nicBack ? "border-danger" : ""}`}>
                                             <div className={"file-uploader-container-main nic-upload"}>
                                                 <div>
                                                     {!nicBack ? <img src={uploadIcon} alt={"camera"} width={"50px"}
@@ -311,6 +321,10 @@ function Settings() {
                                                         your machine
                                                     </div>
                                                 </div>}
+                                            </div>
+                                            <div className={"my-2"}>
+                                                {errors.nicBack &&
+                                                    <p className={"error-message text-danger"}>{errors.nicBack}</p>}
                                             </div>
                                         </FileUploader>
                                     </div>

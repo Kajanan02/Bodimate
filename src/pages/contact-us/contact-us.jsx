@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./contact-us.css";
 import mapImage from '../../assets/contact-us/map.png';
 import faceBookImage from '../../assets/contact-us/facebook.svg';
@@ -8,11 +8,17 @@ import tiktokImage from '../../assets/contact-us/tiktok.svg';
 import instagramImage from '../../assets/contact-us/instagram.svg';
 import emailImage from '../../assets/contact-us/email.svg';
 import phoneImage from '../../assets/contact-us/Frame.svg'
+import {toggleLoader} from "../../redux/action.js";
+import axios from "axios";
+import {toast} from 'react-toastify';
+import {useDispatch} from "react-redux";
 import formHandler from "../../utils/FormHandler.js";
 import {validateContactUs} from "../../utils/validation.js";
 
 function ContactUs() {
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const dispatch = useDispatch();
+
 
     const {
         handleSubmit,
@@ -20,6 +26,35 @@ function ContactUs() {
         values,
         errors,
     } = formHandler(submitContactUs, validateContactUs)
+    console.log(errors)
+
+
+    useEffect(() => {
+        if (!formSubmitted) {
+            return
+        }
+
+        axios.post(`http://localhost:5002/api/contactUs/sendMessage`, values)
+            .then((res) => {
+                console.log(res.data)
+                //props.update()
+                //props.onHide();
+                toast.success(`Successfully Message is Created`)
+            }).catch((err) => {
+            toast.error("Something went wrong")
+        }).finally(() => {
+            dispatch(toggleLoader(false))
+            setFormSubmitted(false);
+            // resetForm()
+            // if (parentSubmit) {
+            //     setStudentId(null);
+            //     props.onHide()
+
+            // }
+        })
+    }, [formSubmitted]);
+
+
 
     function submitContactUs() {
         setFormSubmitted(true)
@@ -38,7 +73,7 @@ function ContactUs() {
                             </div>
                         </div>
                         <div className={"mt-4"}>
-                            <form >
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputEmail1"
                                            className="form-label fw-normal login-font">Name</label>
@@ -76,13 +111,13 @@ function ContactUs() {
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputPassword1"
                                            className="form-label fw-normal login-font">Message Topic</label>
-                                    <input className={`form-control fw-normal ${errors.topic ? "border-red" : ""}`}
-                                           name={"topic"}
-                                           value={values.topic || ""}
+                                    <input className={`form-control fw-normal ${errors.messageTopic ? "border-red" : ""}`}
+                                           name={"messageTopic"}
+                                           value={values.messageTopic || ""}
                                            onChange={handleChange}
                                            placeholder="Enter Message Topic"/>
-                                    {errors.topic &&
-                                        <p className={"error-message text-danger"}>{errors.topic}</p>}
+                                    {errors.messageTopic &&
+                                        <p className={"error-message text-danger"}>{errors.messageTopic}</p>}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputPassword1"

@@ -80,8 +80,8 @@ export function validateAddBoarding(values) {
     if (!values.province) {
         errors.province = "Province is Required";
     }
-    if (!values.roomCount) {
-        errors.roomCount = "Room Count is Required";
+    if (!values.noOfRooms) {
+        errors.noOfRooms = "Room Count is Required";
     }
     if (!values.pricePerMonth) {
         errors.pricePerMonth = "Price Per Month is Required";
@@ -112,6 +112,9 @@ export function validateAddBoarding(values) {
     }
     if (!values.facilities) {
         errors.facilities = "Facilities is Required";
+    }
+    if (!values.boardingImage) {
+        errors.boardingImage = "Boarding Image is Required";
     }
     return errors;
 }
@@ -161,6 +164,12 @@ export function validatePersonalSettings(values) {
     }
     if (!values.postalCode) {
         errors.postalCode = "Postal Code is Required";
+    }
+    if (!values.nicFront) {
+        errors.nicFront = "NIC Front Image is Required";
+    }
+    if (!values.nicBack) {
+        errors.nicBack = "NIC Back Image is Required";
     }
 
     return errors;
@@ -254,8 +263,8 @@ export function validateContactUs(values){
     } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
         errors.phoneNo = 'Contact No is not valid';
     }
-    if (!values.topic) {
-        errors.topic = "Message Topic is Required";
+    if (!values.messageTopic) {
+        errors.messageTopic = "Message Topic is Required";
     }
     if (!values.message) {
         errors.message = "Message is Required";
