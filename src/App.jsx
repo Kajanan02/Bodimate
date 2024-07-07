@@ -24,6 +24,9 @@ import AdminBoardingOwners from "./pages/admin/users/admin-boarding-owners/admin
 import AdminStudents from "./pages/admin/users/admin-students/admin-students.jsx";
 import AdminPayments from "./pages/admin/payments/admin-payments.jsx";
 import Loader from "./components/loader.jsx";
+import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
+import Analytics from "./pages/admin/analytics/analytics.jsx";
+
 
 function App() {
 
@@ -53,6 +56,8 @@ function App() {
                     <Route path="users-students" element={<AdminStudents/>}/>
                     <Route path="payments" element={<AdminPayments/>}/>
                     <Route path="chat-box" element={<ChatBox/>}/>
+                    <Route path="settings" element={<AdminSetting/>}/>
+                    <Route path="analytics" element={<Analytics/>}/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>

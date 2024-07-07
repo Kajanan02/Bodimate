@@ -196,17 +196,17 @@ export function validateListings(values) {
     if (!values.boardingName) {
         errors.boardingName = "Boarding Name is Required"
     }
-    if (!values.boardingRegNo) {
-        errors.boardingRegNo = "Boarding Registration No is Required"
+    if (!values.boardingNo) {
+        errors.boardingNo = "Boarding Registration No is Required"
     }
-    if (!values.boardingOwnerName) {
-        errors.boardingOwnerName = "Boarding Owner Name is Required"
+    if (!values.ownerName) {
+        errors.ownerName = "Boarding Owner Name is Required"
     }
-    if (!values.boardingOwnerNicNo) {
-        errors.boardingOwnerNicNo = "Boarding Owner NIC No is Required"
+    if (!values.ownerNIC) {
+        errors.ownerNIC = "Boarding Owner NIC No is Required"
     }
-    if (!values.streetAddress) {
-        errors.streetAddress = "Street Address is Required"
+    if (!values.street) {
+        errors.street = "Street Address is Required"
     }
     if (!values.city) {
         errors.city = "City is Required"
@@ -217,8 +217,8 @@ export function validateListings(values) {
     if (!values.province) {
         errors.province = "Province is Required"
     }
-    if (!values.nearByUniversity) {
-        errors.nearByUniversity = "Near By University is Required"
+    if (!values.nearestUniversity) {
+        errors.nearestUniversity = "Near By University is Required"
     }
     if (!values.boardingType) {
         errors.boardingType = "Boarding Type is Required"
@@ -238,8 +238,8 @@ export function validateListings(values) {
     if (!values.distance) {
         errors.distance = "Distance is Required"
     }
-    if (!values.advancePayment) {
-        errors.advancePayment = "Advance Payment is Required"
+    if (!values.advancedPayment) {
+        errors.advancedPayment = "Advance Payment is Required"
     }
     if (!values.pricePerMonth) {
         errors.pricePerMonth = "Price Per Month is Required"
@@ -490,5 +490,57 @@ export function validatePayments(values) {
     if (!values.paymentReceipt) {
         errors.paymentReceipt = "Payment Receipt is Required"
     }
+    return errors;
+}
+
+
+export function validateAdminSettings(values) {
+    let errors = {};
+
+    if (!values.firstName) {
+        errors.firstName = "First Name is Required";
+    }
+    if (!values.lastName) {
+        errors.lastName = "Last Name is Required";
+    }
+    if (!values.userName) {
+        errors.userName = "User Name is Required";
+    }
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (values.email && !/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email is not valid';
+    }
+    if (!values.nicNo) {
+        errors.nicNo = "NIC No is Required";
+    }
+    if (!values.phoneNo) {
+        errors.phoneNo = 'Contact No is required';
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
+        errors.phoneNo = 'Contact No is not valid';
+    }
+    if (!values.dob) {
+        errors.dob = "Date of Birth is Required";
+    }
+    if (!values.address) {
+        errors.address = "Address is Required";
+    }
+    if (!values.gender) {
+        errors.gender = "Gender is Required";
+    }
+
+
+    return errors;
+}
+
+export function validateAdminPasswordSettings(values) {
+    let errors = {}
+    if (!values.currentPassword) {
+        errors.currentPassword = "Current Password is Required";
+    }
+    if (!values.newPassword) {
+        errors.newPassword = "New Password is Required";
+    }
+
     return errors;
 }
