@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import {NavLink, Outlet, useLocation} from 'react-router-dom';
 import Logo from "../../assets/logo.svg";
 import FeatherIcon from 'feather-icons-react';
-import {NavLink, Outlet} from "react-router-dom";
 import SideClose from "../../assets/admin-layout/carbon_side-panel-close.svg";
 import ProfilePic from "../../assets/admin-layout/DefaultProfile.jpg";
 import Msg from "../../assets/admin-layout/msg-icon.svg";
@@ -14,6 +14,7 @@ function AdminLayout() {
     const [showNotification, setShowNotification] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [usersDropdown, setUsersDropdown] = useState(false);
+    const location = useLocation();
 
     const toggleNotification = () => setShowNotification(!showNotification);
 
@@ -42,6 +43,8 @@ function AdminLayout() {
     };
 
     const toggleUsersDropdown = () => setUsersDropdown(!usersDropdown);
+
+    const isUsersActive = location.pathname === '/admin/users-boarding-owners' || location.pathname === '/admin/users-students';
 
     return (
         <div className="container-fluid">
@@ -91,7 +94,7 @@ function AdminLayout() {
                         </div>
                         <div className={"w-100 px-sm-2"}>
                             <div
-                                className="side-menu-item d-flex justify-content-between align-items-center"
+                                className={`side-menu-item d-flex justify-content-between align-items-center ${isUsersActive ? 'side-menu-active' : ''}`}
                                 onClick={toggleUsersDropdown}
                                 style={{cursor: "pointer"}}
                             >
@@ -106,14 +109,14 @@ function AdminLayout() {
                                 <div className="w-100">
                                     <NavLink
                                         className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
-                                        to={"/admin/users/boarding-owners"}>
+                                        to={"/admin/users-boarding-owners"}>
                                         <div className={'d-flex'}>
                                             <div className={!toggle ? 'ms-4 ps-2' : "ms-1"}>Boarding Owners</div>
                                         </div>
                                     </NavLink>
                                     <NavLink
                                         className={({isActive}) => isActive ? "side-menu-item sub-side-menu-active" : "side-menu-item"}
-                                        to={"/admin/users/students"}>
+                                        to={"/admin/users-students"}>
                                         <div className={'d-flex'}>
                                             <div className={!toggle ? 'ms-4 ps-2' : "ms-1"}>Students</div>
                                         </div>

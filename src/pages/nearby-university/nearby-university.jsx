@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import BoardingCard from "../home/boarding-card/boarding-card.jsx";
 import './nearby-university.css';
 
