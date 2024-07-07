@@ -23,7 +23,7 @@ function Header() {
                     <div className="d-flex m-auto">
                         <ul className="navbar-nav me-auto gap-10 m-auto my-2 my-lg-0 navbar-nav-scroll">
                             <li className="nav-item">
-                                <NavLink className="nav-link home active" aria-current="page" to="/">Home</NavLink>
+                                <NavLink className="nav-link home nav-link-text" aria-current="page" to="/">Home</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link explore nav-link-text" to={"/nearby-universities"}>Explore
@@ -64,6 +64,7 @@ function Header() {
                                         Up</NavLink></li>
                                     <li><NavLink className="dropdown-item dropdown-detail" to={"/login"}>Log
                                         In</NavLink></li>
+                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/admin"}>Profile</NavLink></li>
                                     <li>
                                         <hr className="dropdown-divider"/>
                                     </li>

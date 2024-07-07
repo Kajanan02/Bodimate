@@ -186,7 +186,7 @@ function AdminLayout() {
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/admin/login"}>
+                                to={"/login"}>
                                 <div className={'d-flex'}>
                                     <FeatherIcon icon="log-out" className={!toggle ? 'me-2' : "ms-1"}/>
                                     {!toggle && <div className={''}>Logout</div>}
