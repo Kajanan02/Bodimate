@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {FormControl, Modal} from "react-bootstrap";
-import formHandler from "../../../utils/FormHandler";
 import {validateBookings} from "../../../utils/validation";
 import {toggleLoader} from "../../../redux/action.js";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
+import FormHandler from "react-form-buddy";
 
 function BookingsForm(props) {
 
@@ -21,7 +21,7 @@ function BookingsForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(stateBookings, validateBookings);
+    } = FormHandler(stateBookings, validateBookings);
 
     function stateBookings() {
         setIsSubmit(true)

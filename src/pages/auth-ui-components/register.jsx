@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link} from "react-router-dom";
 import {validateRegister} from "../../utils/validation.js";
-import formHandler from "../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
 
 function Register() {
 
@@ -12,7 +12,7 @@ function Register() {
         handleChange,
         handleSubmit,
         errors,
-    } = formHandler(isRegister, validateRegister);
+    } = FormHandler(isRegister, validateRegister);
 
     function isRegister() {
 

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {FileUploader} from "react-drag-drop-files";
-import formHandler from "../../../../utils/FormHandler.js";
 import {validateBoardingOwners} from "../../../../utils/validation.js";
 import {toggleLoader} from "../../../../redux/action.js";
 import axios from "axios";
@@ -9,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
 import uploadIcon from "../../../../assets/admin-users/file-uploader.svg"
+import FormHandler from "react-form-buddy";
 
 function BoardingOwnerForm(props) {
 
@@ -25,7 +25,7 @@ function BoardingOwnerForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(stateBoardingOwners, validateBoardingOwners);
+    } = FormHandler(stateBoardingOwners, validateBoardingOwners);
 
     function stateBoardingOwners() {
         setIsSubmit(true)

@@ -5,7 +5,7 @@ import LoginBanner from "../../assets/login-banner.jpeg";
 import FeatherIcon from 'feather-icons-react';
 import {Link, useNavigate} from "react-router-dom";
 import {validateLogin} from "../../utils/validation.js";
-import formHandler from "../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
@@ -24,7 +24,7 @@ function Login() {
         handleSubmit,
         errors,
         values
-    } = formHandler(isLogin, validateLogin);
+    } = FormHandler(isLogin, validateLogin);
 
     function isLogin() {
         setIsSubmitted(true)

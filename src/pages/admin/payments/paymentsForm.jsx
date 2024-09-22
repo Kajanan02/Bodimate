@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FormControl, Modal} from "react-bootstrap";
-import formHandler from "../../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
 import {validatePayments} from "../../../utils/validation";
 import {toggleLoader} from "../../../redux/action.js";
 import axios from "axios";
@@ -24,7 +24,7 @@ function PaymentsForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(statePayments, validatePayments);
+    } = FormHandler(statePayments, validatePayments);
 
     function statePayments() {
         setIsSubmit(true)

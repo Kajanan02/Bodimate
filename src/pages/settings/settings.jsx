@@ -5,10 +5,9 @@ import profileImage from "../../assets/settings/profile.png"
 import {FileUploader} from "react-drag-drop-files";
 import {Col, FormControl, Row} from "react-bootstrap";
 import PasswordSettings from "./passwordSettings.jsx";
-import formHandler from "../../utils/FormHandler.js";
 import uploadIcon from "../../assets/uplod-icon.svg"
 import {validatePersonalSettings} from "../../utils/validation.js";
-
+import FormHandler from "react-form-buddy";
 
 function Settings() {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -54,7 +53,7 @@ function Settings() {
         handleChange,
         values,
         errors,
-    } = formHandler(submitSettings, validatePersonalSettings)
+    } = FormHandler(submitSettings, validatePersonalSettings)
 
 
     function submitSettings() {

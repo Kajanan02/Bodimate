@@ -11,12 +11,12 @@ import "./add-boarding.css"
 import {validateAddBoarding} from "../../utils/validation.js";
 import addIcon from "../../assets/plus-circle.svg"
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Row,} from "react-bootstrap";
-import formHandler from "../../utils/FormHandler.js";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {toggleLoader} from "../../redux/action.js";
 import {useDispatch} from "react-redux";
+import FormHandler from "react-form-buddy";
 
 "../../utils/validation.js"
 
@@ -30,7 +30,7 @@ function AddBoarding(props) {
         handleChange,
         values,
         errors,
-    } = formHandler(submitAddBoarding, validateAddBoarding)
+    } = FormHandler(submitAddBoarding, validateAddBoarding)
 
     function submitAddBoarding() {
         setFormSubmitted(true)

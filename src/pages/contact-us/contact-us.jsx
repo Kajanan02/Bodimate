@@ -12,7 +12,7 @@ import {toggleLoader} from "../../redux/action.js";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {useDispatch} from "react-redux";
-import formHandler from "../../utils/FormHandler.js";
+import FormHandler from 'react-form-buddy';
 import {validateContactUs} from "../../utils/validation.js";
 
 function ContactUs() {
@@ -25,7 +25,7 @@ function ContactUs() {
         handleChange,
         values,
         errors,
-    } = formHandler(submitContactUs, validateContactUs)
+    } = FormHandler(submitContactUs, validateContactUs)
     console.log(errors)
 
 

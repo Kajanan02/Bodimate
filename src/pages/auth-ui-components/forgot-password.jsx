@@ -4,7 +4,8 @@ import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link} from "react-router-dom";
 import {validateForgotPassword} from "../../utils/validation.js";
-import formHandler from "../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
+
 
 function ForgotPassword() {
 
@@ -12,7 +13,7 @@ function ForgotPassword() {
         handleChange,
         handleSubmit,
         errors,
-    } = formHandler(isForgotPassword, validateForgotPassword);
+    } = FormHandler(isForgotPassword, validateForgotPassword);
 
     function isForgotPassword() {
 

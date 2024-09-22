@@ -4,10 +4,10 @@ import profileImage from "../../../assets/admin-setting/admin-profile.png"
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Form, FormControl, Row} from "react-bootstrap";
 import PasswordSetting from "./password-Setting.jsx";
-import formHandler from "../../../utils/FormHandler.js";
 import {validateAdminSettings} from "../../../utils/validation.js";
 import maleIcon from "../../../assets/male-student-5-svgrepo-com.svg";
 import femaleIcon from "../../../assets/female-doctor-2-svgrepo-com.svg";
+import FormHandler from "react-form-buddy";
 
 
 function AdminSetting() {
@@ -32,7 +32,7 @@ function AdminSetting() {
         handleChange,
         values,
         errors,
-    } = formHandler(submitSettings, validateAdminSettings)
+    } = FormHandler(submitSettings, validateAdminSettings)
 
     console.log(errors)
 

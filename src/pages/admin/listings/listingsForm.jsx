@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Modal, Row} from "react-bootstrap";
-import formHandler from "../../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
 import {validateListings} from "../../../utils/validation";
 import {toggleLoader} from "../../../redux/action.js";
 import axios from "axios";
@@ -38,7 +38,7 @@ function ListingsForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(stateListings, validateListings);
+    } = FormHandler(stateListings, validateListings);
 
     function stateListings() {
         setIsSubmit(true)
