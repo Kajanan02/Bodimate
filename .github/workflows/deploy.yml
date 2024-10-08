@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ dev ]  # Adjust if using a different branch
+    branches: [ dev ]
 
 jobs:
   build-and-deploy:
@@ -25,8 +25,14 @@ jobs:
           VITE_REACT_APP_HOST: ${{ secrets.VITE_REACT_APP_HOST }}
         run: npm run build
 
-      - name: Zip Artifact
-        run: zip -r deploy.zip . -x '*.git*' 'node_modules/*' '.github/*'
+      - name: Prepare Deployment Package
+        run: |
+          mkdir deploy
+          cp -r dist server.js package.json package-lock.json deploy/
+          cd deploy
+          npm install --only=production
+          cd ..
+          zip -r deploy.zip deploy/*
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
