@@ -14,6 +14,7 @@ import {toast} from 'react-toastify';
 import {useDispatch} from "react-redux";
 import FormHandler from 'react-form-buddy';
 import {validateContactUs} from "../../utils/validation.js";
+import axiosInstance from "../../utils/axiosInstance.js";
 
 function ContactUs() {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -34,7 +35,7 @@ function ContactUs() {
             return
         }
 
-        axios.post(`http://localhost:5002/api/contactUs/sendMessage`, values)
+        axiosInstance.post(`/contactUs/sendMessage`, values)
             .then((res) => {
                 console.log(res.data)
                 //props.update()
