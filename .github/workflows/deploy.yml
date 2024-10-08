@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]  # Adjust if using a different branch
+    branches: [ dev ]  # Adjust if using a different branch
 
 jobs:
   build-and-deploy:
