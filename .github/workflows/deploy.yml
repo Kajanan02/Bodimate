@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
       - name: Package Application for Deployment
-        run: tar -czf deploy.tar.gz --exclude='.git/*' --exclude='node_modules/*' --exclude='.github/*' --exclude='.DS_Store' --exclude='README.md' --exclude='LICENSE' --exclude='.gitignore' --exclude='package-lock.json' --exclude='package.json' .
+        run: tar -czf deploy.tar.gz -C dist .
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
