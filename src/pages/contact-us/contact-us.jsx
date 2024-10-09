@@ -8,8 +8,7 @@ import tiktokImage from '../../assets/contact-us/tiktok.svg';
 import instagramImage from '../../assets/contact-us/instagram.svg';
 import emailImage from '../../assets/contact-us/email.svg';
 import phoneImage from '../../assets/contact-us/Frame.svg'
-import {toggleLoader} from "../../redux/action.js";
-import axios from "axios";
+import {setLoading} from "../../redux/features/loaderSlice.js";
 import {toast} from 'react-toastify';
 import {useDispatch} from "react-redux";
 import FormHandler from 'react-form-buddy';
@@ -44,7 +43,7 @@ function ContactUs() {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setFormSubmitted(false);
             // resetForm()
             // if (parentSubmit) {

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {FormControl, Modal} from "react-bootstrap";
 import {validateBookings} from "../../../utils/validation";
-import {toggleLoader} from "../../../redux/action.js";
-import axios from "axios";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
+import axiosInstance from "../../../utils/axiosInstance.js";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
 import FormHandler from "react-form-buddy";
+
 
 function BookingsForm(props) {
 
@@ -32,14 +33,14 @@ function BookingsForm(props) {
     }
 
     useEffect(() => {
-        dispatch(toggleLoader(true))
-        axios.get(`http://localhost:3000/admin/bookings`)
+        dispatch(setLoading(true))
+        axiosInstance.get(`/admin/bookings`)
             .then((res) => {
                 setBookingsList(res.data)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
         })
     }, [])
 
@@ -57,7 +58,7 @@ function BookingsForm(props) {
         }
 
         //http://localhost:5000/api/bookings
-        axios.post(`http://localhost:3000/admin/bookings`, values)
+        axiosInstance.post(`/admin/bookings`, values)
             .then((res) => {
                 console.log(res.data)
                 props.update()
@@ -66,7 +67,7 @@ function BookingsForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setIsSubmit(false);
             resetForm()
         })
@@ -76,10 +77,10 @@ function BookingsForm(props) {
         if (!isSubmit || props.type !== "Edit") {
             return
         }
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
         //http://localhost:5000/api/bookings/:id
-        axios.put(`http://localhost:3000/admin/bookings/${values.id}`, values)
+        axiosInstance.put(`/admin/bookings/${values.id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -87,7 +88,7 @@ function BookingsForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            // dispatch(toggleLoader(false))
+            // dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -106,8 +107,8 @@ function BookingsForm(props) {
         console.log(props.selectedBookings)
         console.log(props.selectedBookings._id)
 
-        dispatch(toggleLoader(true))
-        axios.put(`http://localhost:3000/admin/bookings/${props.selectedBookings._id}`, values)
+        dispatch(setLoading(true))
+        axiosInstance.put(`/admin/bookings/${props.selectedBookings._id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -115,7 +116,7 @@ function BookingsForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setIsSubmit(false);
             setIsSubmit(false)
             resetForm()
