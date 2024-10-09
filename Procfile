@@ -1,1 +1,1 @@
-web: /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf
+web: npm run start
