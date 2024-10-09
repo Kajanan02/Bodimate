@@ -33,8 +33,21 @@ jobs:
           VITE_REACT_APP_HOST: ${{ secrets.VITE_REACT_APP_HOST }}
         run: npm run build
 
-      - name: Package Application for Deployment
-        run: tar -czf deploy.tar.gz -C dist .
+      - name: Prepare Deployment Package
+        run: |
+          # Create a deployment directory
+          mkdir deploy_package
+          # Copy built files to deployment directory
+          cp -r dist/* deploy_package/
+          # Copy .ebextensions to deployment directory
+          cp -r .ebextensions deploy_package/
+          # Navigate to deployment directory
+          cd deploy_package
+          # Create a ZIP file of the contents
+          zip -r ../deploy.zip .
+          # Navigate back and remove deployment directory
+          cd ..
+          rm -rf deploy_package
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
