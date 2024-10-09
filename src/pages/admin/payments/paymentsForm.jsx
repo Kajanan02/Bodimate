@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {FormControl, Modal} from "react-bootstrap";
 import FormHandler from "react-form-buddy";
 import {validatePayments} from "../../../utils/validation";
-import {toggleLoader} from "../../../redux/action.js";
-import axios from "axios";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
+import axiosInstance from "../../../utils/axiosInstance.js";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
@@ -35,14 +35,14 @@ function PaymentsForm(props) {
     }
 
     useEffect(() => {
-        dispatch(toggleLoader(true))
-        axios.get(`http://localhost:3000/admin/payments`)
+        dispatch(setLoading(true))
+        axiosInstance.get(`/admin/payments`)
             .then((res) => {
                 setPaymentsList(res.data)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
         })
     }, [])
 
@@ -58,10 +58,10 @@ function PaymentsForm(props) {
         if (!isSubmit || props.type !== "Edit") {
             return
         }
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
         //http://localhost:5000/api/payments/:id
-        axios.put(`http://localhost:3000/admin/payments/${values.id}`, values)
+        axiosInstance.put( `/admin/payments/${values.id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -69,7 +69,7 @@ function PaymentsForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            // dispatch(toggleLoader(false))
+            // dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -88,8 +88,8 @@ function PaymentsForm(props) {
         console.log(props.selectedPayments)
         console.log(props.selectedPayments._id)
 
-        dispatch(toggleLoader(true))
-        axios.put(`http://localhost:3000/admin/payments/${props.selectedPayments._id}`, values)
+        dispatch(setLoading(true))
+        axiosInstance.put(`/admin/payments/${props.selectedPayments._id}`,values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -97,7 +97,7 @@ function PaymentsForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setIsSubmit(false);
             setIsSubmit(false)
             resetForm()
@@ -113,7 +113,7 @@ function PaymentsForm(props) {
     function imageUpload(file, key) {
         console.log("File")
 
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
         const data = new FormData()
         data.append("file", file)
         data.append("upload_preset", "xi7icexi")
@@ -122,7 +122,7 @@ function PaymentsForm(props) {
             .then((res) => {
                 console.log(res.data.url)
                 setValue({[key]: res.data.url})
-            }).finally(() => dispatch(toggleLoader(false)))
+            }).finally(() => dispatch(setLoading(false)))
     }
 
     return (

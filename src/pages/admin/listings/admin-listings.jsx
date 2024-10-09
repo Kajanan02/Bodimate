@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
-import axios from 'axios';
 import ListingsForm from "./listingsForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../redux/action.js";
+import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, pluck, uniq, values} from "underscore";
 import {filterDataByKey} from '../../../utils/utils.js';
@@ -61,9 +61,9 @@ function AdminListings() {
 
 
     useEffect(() => {
-        dispatch(toggleLoader(true));
+        dispatch(setLoading(true));
 
-        axiosInstance.get("/boardings/getAllBoarding")
+        axiosInstance.get(`/boardings/getAllBoarding`)
             .then((res) => {
                 console.log(res.data);
                 setListingsList(res.data);
@@ -73,7 +73,7 @@ function AdminListings() {
                 console.error("Error fetching boardings:", err);
             })
             .finally(() => {
-                dispatch(toggleLoader(false));
+                dispatch(setLoading(false));
             });
     }, [update]);
 
@@ -83,17 +83,18 @@ function AdminListings() {
             return;
         }
         console.log("asdasd")
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.delete(`http://localhost:5000/api/boardings/deleteBoarding/${deletedId}`)
+        axiosInstance.delete(`/boardings/deleteBoarding/${deletedId}`)
             .then((res) => {
+                console.log(res.data);
                 setUpdate(!update)
                 toast.success(`Successfully Deleted`)
 
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setDeletedId(null)
         })
     }, [confirmationDialog])
