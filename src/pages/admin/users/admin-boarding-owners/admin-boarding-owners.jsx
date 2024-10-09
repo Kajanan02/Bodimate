@@ -3,9 +3,10 @@ import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
 import axios from 'axios';
 import BoardingOwnerForm from "./boardingOwnerForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../../redux/action.js";
+import { toggleLoader} from "../../../../redux/action.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
+import {toggleConfirmationDialog} from "../../../../redux/features/confirmationDialogSlice.js";
 
 function AdminBoardingOwners() {
     const [modalType, setModalType] = useState("view")
@@ -168,10 +169,7 @@ function AdminBoardingOwners() {
         }
     ]);
 
-    // const confirmationDialog = useSelector(state => {
-    //     return state.setting.confirmationDialog
-    // });
-    const confirmationDialog = useSelector(state => state.setting?.confirmationDialog);
+    const confirmationDialog = useSelector(state => state.confirmationDialog.confirmationDialog);
 
     function handleDelete(id) {
         dispatch(toggleConfirmationDialog({
@@ -180,11 +178,8 @@ function AdminBoardingOwners() {
             confirmationDescription: ('The delete action will remove the this listing data')
         }));
         setDeletedId(id)
-        console.log("ads")
     }
 
-    console.log(confirmationDialog)
-    console.log(deletedId)
 
     useEffect(() => {
         if (!confirmationDialog || !confirmationDialog.onSuccess || !deletedId) {

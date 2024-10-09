@@ -3,9 +3,10 @@ import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
 import axios from 'axios';
 import BookingsForm from "./bookingsForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../redux/action.js";
+import { toggleLoader} from "../../../redux/action.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
+import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
 
 function AdminBookings() {
     const [modalType, setModalType] = useState("view")

@@ -1,13 +1,14 @@
 import {configureStore} from "@reduxjs/toolkit";
-import loaderReducer from "./features/loaderSlice";
+import loaderSlice from "./features/loaderSlice.js";
+import confirmationDialogSlice from "./features/confirmationDialogSlice.js";
 
 const store = configureStore({
     reducer: {
-        loader: loaderReducer,
+        loader: loaderSlice,
+        confirmationDialog: confirmationDialogSlice,
     },
     setting: {
-        toggle: false,
-        confirmationDialog: {},
+        confirmationDialog: confirmationDialogSlice,
     },
     loader: {
         isLoading: false,

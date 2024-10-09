@@ -26,6 +26,7 @@ import AdminPayments from "./pages/admin/payments/admin-payments.jsx";
 import Loader from "./components/loader.jsx";
 import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
 import Analytics from "./pages/admin/analytics/analytics.jsx";
+import ConfirmationDialog from "./components/confirmation-dialog.jsx";
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
             </Routes>
             <ToastContainer/>
             <Loader/>
+            <ConfirmationDialog/>
         </>
     )
 }
