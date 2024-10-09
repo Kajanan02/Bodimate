@@ -52,5 +52,5 @@ jobs:
           application_name: 'front-bodimate'
           environment_name: 'Front-bodimate-env'  # Your Elastic Beanstalk environment name
           version_label: ${{ github.sha }}-${{ github.run_id }}
-          deployment_package: deploy-package.zip
+          deployment_package: deploy.tar.gz
           use_existing_version_if_available: true
