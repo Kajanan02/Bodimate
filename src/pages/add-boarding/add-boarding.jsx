@@ -12,9 +12,9 @@ import {validateAddBoarding} from "../../utils/validation.js";
 import addIcon from "../../assets/plus-circle.svg"
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Row,} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance.js";
 import {toast} from "react-toastify";
-import {toggleLoader} from "../../redux/action.js";
+import {setLoading} from "../../redux/features/loaderSlice.js";
 import {useDispatch} from "react-redux";
 import FormHandler from "react-form-buddy";
 
@@ -42,7 +42,7 @@ function AddBoarding(props) {
         }
 
         //router.route('/:instituteId/broadcast').post(createBroadcast);
-        axios.post(`http://localhost:5002/api/boardings/createBoarding`, values)
+        axiosInstance.post(`/boardings/createBoarding`, values)
             .then((res) => {
                 console.log(res.data)
                 //props.update()
@@ -51,7 +51,7 @@ function AddBoarding(props) {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setFormSubmitted(false);
             // resetForm()
             // if (parentSubmit) {

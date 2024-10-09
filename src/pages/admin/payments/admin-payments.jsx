@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
-import axios from 'axios';
+import axiosInstance from "../../../utils/axiosInstance.js";
 import PaymentsForm from "./paymentsForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../redux/action.js";
+import {toggleConfirmationDialog} from "../../../redux/action.js";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
 
@@ -171,16 +172,16 @@ function AdminPayments() {
             return;
         }
         console.log("deleted")
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.delete(`http://localhost:3000/admin/payments/${deletedId}`)
+        axiosInstance.delete(`/admin/payments/${deletedId}`)
             .then((res) => {
                 setUpdate(!update)
                 toast.success(`Successfully Deleted`)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setDeletedId(null)
         })
     }, [confirmationDialog, deletedId, dispatch])
@@ -199,8 +200,8 @@ function AdminPayments() {
     }
 
     // useEffect(() => {
-    //     dispatch(toggleLoader(true));
-    //     axios.get(`http://localhost:3000/getAllPayments`)
+    //     dispatch(setLoading(true));
+    //     axiosInstance.get(`/getAllPayments`)
     //         .then((res) => {
     //             setPaymentsList(res.data)
     //             setPaymentsAllList(res.data)
@@ -209,7 +210,7 @@ function AdminPayments() {
     //             console.log(err);
     //         })
     //         .finally(() => {
-    //             dispatch(toggleLoader(false));
+    //             dispatch(setLoading(false));
     //         });
     // }, [update]);
 
