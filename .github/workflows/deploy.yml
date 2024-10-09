@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ dev ]  # Adjust if using a different branch
+    branches: [ dev ]
 
 jobs:
   build-and-deploy:
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
 
       - name: Install Dependencies
         run: npm install
@@ -35,17 +35,13 @@ jobs:
 
       - name: Prepare Deployment Package
         run: |
-          # Create a deployment directory
           mkdir deploy_package
-          # Copy built files to deployment directory
           cp -r dist/* deploy_package/
-          # Copy .ebextensions to deployment directory
           cp -r .ebextensions deploy_package/
-          # Navigate to deployment directory
+          cp Procfile deploy_package/
+          cp package.json deploy_package/
           cd deploy_package
-          # Create a ZIP file of the contents
           zip -r ../deploy.zip .
-          # Navigate back and remove deployment directory
           cd ..
           rm -rf deploy_package
 
