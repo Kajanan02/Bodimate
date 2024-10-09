@@ -6,6 +6,10 @@ import {NavLink} from "react-router-dom";
 
 
 function Header() {
+
+
+    const [username, setUsername] = React.useState(localStorage.getItem('NAME'));
+
     return (
 
         <nav className="contai navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-body rounded ">
@@ -23,7 +27,8 @@ function Header() {
                     <div className="d-flex m-auto">
                         <ul className="navbar-nav me-auto gap-10 m-auto my-2 my-lg-0 navbar-nav-scroll">
                             <li className="nav-item">
-                                <NavLink className="nav-link home nav-link-text" aria-current="page" to="/">Home</NavLink>
+                                <NavLink className="nav-link home nav-link-text" aria-current="page"
+                                         to="/">Home</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link explore nav-link-text" to={"/nearby-universities"}>Explore
@@ -40,6 +45,7 @@ function Header() {
                         </ul>
                     </div>
                 </div>
+
                 <div className={"d-none d-lg-flex"}>
                     <ul className="nav-owner my-lg-0 navbar-nav-scroll m-0">
                         <div className="nav-item m-0 d-none d-lg-block">
@@ -51,20 +57,36 @@ function Header() {
                     <div>
                         <ul className="navbar-nav navbar-nav-icon ml-auto m-0">
                             <li className="nav-item dropdown m-0">
-                                <NavLink className="nav-link user-btn-icon dropdown-toggle" to={"/"} id="navbarDropdown"
+                                <NavLink style={{minWidth: "42px"}}
+                                         className="nav-link user-btn-icon dropdown-toggle text-center" to={"/"}
+                                         id="navbarDropdown"
                                          role="button"
                                          data-bs-toggle="dropdown" aria-expanded="false">
-                                    <FeatherIcon className="" icon={"menu"}/>
-                                    <span className="ms-1">
+                                    {username ? <span className={"text-center"}>{username?.slice(0, 1)}</span> :
+                                        <div>
+                                            <FeatherIcon className="" icon={"menu"}/>
+                                            <span className="ms-1">
                                     <FeatherIcon className="" icon={"user"}/>
                                 </span>
+                                        </div>
+                                    }
                                 </NavLink>
                                 <ul className="dropdown-menu m-0" aria-labelledby="navbarDropdown">
-                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/register"}>Sign
-                                        Up</NavLink></li>
-                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/login"}>Log
-                                        In</NavLink></li>
-                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/admin"}>Profile</NavLink></li>
+                                    {!username ?
+                                        <li><NavLink className="dropdown-item dropdown-detail" to={"/register"}>Sign
+                                            Up</NavLink></li> : null}
+                                    {!username ? <li><NavLink className="dropdown-item dropdown-detail" to={"/login"}>Log
+                                        In</NavLink></li> : null}
+                                    {username &&<li><NavLink className="dropdown-item dropdown-detail"
+                                                  to={"/admin"}>Profile</NavLink></li>}
+                                    {username &&<li>
+                                        <div className="dropdown-item dropdown-detail" onClick={()=>{
+                                            localStorage.clear();
+                                            setUsername(null)
+                                        }}
+                                        >Logout
+                                        </div>
+                                    </li>}
                                     <li>
                                         <hr className="dropdown-divider"/>
                                     </li>

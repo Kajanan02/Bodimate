@@ -33,7 +33,7 @@ export function validateRegister(values) {
         }
     }
     if (!values.username) {
-        errors.username = "Username is Required";
+        errors.username = "Name is Required";
     }
     if (!values.password) {
         errors.password = "Password is Required"

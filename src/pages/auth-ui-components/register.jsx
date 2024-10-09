@@ -5,17 +5,37 @@ import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link} from "react-router-dom";
 import {validateRegister} from "../../utils/validation.js";
 import FormHandler from "react-form-buddy";
+import axiosInstance from "../../utils/axiosInstance.js";
+import {useDispatch} from "react-redux";
+import {setLoading} from "../../redux/features/loaderSlice.js";
+import {toast} from "react-toastify";
 
 function Register() {
 
     const {
+        values,
         handleChange,
         handleSubmit,
         errors,
     } = FormHandler(isRegister, validateRegister);
 
-    function isRegister() {
+    const dispatch = useDispatch();
 
+    console.log(values)
+
+    function isRegister() {
+        dispatch(setLoading(true))
+        axiosInstance.post("/users/register", values)
+            .then(res => {
+                console.log(res.data)
+                toast.success("Successfully Registered")
+            })
+            .catch(err => {
+                console.log(err.response.data)
+                toast.error(err.response.data.message)
+            }).finally(() => {
+            dispatch(setLoading(false))
+        })
     }
 
     return (
@@ -40,7 +60,7 @@ function Register() {
                                     here!</Link>
                             </p>
                         </div>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Email</label>
@@ -52,7 +72,7 @@ function Register() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
-                                       className="form-label fw-normal login-font">Username</label>
+                                       className="form-label fw-normal login-font">Name</label>
                                 <input className={`form-control fw-normal ${errors.username ? "border-red" : ""}`}
                                        type="text"
                                        name={"username"} onChange={handleChange} placeholder="Enter Username"/>
@@ -68,7 +88,7 @@ function Register() {
                             </div>
                             <div className="row">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2"
+                                    <button type={"submit"} className="btn login-btn w-100 fw-semibold p-2"
                                             onClick={handleSubmit}>Register
                                     </button>
                                 </div>

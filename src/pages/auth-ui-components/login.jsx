@@ -116,7 +116,7 @@ function Login() {
                             </div>
                             <div className="row">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2"
+                                    <button type={"submit"} className="btn login-btn w-100 fw-semibold p-2"
                                             onClick={handleSubmit}>Login
                                     </button>
                                 </div>
