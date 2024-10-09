@@ -46,8 +46,11 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v20
         with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: 'ap-south-1'  # Your AWS region
           application_name: 'front-bodimate'
-          environment_name: 'Front-bodimate-dev'
-          version_label: v_${{ github.run_number }}_${{ github.sha }}
-          region: 'ap-south-1'
-          deployment_package: deploy.tar.gz
+          environment_name: 'Front-bodimate-env'  # Your Elastic Beanstalk environment name
+          version_label: ${{ github.sha }}-${{ github.run_id }}
+          deployment_package: deploy-package.zip
+          use_existing_version_if_available: true
