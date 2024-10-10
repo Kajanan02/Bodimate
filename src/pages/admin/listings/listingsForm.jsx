@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Modal, Row} from "react-bootstrap";
-import formHandler from "../../../utils/FormHandler";
+import FormHandler from "react-form-buddy";
 import {validateListings} from "../../../utils/validation";
-import {toggleLoader} from "../../../redux/action.js";
-import axios from "axios";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
@@ -38,7 +37,7 @@ function ListingsForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(stateListings, validateListings);
+    } = FormHandler(stateListings, validateListings);
 
     function stateListings() {
         setIsSubmit(true)
@@ -70,14 +69,14 @@ function ListingsForm(props) {
     console.log(selectedImage)
 
     useEffect(() => {
-        dispatch(toggleLoader(true))
-        axios.get(`http://localhost:5000/api/boardings/getAllBoarding`)
+        dispatch(setLoading(true))
+        axiosInstance.get("/boardings/getAllBoarding")
             .then((res) => {
                 setListingsList(res.data)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
         })
     }, [])
 
@@ -96,11 +95,11 @@ function ListingsForm(props) {
         if (!isSubmit || props.type !== "Edit") {
             return
         }
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
 
 
-            axios.put(`http://localhost:5000/api/boardings/editBoarding/${values._id}`, values)
+            axiosInstance.put(`/boardings/editBoarding/${values._id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -108,7 +107,7 @@ function ListingsForm(props) {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            // dispatch(toggleLoader(false))
+            // dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -132,7 +131,7 @@ function ListingsForm(props) {
                     return
                 }
 
-        axios.post(`http://localhost:5000/api/boardings/createBoarding`, values)
+        axiosInstance.post(`/boardings/createBoarding`, values)
             .then((res) => {
                 console.log(res.data)
                 props.update()
@@ -141,7 +140,7 @@ function ListingsForm(props) {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setIsSubmit(false);
             resetForm()
 

@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
-import axios from 'axios';
+import axiosInstance from "../../../../utils/axiosInstance.js";
 import StudentsForm from "./studentsForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../../redux/action.js";
+import {toggleConfirmationDialog} from "../../../../redux/features/confirmationDialogSlice.js";
+import {setLoading} from "../../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
 
@@ -183,16 +184,16 @@ function AdminStudents() {
             return;
         }
         console.log("deleted")
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.delete(`http://localhost:3000/admin/users-boarding-owner/${deletedId}`)
+        axiosInstance.delete(`/admin/users-boarding-owner/${deletedId}`)
             .then((res) => {
                 setUpdate(!update)
                 toast.success(`Successfully Deleted`)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setDeletedId(null)
         })
     }, [confirmationDialog, deletedId, dispatch])
@@ -211,8 +212,8 @@ function AdminStudents() {
     }
 
     // useEffect(() => {
-    //     dispatch(toggleLoader(true));
-    //     axios.get(`http://localhost:3000/getAllStudents`)
+    //     dispatch(setLoading(true));
+    //     axiosInstance.get(`/getAllStudents`)
     //         .then((res) => {
     //             setStudentsList(res.data)
     //             setStudentsAllList(res.data)
@@ -221,7 +222,7 @@ function AdminStudents() {
     //             console.log(err);
     //         })
     //         .finally(() => {
-    //             dispatch(toggleLoader(false));
+    //             dispatch(setLoading(false));
     //         });
     // }, [update]);
 

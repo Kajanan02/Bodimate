@@ -9,7 +9,7 @@ export function loadCredential(credential) {
     localStorage.setItem('ADDRESS', credential.address);
     localStorage.setItem('PROFILE_PIC', credential.profilePic);
     localStorage.setItem('USER_ID', credential._id);
-    localStorage.setItem('NAME', credential.name);
+    localStorage.setItem('NAME', credential.username);
 }
 
 export function signOut() {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Col, FormControl, Row} from "react-bootstrap";
-import formHandler from "../../utils/FormHandler.js";
 import {validatePasswordSettings} from "../../utils/validation.js";
+import FormHandler from "react-form-buddy";
 
 function PasswordSettings() {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -11,7 +11,7 @@ function PasswordSettings() {
         handleChange,
         values,
         errors,
-    } = formHandler(submitSettings, validatePasswordSettings)
+    } = FormHandler(submitSettings, validatePasswordSettings)
 
     function submitSettings() {
         setFormSubmitted(true)

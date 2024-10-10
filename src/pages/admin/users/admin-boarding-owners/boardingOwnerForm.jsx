@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {FileUploader} from "react-drag-drop-files";
-import formHandler from "../../../../utils/FormHandler.js";
 import {validateBoardingOwners} from "../../../../utils/validation.js";
-import {toggleLoader} from "../../../../redux/action.js";
-import axios from "axios";
+import {setLoading} from "../../../../redux/features/loaderSlice.js";
+import axiosInstance from "../../../../utils/axiosInstance.js";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
 import uploadIcon from "../../../../assets/admin-users/file-uploader.svg"
+import FormHandler from "react-form-buddy";
 
 function BoardingOwnerForm(props) {
 
@@ -25,7 +25,7 @@ function BoardingOwnerForm(props) {
         initForm,
         values,
         errors,
-    } = formHandler(stateBoardingOwners, validateBoardingOwners);
+    } = FormHandler(stateBoardingOwners, validateBoardingOwners);
 
     function stateBoardingOwners() {
         setIsSubmit(true)
@@ -36,14 +36,14 @@ function BoardingOwnerForm(props) {
     }
 
     useEffect(() => {
-        dispatch(toggleLoader(true))
-        axios.get(`http://localhost:3000/admin/users-boarding-owner`)
+        dispatch(setLoading(true))
+        axiosInstance.get(`/admin/users-boarding-owner`)
             .then((res) => {
                 setBoardingOwnersList(res.data)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
         })
     }, [])
 
@@ -59,9 +59,9 @@ function BoardingOwnerForm(props) {
         if (!isSubmit || props.type !== "Edit") {
             return
         }
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.put(`http://localhost:3000/admin/users-boarding-owner/${values.id}`, values)
+        axiosInstance.put(`/admin/users-boarding-owner/${values.id}`,values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -69,7 +69,7 @@ function BoardingOwnerForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            // dispatch(toggleLoader(false))
+            // dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -88,8 +88,8 @@ function BoardingOwnerForm(props) {
         console.log(props.selectedBoardingOwners)
         console.log(props.selectedBoardingOwners._id)
 
-        dispatch(toggleLoader(true))
-        axios.put(`http://localhost:3000/admin/users-boarding-owner/${props.selectedBoardingOwners._id}`, values)
+        dispatch(setLoading(true))
+        axiosInstance.put(`/admin/users-boarding-owner/${props.selectedBoardingOwners._id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -97,7 +97,7 @@ function BoardingOwnerForm(props) {
             }).catch((err) => {
             toast.error("Something Went Wrong")
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setIsSubmit(false);
             setIsSubmit(false)
             resetForm()
@@ -118,7 +118,7 @@ function BoardingOwnerForm(props) {
     function imageUpload(file, key) {
         console.log("File")
 
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
         const data = new FormData()
         data.append("file", file)
         data.append("upload_preset", "xi7icexi")
@@ -127,7 +127,7 @@ function BoardingOwnerForm(props) {
             .then((res) => {
                 console.log(res.data.url)
                 setValue({[key]: res.data.url})
-            }).finally(() => dispatch(toggleLoader(false)))
+            }).finally(() => dispatch(setLoading(false)))
     }
 
     const nearByUniversities = [

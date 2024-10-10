@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
-import axios from 'axios';
+import axiosInstance from "../../../utils/axiosInstance.js";
 import BookingsForm from "./bookingsForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../redux/action.js";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
+import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
 
 function AdminBookings() {
     const [modalType, setModalType] = useState("view")
@@ -165,16 +166,16 @@ function AdminBookings() {
             return;
         }
         console.log("deleted")
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.delete(`http://localhost:3000/admin/bookings/${deletedId}`)
+        axiosInstance.delete(`/admin/bookings/${deletedId}`)
             .then((res) => {
                 setUpdate(!update)
                 toast.success(`Successfully Deleted`)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setDeletedId(null)
         })
     }, [confirmationDialog, deletedId, dispatch])
@@ -192,20 +193,20 @@ function AdminBookings() {
         }
     }
 
-    // useEffect(() => {
-    //     dispatch(toggleLoader(true));
-    //     axios.get(`http://localhost:3000/getAllBookings`)
-    //         .then((res) => {
-    //             setBookingsList(res.data)
-    //             setBookingsAllList(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         })
-    //         .finally(() => {
-    //             dispatch(toggleLoader(false));
-    //         });
-    // }, [update]);
+    useEffect(() => {
+        dispatch(setLoading(true));
+        axiosInstance.get(`/getAllBookings`)
+            .then((res) => {
+                setBookingsList(res.data)
+                setBookingsAllList(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, [update]);
 
     function colorChange(status) {
         switch (status) {

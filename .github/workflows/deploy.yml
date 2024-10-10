@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Application
+        env:
+          VITE_REACT_APP_HOST: ${{ secrets.VITE_REACT_APP_HOST }}
+        run: npm run build
+
+      - name: Prepare Deployment Package
+        run: zip -r deploy.zip . -x "node_modules/*" -x "deploy.zip" -x ".git/*" -x ".github/*" -x ".gitignore" -x "README.md" -x "LICENSE" -x ".idea/*" -x "src/*" -x "public/*" -x ".env*" -x "vercel.json" -x ".eslintrc.cjs"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'ap-south-1'
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: 'ap-south-1'  # Your AWS region
+          application_name: 'front-bodimate'
+          environment_name: 'Front-bodimate-env'  # Your Elastic Beanstalk environment name
+          version_label: ${{ github.sha }}-${{ github.run_id }}
+          deployment_package: deploy.zip
+          use_existing_version_if_available: true

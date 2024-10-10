@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
-import axios from 'axios';
+import axiosInstance from "../../../../utils/axiosInstance.js";
 import BoardingOwnerForm from "./boardingOwnerForm.jsx";
-import {toggleConfirmationDialog, toggleLoader} from "../../../../redux/action.js";
+import {setLoading} from "../../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
-import axiosInstance from "../../../../utils/axiosInstance.js";
+import {toggleConfirmationDialog} from "../../../../redux/features/confirmationDialogSlice.js";
 
 function AdminBoardingOwners() {
     const [modalType, setModalType] = useState("view")
@@ -17,162 +17,159 @@ function AdminBoardingOwners() {
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
     const [boardingOwnersList, setBoardingOwnersList] = useState([
-        // {
-        //     id: '0o1',
-        //     boardingOwnerRegNo: 'BO/KLN/CBO/045',
-        //     boardingOwnerFirstName: 'Kamal',
-        //     boardingOwnerLastName: 'Perera',
-        //     boardingOwnerNicNo: '199012345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o2',
-        //     boardingOwnerRegNo: 'BO/GAM/PDN/027',
-        //     boardingOwnerFirstName: 'Nuwan',
-        //     boardingOwnerLastName: 'Jayasinghe',
-        //     boardingOwnerNicNo: '198901234V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o3',
-        //     boardingOwnerRegNo: 'BO/KAL/SJP/089',
-        //     boardingOwnerFirstName: 'Sajith',
-        //     boardingOwnerLastName: 'Bandara',
-        //     boardingOwnerNicNo: '198712345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o4',
-        //     boardingOwnerRegNo: 'BO/GAM/KLN/053',
-        //     boardingOwnerFirstName: 'Chathura',
-        //     boardingOwnerLastName: 'Wickramasinghe',
-        //     boardingOwnerNicNo: '198512345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o5',
-        //     boardingOwnerRegNo: 'BO/KAL/MRT/012',
-        //     boardingOwnerFirstName: 'Isuru',
-        //     boardingOwnerLastName: 'Weerasinghe',
-        //     boardingOwnerNicNo: '198312345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o6',
-        //     boardingOwnerRegNo: 'BO/ANU/UJA/076',
-        //     boardingOwnerFirstName: 'Amila',
-        //     boardingOwnerLastName: 'Rathnayake',
-        //     boardingOwnerNicNo: '198112345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o7',
-        //     boardingOwnerRegNo: 'BO/KAN/OUSL/038',
-        //     boardingOwnerFirstName: 'Nishantha',
-        //     boardingOwnerLastName: 'Abeysekara',
-        //     boardingOwnerNicNo: '197912345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o8',
-        //     boardingOwnerRegNo: 'BO/MAT/RUH/055',
-        //     boardingOwnerFirstName: 'Tharindu',
-        //     boardingOwnerLastName: 'Perera',
-        //     boardingOwnerNicNo: '197712345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o9',
-        //     boardingOwnerRegNo: 'BO/BAD/EUSL/033',
-        //     boardingOwnerFirstName: 'Kasun',
-        //     boardingOwnerLastName: 'Samarasinghe',
-        //     boardingOwnerNicNo: '197512345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o10',
-        //     boardingOwnerRegNo: 'BO/MON/RUSL/065',
-        //     boardingOwnerFirstName: 'Saman',
-        //     boardingOwnerLastName: 'Ekanayake',
-        //     boardingOwnerNicNo: '197312345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o11',
-        //     boardingOwnerRegNo: 'BO/SAB/SUSL/094',
-        //     boardingOwnerFirstName: 'Dilan',
-        //     boardingOwnerLastName: 'Karunaratne',
-        //     boardingOwnerNicNo: '197112345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o12',
-        //     boardingOwnerRegNo: 'BO/TRI/SEUSL/021',
-        //     boardingOwnerFirstName: 'Udara',
-        //     boardingOwnerLastName: 'Gunasekara',
-        //     boardingOwnerNicNo: '196912345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o13',
-        //     boardingOwnerRegNo: 'BO/KUR/WUSL/077',
-        //     boardingOwnerFirstName: 'Ravindu',
-        //     boardingOwnerLastName: 'Madushanka',
-        //     boardingOwnerNicNo: '196712345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o14',
-        //     boardingOwnerRegNo: 'BO/BAD/UWU/040',
-        //     boardingOwnerFirstName: 'Charith',
-        //     boardingOwnerLastName: 'Fernando',
-        //     boardingOwnerNicNo: '196512345V',
-        //     boardingOwnerGender: 'Male',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // },
-        // {
-        //     id: '0o15',
-        //     boardingOwnerRegNo: 'BO/COL/UVPA/083',
-        //     boardingOwnerFirstName: 'Pasindu',
-        //     boardingOwnerLastName: 'Jayawardena',
-        //     boardingOwnerNicNo: '196312345V',
-        //     boardingOwnerGender: 'Female',
-        //     nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-        //     nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        // }
+        {
+            id: '0o1',
+            boardingOwnerRegNo: 'BO/KLN/CBO/045',
+            boardingOwnerFirstName: 'Kamal',
+            boardingOwnerLastName: 'Perera',
+            boardingOwnerNicNo: '199012345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o2',
+            boardingOwnerRegNo: 'BO/GAM/PDN/027',
+            boardingOwnerFirstName: 'Nuwan',
+            boardingOwnerLastName: 'Jayasinghe',
+            boardingOwnerNicNo: '198901234V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o3',
+            boardingOwnerRegNo: 'BO/KAL/SJP/089',
+            boardingOwnerFirstName: 'Sajith',
+            boardingOwnerLastName: 'Bandara',
+            boardingOwnerNicNo: '198712345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o4',
+            boardingOwnerRegNo: 'BO/GAM/KLN/053',
+            boardingOwnerFirstName: 'Chathura',
+            boardingOwnerLastName: 'Wickramasinghe',
+            boardingOwnerNicNo: '198512345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o5',
+            boardingOwnerRegNo: 'BO/KAL/MRT/012',
+            boardingOwnerFirstName: 'Isuru',
+            boardingOwnerLastName: 'Weerasinghe',
+            boardingOwnerNicNo: '198312345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o6',
+            boardingOwnerRegNo: 'BO/ANU/UJA/076',
+            boardingOwnerFirstName: 'Amila',
+            boardingOwnerLastName: 'Rathnayake',
+            boardingOwnerNicNo: '198112345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o7',
+            boardingOwnerRegNo: 'BO/KAN/OUSL/038',
+            boardingOwnerFirstName: 'Nishantha',
+            boardingOwnerLastName: 'Abeysekara',
+            boardingOwnerNicNo: '197912345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o8',
+            boardingOwnerRegNo: 'BO/MAT/RUH/055',
+            boardingOwnerFirstName: 'Tharindu',
+            boardingOwnerLastName: 'Perera',
+            boardingOwnerNicNo: '197712345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o9',
+            boardingOwnerRegNo: 'BO/BAD/EUSL/033',
+            boardingOwnerFirstName: 'Kasun',
+            boardingOwnerLastName: 'Samarasinghe',
+            boardingOwnerNicNo: '197512345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o10',
+            boardingOwnerRegNo: 'BO/MON/RUSL/065',
+            boardingOwnerFirstName: 'Saman',
+            boardingOwnerLastName: 'Ekanayake',
+            boardingOwnerNicNo: '197312345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o11',
+            boardingOwnerRegNo: 'BO/SAB/SUSL/094',
+            boardingOwnerFirstName: 'Dilan',
+            boardingOwnerLastName: 'Karunaratne',
+            boardingOwnerNicNo: '197112345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o12',
+            boardingOwnerRegNo: 'BO/TRI/SEUSL/021',
+            boardingOwnerFirstName: 'Udara',
+            boardingOwnerLastName: 'Gunasekara',
+            boardingOwnerNicNo: '196912345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o13',
+            boardingOwnerRegNo: 'BO/KUR/WUSL/077',
+            boardingOwnerFirstName: 'Ravindu',
+            boardingOwnerLastName: 'Madushanka',
+            boardingOwnerNicNo: '196712345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o14',
+            boardingOwnerRegNo: 'BO/BAD/UWU/040',
+            boardingOwnerFirstName: 'Charith',
+            boardingOwnerLastName: 'Fernando',
+            boardingOwnerNicNo: '196512345V',
+            boardingOwnerGender: 'Male',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        },
+        {
+            id: '0o15',
+            boardingOwnerRegNo: 'BO/COL/UVPA/083',
+            boardingOwnerFirstName: 'Pasindu',
+            boardingOwnerLastName: 'Jayawardena',
+            boardingOwnerNicNo: '196312345V',
+            boardingOwnerGender: 'Female',
+            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
+            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
+        }
     ]);
 
-    // const confirmationDialog = useSelector(state => {
-    //     return state.setting.confirmationDialog
-    // });
-    const confirmationDialog = useSelector(state => state.setting?.confirmationDialog);
+    const confirmationDialog = useSelector(state => state.confirmationDialog.confirmationDialog);
 
     function handleDelete(id) {
         dispatch(toggleConfirmationDialog({
@@ -181,11 +178,8 @@ function AdminBoardingOwners() {
             confirmationDescription: ('The delete action will remove the this listing data')
         }));
         setDeletedId(id)
-        console.log("ads")
     }
 
-    console.log(confirmationDialog)
-    console.log(deletedId)
 
     useEffect(() => {
         if (!confirmationDialog || !confirmationDialog.onSuccess || !deletedId) {
@@ -193,16 +187,16 @@ function AdminBoardingOwners() {
             return;
         }
         console.log("deleted")
-        dispatch(toggleLoader(true))
+        dispatch(setLoading(true))
 
-        axios.delete(`http://localhost:3000/admin/users-boarding-owner/${deletedId}`)
+        axiosInstance.delete(`/admin/users-boarding-owner/${deletedId}`)
             .then((res) => {
                 setUpdate(!update)
                 toast.success(`Successfully Deleted`)
             }).catch((err) => {
             console.log(err)
         }).finally(() => {
-            dispatch(toggleLoader(false))
+            dispatch(setLoading(false))
             setDeletedId(null)
         })
     }, [confirmationDialog, deletedId, dispatch])
@@ -220,21 +214,20 @@ function AdminBoardingOwners() {
         }
     }
 
-    useEffect(() => {
-        dispatch(toggleLoader(true));
-        axiosInstance.get("/boardings/getAllBoarding")
-            .then((res) => {
-                setBoardingOwnersList(res.data)
-                setBoardingOwnersAllList(res.data)
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                dispatch(toggleLoader(false));
-            });
-    }, [update]);
+    // useEffect(() => {
+    //     dispatch(setLoading(true));
+    //     axiosInstance.get(`/getAllBoardingOwners`)
+    //         .then((res) => {
+    //             setBoardingOwnersList(res.data)
+    //             setBoardingOwnersAllList(res.data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    //         .finally(() => {
+    //             dispatch(setLoading(false));
+    //         });
+    // }, [update]);
 
     return (
         <div className={"container mb-4 p-5"}>
@@ -273,9 +266,9 @@ function AdminBoardingOwners() {
                             <tr key={index + "asd"}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{data.boardingOwnerRegNo}</td>
-                                <td>{data.ownerName}</td>
+                                <td>{data.boardingOwnerFirstName}</td>
                                 <td>{data.boardingOwnerLastName}</td>
-                                <td>{data.ownerNIC}</td>
+                                <td>{data.boardingOwnerNicNo}</td>
                                 <td>{data.boardingOwnerGender}</td>
                                 <td>
                                     <FeatherIcon className={"admin-action-icons"} icon={"eye"}

@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
 import {Link, useNavigate} from "react-router-dom";
 import {validateForgotPassword} from "../../utils/validation.js";
+import FormHandler from "react-form-buddy";
+
 import formHandler from "../../utils/FormHandler";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {toast} from "react-toastify";

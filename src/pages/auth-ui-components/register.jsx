@@ -1,60 +1,42 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {validateRegister} from "../../utils/validation.js";
-import formHandler from "../../utils/FormHandler";
-import {useDispatch} from "react-redux";
+import FormHandler from "react-form-buddy";
 import axiosInstance from "../../utils/axiosInstance.js";
-import {toast} from "react-toastify";
-import {loadCredential} from "../../utils/Authentication.js";
+import {useDispatch} from "react-redux";
 import {setLoading} from "../../redux/features/loaderSlice.js";
+import {toast} from "react-toastify";
 
 function Register() {
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     const {
+        values,
         handleChange,
         handleSubmit,
         errors,
-        values
-    } = formHandler(isRegister, validateRegister);
+    } = FormHandler(isRegister, validateRegister);
+
+    const dispatch = useDispatch();
+
+    console.log(values)
 
     function isRegister() {
-        setIsSubmitted(true)
-    }
-
-    useEffect(() => {
-        if (!isSubmitted){
-            return;
-        }
         dispatch(setLoading(true))
-        let data = {
-            email: values.email.toLowerCase(),
-            username: values.username,
-            password: values.password
-        }
-        axiosInstance.post('/users/register', data)
-            .then(res=>{
+        axiosInstance.post("/users/register", values)
+            .then(res => {
                 console.log(res.data)
-                loadCredential(res.data)
-                navigate('/login')
-                toast.success('Successfully Registered');
+                toast.success("Successfully Registered")
             })
-           .catch(err => {
-               toast.error(err.response.data.message)
-           })
-            .finally(()=>{
-                console.log("Request completed")
-                setIsSubmitted(false)
-                dispatch(setLoading(false))
-            })
-
-    }, [isSubmitted]);
+            .catch(err => {
+                console.log(err.response.data)
+                toast.error(err.response.data.message)
+            }).finally(() => {
+            dispatch(setLoading(false))
+        })
+    }
 
     return (
         <div className="container-fluid align-middle">
@@ -78,7 +60,7 @@ function Register() {
                                     here!</Link>
                             </p>
                         </div>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Email</label>
@@ -90,7 +72,7 @@ function Register() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
-                                       className="form-label fw-normal login-font">Username</label>
+                                       className="form-label fw-normal login-font">Name</label>
                                 <input className={`form-control fw-normal ${errors.username ? "border-red" : ""}`}
                                        type="text"
                                        name={"username"} onChange={handleChange} placeholder="Enter Username"/>
@@ -106,7 +88,7 @@ function Register() {
                             </div>
                             <div className="row">
                                 <div className="col p-2">
-                                    <button type={"button"} className="btn login-btn w-100 fw-semibold p-2"
+                                    <button type={"submit"} className="btn login-btn w-100 fw-semibold p-2"
                                             onClick={handleSubmit}>Register
                                     </button>
                                 </div>

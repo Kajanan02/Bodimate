@@ -26,6 +26,7 @@ import AdminPayments from "./pages/admin/payments/admin-payments.jsx";
 import Loader from "./components/loader.jsx";
 import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
 import Analytics from "./pages/admin/analytics/analytics.jsx";
+import ConfirmationDialog from "./components/confirmation-dialog.jsx";
 import BodimateyourHome from "./pages/ Bodimate-your-home/Bodimateyourhome.jsx";
 
 import Owner_Register from "./pages/ Bodimate-your-home/bodimate-owner-register.jsx";
@@ -52,7 +53,6 @@ function App() {
                     <Route path="/nearby-university/:universityName" element={<NearbyUniversity />} />
                     <Route path="settings" element={<Settings/>}/>
                     <Route path="contact-us" element={<ContactUs/>}/>
-                    {/*<Route path="/boding-home" element={<BodimateyourHome/>}/>*/}
                 </Route>
                 <Route path="/boding-home" element={<BodimateyourHome/>}/>
                 <Route path="/admin" element={<AdminLayout/>}>
@@ -66,9 +66,6 @@ function App() {
                     <Route path="settings" element={<AdminSetting/>}/>
                     <Route path="analytics" element={<Analytics/>}/>
                 </Route>
-                {/*<Route path="/Bodimate" element={<HomeLayout/>}>*/}
-                {/*    <Route path="" element={<BodimateyourHome/>}/>*/}
-                {/*</Route>*/}
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/bodimate-register-now" element={<Register_Now/>}/>
@@ -78,6 +75,7 @@ function App() {
             </Routes>
             <ToastContainer/>
             <Loader/>
+            <ConfirmationDialog/>
         </>
     )
 }
