@@ -1,0 +1,33 @@
+.step-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+
+}
+
+
+
+
+
+.text-muted {
+    font-size: 0.9rem;
+}
+
+
+.custom-input {
+    height: 130px;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    width: 582px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.custom-input:focus {
+    border-color: #024950;
+    box-shadow: 0 0 5px rgba(2, 73, 80, 0.5);
+    outline: none;
+}

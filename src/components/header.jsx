@@ -3,6 +3,7 @@ import './styles.css';
 import logo from '../../src/assets/logo.png';
 import FeatherIcon from "feather-icons-react";
 import {NavLink} from "react-router-dom";
+import MultiStepForm from "./../pages/ Bodimate-your-home/MultiStepForm/MultiStepForm.jsx";
 
 
 function Header() {
@@ -34,8 +35,10 @@ function Header() {
                                     Us</NavLink>
                             </li>
                             <li className="nav-item d-lg-none">
-                                <NavLink className="nav-link contact nav-link-text" to={"/boding-home"}>Bodimate your
+                                <NavLink className="nav-link contact nav-link-text" to={"/bodimate-register-now"}>Bodimate your
                                     home</NavLink>
+
+
                             </li>
                         </ul>
                     </div>
@@ -44,7 +47,7 @@ function Header() {
                     <ul className="nav-owner my-lg-0 navbar-nav-scroll m-0">
                         <div className="nav-item m-0 d-none d-lg-block">
                             <NavLink className="nav-link-owner bodimate-home nav-link-text text-decoration-none"
-                                     to={"/boding-home"}>Bodimate
+                                     to={"/bodimate-register-now"}>Bodimate
                                 your home</NavLink>
                         </div>
                     </ul>
@@ -68,7 +71,7 @@ function Header() {
                                     <li>
                                         <hr className="dropdown-divider"/>
                                     </li>
-                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/bodimate-home"}>Bodimate
+                                    <li><NavLink className="dropdown-item dropdown-detail" to={"/bodimate-register-now"}>Bodimate
                                         Home</NavLink></li>
                                     <li><NavLink className="dropdown-item dropdown-detail" to={"/help-cente"}>Help
                                         Center</NavLink></li>
