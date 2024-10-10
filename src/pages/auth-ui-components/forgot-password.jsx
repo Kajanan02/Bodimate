@@ -23,6 +23,7 @@ function ForgotPassword() {
         handleChange,
         handleSubmit,
         errors,
+
         values
     } = formHandler(isForgotPassword, validateForgotPassword);
 
