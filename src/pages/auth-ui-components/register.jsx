@@ -1,22 +1,60 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {validateRegister} from "../../utils/validation.js";
 import formHandler from "../../utils/FormHandler";
+import {useDispatch} from "react-redux";
+import axiosInstance from "../../utils/axiosInstance.js";
+import {toast} from "react-toastify";
+import {loadCredential} from "../../utils/Authentication.js";
+import {setLoading} from "../../redux/features/loaderSlice.js";
 
 function Register() {
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         handleChange,
         handleSubmit,
         errors,
+        values
     } = formHandler(isRegister, validateRegister);
 
     function isRegister() {
-
+        setIsSubmitted(true)
     }
+
+    useEffect(() => {
+        if (!isSubmitted){
+            return;
+        }
+        dispatch(setLoading(true))
+        let data = {
+            email: values.email.toLowerCase(),
+            username: values.username,
+            password: values.password
+        }
+        axiosInstance.post('/users/register', data)
+            .then(res=>{
+                console.log(res.data)
+                loadCredential(res.data)
+                navigate('/login')
+                toast.success('Successfully Registered');
+            })
+           .catch(err => {
+               toast.error(err.response.data.message)
+           })
+            .finally(()=>{
+                console.log("Request completed")
+                setIsSubmitted(false)
+                dispatch(setLoading(false))
+            })
+
+    }, [isSubmitted]);
 
     return (
         <div className="container-fluid align-middle">

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect,useRef, useState} from 'react';
 import "./admin-Setting.css"
 import profileImage from "../../../assets/admin-setting/admin-profile.png"
 import {FileUploader} from "react-drag-drop-files";
@@ -8,6 +8,12 @@ import formHandler from "../../../utils/FormHandler.js";
 import {validateAdminSettings} from "../../../utils/validation.js";
 import maleIcon from "../../../assets/male-student-5-svgrepo-com.svg";
 import femaleIcon from "../../../assets/female-doctor-2-svgrepo-com.svg";
+import { toggleLoader} from "../../../redux/action.js";
+
+import {useDispatch} from "react-redux";
+
+import axiosInstance from "../../../utils/axiosInstance.js";
+
 
 
 function AdminSetting() {
@@ -32,6 +38,7 @@ function AdminSetting() {
         handleChange,
         values,
         errors,
+        initForm,
     } = formHandler(submitSettings, validateAdminSettings)
 
     console.log(errors)
@@ -39,6 +46,29 @@ function AdminSetting() {
     function submitSettings() {
         setFormSubmitted(true)
     }
+    const dispatch = useDispatch();
+    const [userData, setUserData] = useState({})
+
+
+
+    useEffect(() => {
+        dispatch(toggleLoader(true))
+        axiosInstance.get(`http://localhost:5000/api/users/66a0c4b0e0080ba7f1090193/profile`)
+            .then((res) => {
+                // setUserData(res.data.filter((item) => item._id === getUserId())[0])
+                setUserData(res.data)
+                console.log(res.data)
+            }).catch((err) => {
+            console.log(err)
+        }).finally(() => {
+            dispatch(toggleLoader(false))
+        });
+    }, [])
+    //
+    useEffect(() => {
+        initForm(userData);
+    }, [userData]);
+
 
 
     return (

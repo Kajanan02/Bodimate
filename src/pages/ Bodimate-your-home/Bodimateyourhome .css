@@ -1,0 +1,16 @@
+.file-uploader-container {
+    border: 2px dashed #d3d3d3; /* Add border to the file uploader */
+    padding: 20px; /* Add some padding */
+    margin: 0 auto; /* Center the container */
+    width: 100%; /* Full width */
+    text-align: center; /* Center the text inside */
+}
+
+.file-uploader-container img {
+    width: 40px; /* Adjust icon size as needed */
+    margin-bottom: 10px; /* Space between icon and text */
+}
+
+.login-btn {
+    margin-left: 0%; /* Adjust button alignment to the left */
+}
