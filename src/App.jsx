@@ -27,7 +27,7 @@ import Loader from "./components/loader.jsx";
 import AdminSetting from "./pages/admin/setting/admin-Setting.jsx";
 import Analytics from "./pages/admin/analytics/analytics.jsx";
 import ConfirmationDialog from "./components/confirmation-dialog.jsx";
-import BodimateyourHome from "./pages/ Bodimate-your-home/Bodimateyourhome.jsx";
+
 
 import Owner_Register from "./pages/ Bodimate-your-home/bodimate-owner-register.jsx";
 import Register_Now from "./pages/ Bodimate-your-home/bodimte-register-now.jsx";
