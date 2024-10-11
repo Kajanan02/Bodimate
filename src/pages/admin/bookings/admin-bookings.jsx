@@ -16,169 +16,58 @@ function AdminBookings() {
     const [bookingsAllList, setBookingsAllList] = useState([])
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
-    const [bookingsList, setBookingsList] = useState([
-        {
-            id: '0o1',
-            studentName: 'Kamal Perera',
-            boardingOwnerName: 'Nimal Silva',
-            membersCount: '4',
-            moveInDate: '2024-06-20',
-            status: 'Booked'
-        },
-        {
-            id: '0o2',
-            studentName: 'Nuwan Jayasinghe',
-            boardingOwnerName: 'Sunil Fernando',
-            membersCount: '5',
-            moveInDate: '2024-06-21',
-            status: 'Pending'
-        },
-        {
-            id: '0o3',
-            studentName: 'Sajith Bandara',
-            boardingOwnerName: 'Asoka Kumar',
-            membersCount: '10',
-            moveInDate: '2024-06-22',
-            status: 'Booked'
-        },
-        {
-            id: '0o4',
-            studentName: 'Chathura Wickramasinghe',
-            boardingOwnerName: 'Ranjith Perera',
-            membersCount: '15',
-            moveInDate: '2024-06-23',
-            status: 'Pending'
-        },
-        {
-            id: '0o5',
-            studentName: 'Isuru Weerasinghe',
-            boardingOwnerName: 'Sarath Gunawardena',
-            membersCount: '3',
-            moveInDate: '2024-06-24',
-            status: 'Decline'
-        },
-        {
-            id: '0o6',
-            studentName: 'Amila Rathnayake',
-            boardingOwnerName: 'Mohan de Silva',
-            membersCount: '10',
-            moveInDate: '2024-06-25',
-            status: 'Pending'
-        },
-        {
-            id: '0o7',
-            studentName: 'Nishantha Abeysekara',
-            boardingOwnerName: 'Lakshman Jayawardena',
-            membersCount: '7',
-            moveInDate: '2024-06-26',
-            status: 'Booked'
-        },
-        {
-            id: '0o8',
-            studentName: 'Tharindu Perera',
-            boardingOwnerName: 'Gamini Fonseka',
-            membersCount: '6',
-            moveInDate: '2024-06-27',
-            status: 'Pending'
-        },
-        {
-            id: '0o9',
-            studentName: 'Kasun Samarasinghe',
-            boardingOwnerName: 'Anura Senanayake',
-            membersCount: '8',
-            moveInDate: '2024-06-28',
-            status: 'Booked'
-        },
-        {
-            id: '0o10',
-            studentName: 'Saman Ekanayake',
-            boardingOwnerName: 'Jayantha Silva',
-            membersCount: '5',
-            moveInDate: '2024-06-29',
-            status: 'Decline'
-        },
-        {
-            id: '0o11',
-            studentName: 'Dilan Karunaratne',
-            boardingOwnerName: 'Rohan Perera',
-            membersCount: '9',
-            moveInDate: '2024-06-30',
-            status: 'Booked'
-        },
-        {
-            id: '0o12',
-            studentName: 'Udara Gunasekara',
-            boardingOwnerName: 'Hemantha Ranatunga',
-            membersCount: '12',
-            moveInDate: '2024-07-01',
-            status: 'Decline'
-        },
-        {
-            id: '0o13',
-            studentName: 'Ravindu Madushanka',
-            boardingOwnerName: 'Upali Wijesinghe',
-            membersCount: '2',
-            moveInDate: '2024-07-02',
-            status: 'Decline'
-        },
-        {
-            id: '0o14',
-            studentName: 'Charith Fernando',
-            boardingOwnerName: 'Kithsiri Jayalath',
-            membersCount: '13',
-            moveInDate: '2024-07-03',
-            status: 'Pending'
-        },
-        {
-            id: '0o15',
-            studentName: 'Pasindu Jayawardena',
-            boardingOwnerName: 'Mahinda Silva',
-            membersCount: '11',
-            moveInDate: '2024-07-04',
-            status: 'Booked'
-        }
-    ]);
+    const [bookingsList, setBookingsList] = useState([]);
 
 
     // const confirmationDialog = useSelector(state => {
     //     return state.setting.confirmationDialog
     // });
-    const confirmationDialog = useSelector(state => state.setting?.confirmationDialog);
+    const confirmationDialog = useSelector(state => state.confirmationDialog);
 
 
     function handleDelete(id) {
         dispatch(toggleConfirmationDialog({
             isVisible: true,
-            confirmationHeading: ('Are you sure you want to delete this listing data'),
-            confirmationDescription: ('The delete action will remove the this listing data')
+            confirmationHeading: 'ARE YOU SURE YOU WANT TO DELETE THIS STUDENT DATA',
+            confirmationDescription: 'THE DELETE ACTION WILL REMOVE THIS STUDENT DATA',
+            onSuccess: false // Ensure this is added to track success
         }));
-        setDeletedId(id)
-        console.log("ads")
+        setDeletedId(id);
+        console.log("Delete initiated for ID:", id);
     }
 
+    // Debugging: log the current state of confirmation dialog and deletedId
+    console.log("Current Confirmation Dialog:", confirmationDialog);
+    console.log("Current Deleted ID:", deletedId);
 
     console.log(confirmationDialog)
     console.log(deletedId)
 
     useEffect(() => {
-        if (!confirmationDialog || !confirmationDialog.onSuccess || !deletedId) {
-            console.log("deleted")
+        console.log("Checking conditions:", confirmationDialog, deletedId);
+        if (!confirmationDialog || !confirmationDialog.confirmationDialog.onSuccess || !deletedId) {
+            console.log("Deletion conditions not met");
             return;
         }
-        console.log("deleted")
-        dispatch(setLoading(true))
 
-        axiosInstance.delete(`/admin/bookings/${deletedId}`)
+        console.log("Conditions met, proceeding with delete for ID:", deletedId);
+        dispatch(setLoading(true)); // Optional: set loading state if needed
+
+        // Axios delete request
+        axiosInstance.delete(`/booking/deleteBooking/${deletedId}`)
             .then((res) => {
-                setUpdate(!update)
-                toast.success(`Successfully Deleted`)
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-            setDeletedId(null)
-        })
-    }, [confirmationDialog, deletedId, dispatch])
+                console.log("Delete response:", res.data);
+                setUpdate(!update); // Trigger re-render of updated listings
+                toast.success('Successfully Deleted'); // Optional: Toast notification
+            })
+            .catch((err) => {
+                console.log("Delete error:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Optional: remove loading state
+                setDeletedId(null); // Reset after deletion
+            });
+    }, [confirmationDialog, deletedId]);
 
     function handleSearch(e) {
         let val = e.target.value;
@@ -195,7 +84,7 @@ function AdminBookings() {
 
     useEffect(() => {
         dispatch(setLoading(true));
-        axiosInstance.get(`/getAllBookings`)
+        axiosInstance.get(`/booking/getAllBookings`)
             .then((res) => {
                 setBookingsList(res.data)
                 setBookingsAllList(res.data)
@@ -238,14 +127,14 @@ function AdminBookings() {
                                 </form>
                             </div>
                         </div>
-                        <button type="button" className={"btn text-white students-dropdown-btn admin-dropdown"}
-                                onClick={() => {
-                                    setModalType("Add");
-                                    setModalShow(true)
-                                }}>
-                            <FeatherIcon className={"admin-action-icons text-white me-1"} icon={"plus"}/>
-                            Add
-                        </button>
+                        {/*<button type="button" className={"btn text-white students-dropdown-btn admin-dropdown"}*/}
+                        {/*        onClick={() => {*/}
+                        {/*            setModalType("Add");*/}
+                        {/*            setModalShow(true)*/}
+                        {/*        }}>*/}
+                        {/*    <FeatherIcon className={"admin-action-icons text-white me-1"} icon={"plus"}/>*/}
+                        {/*    Add*/}
+                        {/*</button>*/}
                     </div>
                 </div>
                 <div className={"table-container admin-table"}>
@@ -254,9 +143,9 @@ function AdminBookings() {
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Student Name</th>
-                            <th scope="col">Boarding Owner Name</th>
-                            <th scope="col">Members</th>
-                            <th scope="col">Move-In</th>
+                            <th scope="col">Boarding Name</th>
+                            <th scope="col">Check-in Date</th>
+                            <th scope="col">Check-out Date</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
@@ -267,9 +156,9 @@ function AdminBookings() {
                                 <tr key={data.id || index}>
                                     <th scope="row">{index + 1}</th>
                                     <td>{data.studentName}</td>
-                                    <td>{data.boardingOwnerName}</td>
-                                    <td>{data.membersCount}</td>
-                                    <td>{data.moveInDate}</td>
+                                    <td>{data.boardingName}</td>
+                                    <td>{data.checkInDate?.slice(0, 10)}</td>
+                                    <td>{data.checkOutDate?.slice(0, 10)}</td>
                                     <td>
                                         <div
                                             className={"booking-state " + colorChange(data.status)}
@@ -303,7 +192,7 @@ function AdminBookings() {
                                                      }}
                                         />
                                         <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
-                                                     onClick={() => handleDelete(data.id)}
+                                                     onClick={() => handleDelete(data._id)}
                                         />
                                     </td>
                                 </tr>

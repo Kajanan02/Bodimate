@@ -32,17 +32,17 @@ function BookingsForm(props) {
         initForm({});
     }
 
-    useEffect(() => {
-        dispatch(setLoading(true))
-        axiosInstance.get(`/admin/bookings`)
-            .then((res) => {
-                setBookingsList(res.data)
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-        })
-    }, [])
+    // useEffect(() => {
+    //     dispatch(setLoading(true))
+    //     axiosInstance.get(`/admin/bookings`)
+    //         .then((res) => {
+    //             setBookingsList(res.data)
+    //         }).catch((err) => {
+    //         console.log(err)
+    //     }).finally(() => {
+    //         dispatch(setLoading(false))
+    //     })
+    // }, [])
 
     useEffect(() => {
         if (["View", "Edit", "State"].includes(props.type) && !isEmpty(props.selectedBookings)) {
