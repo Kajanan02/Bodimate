@@ -24,7 +24,7 @@ function ListingsForm(props) {
 
     const [selectedBuyer, setSelectedBuyer] = useState([]);
     const [listingsList, setListingsList] = useState([]);
-    const [singleSelections, setSingleSelections] = useState([]);
+    // const [singleSelections, setSingleSelections] = useState([]);
     const [isSubmit, setIsSubmit] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const dispatch = useDispatch();
@@ -107,7 +107,7 @@ function ListingsForm(props) {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            // dispatch(setLoading(false))
+            dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -428,7 +428,6 @@ function ListingsForm(props) {
                                                         type="radio"
                                                         name="boardingType"
                                                         onChange={handleChange}
-
                                                         label={
                                                             <div
                                                                 className={`admin-boarding-type-home-container w-100 ps-3 `}>
@@ -486,103 +485,194 @@ function ListingsForm(props) {
                                 </Col>
 
 
-                                <Col md={12} className={"ps-3"}>
-                                    <fieldset>
-                                        <Form.Group as={Row} className="mb-3">
-                                            <h5 className={'mb-3 admin-form-head fw-semibold'}>Stay Preference</h5>
-                                            <Col sm={12} className={"pe-1"}>
-                                                <div className={"admin-boarding-type-home-button pb-2"}>
-                                                    <Form.Check
-                                                        type="radio"
-                                                        name="stayPreference"
-                                                        value="male"
-                                                        onChange={handleChange}
-                                                        label={
-                                                            <div
-                                                                className={`admin-boarding-type-home-container w-100 ps-3`}>
-                                                                <div
-                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
-                                                                    <div>
-                                                                        <div className={"admin-form-radio-head"}>Male
-                                                                            Only
-                                                                        </div>
-                                                                        <div className={"admin-radio-btn"}>Only Boys can
-                                                                            stay.
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={"ps-5 pe-2"}>
-                                                                        <img src={maleIcon} alt={"maleIcon"}/>
-                                                                    </div>
-                                                                </div>
+                                {/*<Col md={12} className={"ps-3"}>*/}
+                                {/*    <fieldset>*/}
+                                {/*        <Form.Group as={Row} className="mb-3">*/}
+                                {/*            <h5 className={'mb-3 admin-form-head fw-semibold'}>Stay Preference</h5>*/}
+                                {/*            <Col sm={12} className={"pe-1"}>*/}
+                                {/*                <div className={"admin-boarding-type-home-button pb-2"}>*/}
+                                {/*                    <Form.Check*/}
+                                {/*                        type="radio"*/}
+                                {/*                        name="stayPreference"*/}
+                                {/*                        value="male"*/}
+                                {/*                        onChange={handleChange}*/}
+                                {/*                        label={*/}
+                                {/*                            <div*/}
+                                {/*                                className={`admin-boarding-type-home-container w-100 ps-3`}>*/}
+                                {/*                                <div*/}
+                                {/*                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>*/}
+                                {/*                                    <div>*/}
+                                {/*                                        <div className={"admin-form-radio-head"}>Male*/}
+                                {/*                                            Only*/}
+                                {/*                                        </div>*/}
+                                {/*                                        <div className={"admin-radio-btn"}>Only Boys can*/}
+                                {/*                                            stay.*/}
+                                {/*                                        </div>*/}
+                                {/*                                    </div>*/}
+                                {/*                                    <div className={"ps-5 pe-2"}>*/}
+                                {/*                                        <img src={maleIcon} alt={"maleIcon"}/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </div>*/}
+                                {/*                            </div>*/}
+                                {/*                        }*/}
+                                {/*                        id="formHorizontalRadios4"*/}
+                                {/*                    />*/}
+                                {/*                </div>*/}
+                                {/*                <div className={"admin-boarding-type-home-button pb-2"}>*/}
+                                {/*                    <Form.Check*/}
+                                {/*                        type="radio"*/}
+                                {/*                        name="stayPreference"*/}
+                                {/*                        value="female"*/}
+                                {/*                        onChange={handleChange}*/}
+                                {/*                        label={*/}
+                                {/*                            <div*/}
+                                {/*                                className={`admin-boarding-type-home-container w-100 ps-3`}>*/}
+                                {/*                                <div*/}
+                                {/*                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>*/}
+                                {/*                                    <div>*/}
+                                {/*                                        <div className={"admin-form-radio-head"}>Female*/}
+                                {/*                                            Only*/}
+                                {/*                                        </div>*/}
+                                {/*                                        <div className={"admin-radio-btn"}>Only Girls*/}
+                                {/*                                            can stay.*/}
+                                {/*                                        </div>*/}
+                                {/*                                    </div>*/}
+                                {/*                                    <div className={"ps-5 pe-2"}>*/}
+                                {/*                                        <img src={femaleIcon} alt={"femaleIcon"}/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </div>*/}
+                                {/*                            </div>*/}
+                                {/*                        }*/}
+                                {/*                        id="formHorizontalRadios5"*/}
+                                {/*                    />*/}
+                                {/*                </div>*/}
+                                {/*                <div className={"admin-boarding-type-home-button pb-2"}>*/}
+                                {/*                    <Form.Check*/}
+                                {/*                        type="radio"*/}
+                                {/*                        name="stayPreference"*/}
+                                {/*                        value="no_restriction"*/}
+                                {/*                        onChange={handleChange}*/}
+                                {/*                        label={*/}
+                                {/*                            <div*/}
+                                {/*                                className={`admin-boarding-type-home-container w-100 ps-3`}>*/}
+                                {/*                                <div*/}
+                                {/*                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>*/}
+                                {/*                                    <div>*/}
+                                {/*                                        <div className={"admin-form-radio-head"}>No*/}
+                                {/*                                            Gender Restriction*/}
+                                {/*                                        </div>*/}
+                                {/*                                        <div className={"admin-radio-btn"}>Boys or Girls*/}
+                                {/*                                            can stay.*/}
+                                {/*                                        </div>*/}
+                                {/*                                    </div>*/}
+                                {/*                                    <div className={"ps-5 pe-2"}>*/}
+                                {/*                                        <img src={personIcon} alt={"personIcon"}/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </div>*/}
+                                {/*                            </div>*/}
+                                {/*                        }*/}
+                                {/*                        id="formHorizontalRadios6"*/}
+                                {/*                    />*/}
+                                {/*                </div>*/}
+                                {/*                {errors.stayPreference &&*/}
+                                {/*                    <p className={"admin-text-red"}>{errors.stayPreference}</p>}*/}
+                                {/*            </Col>*/}
+                                {/*        </Form.Group>*/}
+                                {/*    </fieldset>*/}
+                                {/*</Col>*/}
+
+                                            <Col md={12} className={"ps-3"}>
+                                                <fieldset>
+                                                    <Form.Group as={Row} className="mb-3">
+                                                        <h5 className={'mb-3 admin-form-head fw-semibold'}>Stay Preference</h5>
+                                                        <Col sm={12} className={"pe-1"}>
+                                                            <div className={"admin-boarding-type-home-button pb-2"}>
+                                                                <Form.Check
+                                                                    type="radio"
+                                                                    value={values.stayPreference}
+                                                                    name="stayPreference"
+                                                                    onChange={handleChange}
+                                                                    label={
+                                                                        <div
+                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
+                                                                            <div
+                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                                <div>
+                                                                                    <div className={"admin-form-radio-head"}>Male
+                                                                                        Only
+                                                                                    </div>
+                                                                                    <div className={"admin-radio-btn"}>
+                                                                                        Only Boys can stay.
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className={"ps-5 pe-2"}>
+                                                                                    <img src={maleIcon} alt={"maleIcon"}/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>}
+                                                                    id="formHorizontalRadios4"
+                                                                />
                                                             </div>
-                                                        }
-                                                        id="formHorizontalRadios4"
-                                                    />
-                                                </div>
-                                                <div className={"admin-boarding-type-home-button pb-2"}>
-                                                    <Form.Check
-                                                        type="radio"
-                                                        name="stayPreference"
-                                                        value="female"
-                                                        onChange={handleChange}
-                                                        label={
-                                                            <div
-                                                                className={`admin-boarding-type-home-container w-100 ps-3`}>
-                                                                <div
-                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
-                                                                    <div>
-                                                                        <div className={"admin-form-radio-head"}>Female
-                                                                            Only
-                                                                        </div>
-                                                                        <div className={"admin-radio-btn"}>Only Girls
-                                                                            can stay.
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={"ps-5 pe-2"}>
-                                                                        <img src={femaleIcon} alt={"femaleIcon"}/>
-                                                                    </div>
-                                                                </div>
+                                                            <div className={"admin-boarding-type-home-button pb-2"}>
+                                                                <Form.Check
+                                                                    type="radio"
+                                                                    name="stayPreference"
+                                                                    value="female"
+                                                                    onChange={handleChange}
+                                                                    label={
+                                                                        <div
+                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
+                                                                            <div
+                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                                <div>
+                                                                                    <div className={"admin-form-radio-head"}>Female
+                                                                                        Only
+                                                                                    </div>
+                                                                                    <div className={"admin-radio-btn"}>
+                                                                                        Only Girls can stay.
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className={"ps-5 pe-2"}>
+                                                                                    <img src={femaleIcon} alt={"femaleIcon"}/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>}
+                                                                    id="formHorizontalRadios5"
+                                                                />
                                                             </div>
-                                                        }
-                                                        id="formHorizontalRadios5"
-                                                    />
-                                                </div>
-                                                <div className={"admin-boarding-type-home-button pb-2"}>
-                                                    <Form.Check
-                                                        type="radio"
-                                                        name="stayPreference"
-                                                        value="no_restriction"
-                                                        onChange={handleChange}
-                                                        label={
-                                                            <div
-                                                                className={`admin-boarding-type-home-container w-100 ps-3`}>
-                                                                <div
-                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.stayPreference ? "border-danger" : ""}`}>
-                                                                    <div>
-                                                                        <div className={"admin-form-radio-head"}>No
-                                                                            Gender Restriction
-                                                                        </div>
-                                                                        <div className={"admin-radio-btn"}>Boys or Girls
-                                                                            can stay.
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={"ps-5 pe-2"}>
-                                                                        <img src={personIcon} alt={"personIcon"}/>
-                                                                    </div>
-                                                                </div>
+                                                            <div className={"admin-boarding-type-home-button pb-2"}>
+                                                                <Form.Check
+                                                                    type="radio"
+                                                                    name="stayPreference"
+                                                                    onChange={handleChange}
+                                                                    label={
+                                                                        <div
+                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
+                                                                            <div
+                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                                <div>
+                                                                                    <div className={"admin-form-radio-head"}>No
+                                                                                        Gender Restriction
+                                                                                    </div>
+                                                                                    <div className={"admin-radio-btn"}>
+                                                                                        Boys or Girls can stay.
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div className={"ps-5 pe-2"}>
+                                                                                    <img src={personIcon} alt={"personIcon"}/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>}
+                                                                    id="formHorizontalRadios6"
+                                                                />
                                                             </div>
-                                                        }
-                                                        id="formHorizontalRadios6"
-                                                    />
-                                                </div>
-                                                {errors.stayPreference &&
-                                                    <p className={"admin-text-red"}>{errors.stayPreference}</p>}
+                                                            {errors.stayPreference &&
+                                                                <p className={"admin-text-red"}>{errors.stayPreference}</p>}
+                                                        </Col>
+                                                    </Form.Group>
+                                                </fieldset>
                                             </Col>
-                                        </Form.Group>
-                                    </fieldset>
-                                </Col>
-
-
                                             <div className={"col-md-6"}>
                                                 <div className="mb-3">
                                                     <label htmlFor="exampleInputEmail1"
@@ -607,12 +697,11 @@ function ListingsForm(props) {
                                                         </DropdownToggle>
                                                         {errors.facilities &&
                                                             <p className={"admin-text-red"}>{errors.facilities}</p>}
-                                                        <DropdownMenu className={"w-100"} >
+                                                        <DropdownMenu className={"w-100"}>
                                                             <FormCheck name={"facilities"}
                                                                        label={<div className={"ps-3"}>WiFi</div>}
                                                                        className="mx-3 my-1"
                                                                        onChange={handleChange}
-                                                                       value={values.facilities}
                                                             />
                                                             <FormCheck name={"facilities"}
                                                                        label={<div className={"ps-3"}>Water

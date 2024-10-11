@@ -165,12 +165,12 @@ export function validatePersonalSettings(values) {
     if (!values.postalCode) {
         errors.postalCode = "Postal Code is Required";
     }
-    if (!values.nicFront) {
-        errors.nicFront = "NIC Front Image is Required";
-    }
-    if (!values.nicBack) {
-        errors.nicBack = "NIC Back Image is Required";
-    }
+    // if (!values.nicFront) {
+    //     errors.nicFront = "NIC Front Image is Required";
+    // }
+    // if (!values.nicBack) {
+    //     errors.nicBack = "NIC Back Image is Required";
+    // }
 
     return errors;
 }

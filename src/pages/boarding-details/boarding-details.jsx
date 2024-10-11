@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {toggleLoader} from "../../redux/action.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {useParams} from "react-router-dom";
-import Heart from "react-heart"
+// import Heart from "react-heart";
 import axios from "axios";
 
 function BoardingDetails() {

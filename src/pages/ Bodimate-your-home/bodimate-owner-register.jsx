@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { validateUserRegistration } from "../../utils/validation.js";
-import formHandler from "../../utils/FormHandler";
+// import formHandler from "../../utils/FormHandler";
 import { useDispatch } from "react-redux";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { toast } from "react-toastify";
