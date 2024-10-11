@@ -36,14 +36,14 @@ const BoardingCard = ({data}) => {
                             outline: "none"
                         }}
                     >
-                        <Heart
-                            isActive={active}
-                            onClick={handleClick}
-                            style={{
-                                border: "none",
-                                outline: "none"
-                            }}
-                        />
+                        {/*<Heart*/}
+                        {/*    isActive={active}*/}
+                        {/*    onClick={handleClick}*/}
+                        {/*    style={{*/}
+                        {/*        border: "none",*/}
+                        {/*        outline: "none"*/}
+                        {/*    }}*/}
+                        {/*/>*/}
                     </div>
                 </div>
             </div>

@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { validateUserRegistration } from "../../utils/validation.js";
-// import formHandler from "../../utils/FormHandler";
+
+import FormHandler from "react-form-buddy";
 import { useDispatch } from "react-redux";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { toast } from "react-toastify";
@@ -22,22 +23,22 @@ function Owner_Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Form handler for managing form state and validation
-    const { handleChange, handleSubmit, errors, values } = formHandler(isOwnerRegister, validateUserRegistration);
+
+    const { handleChange, handleSubmit, errors, values } = FormHandler(isOwnerRegister, validateUserRegistration);
 
     function isOwnerRegister() {
         const validationErrors = validateUserRegistration(values);
         if (Object.keys(validationErrors).length === 0) {
-            setIsSubmitted(true); // No validation errors
+            setIsSubmitted(true);
         } else {
-            handleSubmit(validationErrors); // Set validation errors
+            handleSubmit(validationErrors);
         }
     }
 
     useEffect(() => {
         if (!isSubmitted) return;
 
-        // Prepare data to send in the request
+
         const data = {
             ...values,
             nicFront,
@@ -45,9 +46,9 @@ function Owner_Register() {
             profilePicture,
         };
 
-        dispatch(setLoading(true)); // Show loading indicator
+        dispatch(setLoading(true));
 
-        // Axios POST request for registration
+
         axiosInstance.post('/users/register', data)
             .then(res => {
                 console.log(res.data);
@@ -91,8 +92,8 @@ function Owner_Register() {
                             <h2>Sign Up</h2>
                         </div>
                         <form onSubmit={(e) => {
-                            e.preventDefault(); // Prevent default form submission
-                            isOwnerRegister(); // Call validation and submit
+                            e.preventDefault();
+                            isOwnerRegister();
                         }}>
                             <div className="row mb-3">
                                 <div className="col-md-6">
@@ -129,15 +130,15 @@ function Owner_Register() {
                                            placeholder="Enter Contact Number"/>
                                     {errors.contactNumber && <div className="text-danger">{errors.contactNumber}</div>}
                                 </div>
-                                {/*<div className="col-md-6">*/}
-                                {/*    <label className="form-label">Gender</label>*/}
-                                {/*    <select className="form-control" name="gender" onChange={handleChange}>*/}
-                                {/*        <option value="">Select Gender</option>*/}
-                                {/*        <option value="male">Male</option>*/}
-                                {/*        <option value="female">Female</option>*/}
-                                {/*    </select>*/}
-                                {/*    {errors.gender && <div className="text-danger">{errors.gender}</div>}*/}
-                                {/*</div>*/}
+                                <div className="col-md-6">
+                                    <label className="form-label">Gender</label>
+                                    <select className="form-control" name="gender" onChange={handleChange}>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                    {errors.gender && <div className="text-danger">{errors.gender}</div>}
+                                </div>
                             </div>
                             <div className="row mb-3">
                                 <div className="col-md-6">
@@ -154,7 +155,7 @@ function Owner_Register() {
                                 </div>
                             </div>
 
-                            {/* Full-width NIC Front */}
+
                             <div className="row mb-3">
                                 <label className="form-label d-block">NIC Front</label>
                                 <FileUploader handleChange={handleChangeNicFront}>

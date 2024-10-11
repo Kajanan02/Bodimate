@@ -114,14 +114,14 @@ function BoardingDetails() {
                                 outline: "none"
                             }}
                         >
-                            <Heart
-                                isActive={active}
-                                onClick={() => setActive(!active)}
-                                style={{
-                                    border: "none",
-                                    outline: "none"
-                                }}
-                            />
+                            {/*<Heart*/}
+                            {/*    isActive={active}*/}
+                            {/*    onClick={() => setActive(!active)}*/}
+                            {/*    style={{*/}
+                            {/*        border: "none",*/}
+                            {/*        outline: "none"*/}
+                            {/*    }}*/}
+                            {/*/>*/}
                         </div>
                     </div>
             </div>

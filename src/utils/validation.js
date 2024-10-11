@@ -581,10 +581,10 @@ export function validateUserRegistration(values) {
         errors.contactNumber = "Contact Number is Not Valid";
     }
 
-    //
-    // if (!values.gender) {
-    //     errors.gender = "Gender is Required";
-    // }
+
+    if (!values.gender) {
+        errors.gender = "Gender is Required";
+    }
 
 
     if (!values.address) {
@@ -595,8 +595,8 @@ export function validateUserRegistration(values) {
     if (!values.nicNo) {
         errors.nicNo = "NIC Number is Required";
     }
-    //
-    //
+
+
     // if (!values.nicFront) {
     //     errors.nicFront = "NIC Front is Required";
     // }
@@ -607,8 +607,8 @@ export function validateUserRegistration(values) {
     // }
     //
     //
-    // if (!values.profilePicture) {
-    //     errors.profilePicture = "Profile Picture is Required";
+    // if (!values.profilePic) {
+    //     errors.profilePic = "Profile Picture is Required";
     // }
 
     return errors;
