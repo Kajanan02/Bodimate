@@ -544,3 +544,72 @@ export function validateAdminPasswordSettings(values) {
 
     return errors;
 }
+
+export function validateUserRegistration(values) {
+    console.log(values);
+    let errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (!values.firstName) {
+        errors.firstName = "First Name is Required";
+    }
+
+
+    if (!values.lastName) {
+        errors.lastName = "Last Name is Required";
+    }
+
+
+    if (!values.email) {
+        errors.email = "Email is Required";
+    } else if (!emailRegex.test(values.email)) {
+        errors.email = "Invalid Email Format";
+    }
+
+
+    if (!values.password) {
+        errors.password = "Password is Required";
+    } else if (values.password.length < 6) {
+        errors.password = "Password must be at least 6 characters long";
+    }
+
+
+    if (!values.contactNumber) {
+        errors.contactNumber = "Contact Number is Required";
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.contactNumber)) {
+        errors.contactNumber = "Contact Number is Not Valid";
+    }
+
+
+    if (!values.gender) {
+        errors.gender = "Gender is Required";
+    }
+
+
+    if (!values.address) {
+        errors.address = "Address is Required";
+    }
+
+
+    if (!values.nicNo) {
+        errors.nicNo = "NIC Number is Required";
+    }
+
+
+    // if (!values.nicFront) {
+    //     errors.nicFront = "NIC Front is Required";
+    // }
+    //
+    //
+    // if (!values.nicBack) {
+    //     errors.nicBack = "NIC Back is Required";
+    // }
+    //
+    //
+    // if (!values.profilePic) {
+    //     errors.profilePic = "Profile Picture is Required";
+    // }
+
+    return errors;
+}
