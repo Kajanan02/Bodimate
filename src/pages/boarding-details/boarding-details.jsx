@@ -4,13 +4,22 @@ import FeatherIcon from 'feather-icons-react';
 import verifiedIcon from "../../assets/boarding-details/verified.svg"
 import ownerProfile from "../../assets/boarding-details/OwnerProfile.jpg"
 import DegreeView from "./degreeView.jsx";
+import {useDispatch} from "react-redux";
+import {toggleLoader} from "../../redux/action.js";
+import axiosInstance from "../../utils/axiosInstance.js";
+import {useParams} from "react-router-dom";
+// import Heart from "react-heart";
+import axios from "axios";
 
 function BoardingDetails() {
 
     const [expanded, setExpanded] = useState(false);
     const [showButton, setShowButton] = useState(false);
     const reviewRef = useRef(null);
+    const {id} = useParams()
 
+
+    console.log(id)
     useEffect(() => {
         if (reviewRef.current) {
             const lineHeight = parseInt(window.getComputedStyle(reviewRef.current).lineHeight);
@@ -37,20 +46,88 @@ function BoardingDetails() {
         setGuestCount((prevCount) => Math.max(prevCount - 1, 0));
     };
 
+    const [update, setUpdate] = useState(false);
+    const dispatch = useDispatch();
+    const [List, setList] = useState([
+
+    ]);
+
+    useEffect(() => {
+        dispatch(toggleLoader(true));
+
+        axiosInstance.get(`/boardings/getOneBoarding/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                setList(res.data);
+
+            })
+            .catch((err) => {
+                console.error("Error fetching boardings:", err);
+            })
+            .finally(() => {
+                dispatch(toggleLoader(false));
+            });
+    }, []);
+
+    useEffect(() => {
+        if (update) {
+            dispatch(toggleLoader(true));
+
+            axios.put(`http://localhost:5000/api/saveboarding/user/${values._id}/boarding/${values._id}`, values)
+                .then((res) => {
+                    console.log(res.data);
+                    setActive(res.data.isActive); // Adjust based on API response structure
+                })
+                .catch((err) => {
+                    console.error("Error updating boarding state:", err);
+                })
+                .finally(() => {
+                    dispatch(toggleLoader(false));
+                });
+        }
+    }, [update]);
+
+    const extractNumericValue = (currencyString) => {
+        if (typeof currencyString === 'string') {
+            return parseInt(currencyString.replace(/[^\d]/g, ''), 10);
+        }
+
+        return 0;
+    };
+    const [active, setActive] = useState(false)
+    const advancedPayment = extractNumericValue(List.advancedPayment) || 500;
+    const totalPrice = advancedPayment * guestCount;
+
     return (
         <div className="container padx-sm-3 padx-md-4 pad-lg-20">
+
             <div className="row">
                 <div className="col-12 d-flex align-items-center">
-                    <h2 className="mt-4 mb-3 des-text pe-3 fw-bold">Nugegoda, Colombo</h2>
+                    <h2 className="mt-4 mb-3 des-text pe-3 fw-bold">{List.street}, {List.district}</h2>
                     <img src={verifiedIcon} alt="Verified Icon" className="verified-icon mt-4 mb-3"/>
-                    <button type="button" className="btn btn-heart ms-auto p-0">
-                        <FeatherIcon className="action-icons-color mt-4 mb-3" icon="heart"/>
-                    </button>
-                </div>
+
+                        <div
+                            className="btn btn-heart ms-auto p-0"
+                            style={{
+                                width: "1.5rem",
+                                border: "none",
+                                outline: "none"
+                            }}
+                        >
+                            {/*<Heart*/}
+                            {/*    isActive={active}*/}
+                            {/*    onClick={() => setActive(!active)}*/}
+                            {/*    style={{*/}
+                            {/*        border: "none",*/}
+                            {/*        outline: "none"*/}
+                            {/*    }}*/}
+                            {/*/>*/}
+                        </div>
+                    </div>
             </div>
             <div className="row mb-4">
                 <div className="col-12">
-                    <p className="fw-bold des-sub-text">University of Sri Jayewardenepura</p>
+                    <p className="fw-bold des-sub-text">{List.nearestUniversity}</p>
                 </div>
             </div>
             <div className="row mb-4">
@@ -62,7 +139,7 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-6 col-md-11">
                             <div className="row g-3 position-relative">
-                                <div className="col-6">
+                            <div className="col-6">
                                     <img src={descriptionImg} alt="Boarding Image" className="img-fluid rounded-20"/>
                                 </div>
                                 <div className="col-6">
@@ -102,10 +179,11 @@ function BoardingDetails() {
                     <div className="col d-flex align-items-center justify-content-between">
                         <div>
                             <div className="owner-text fw-bolder">
-                                <p>Boarding hosted by Deva</p>
+                                <p>Boarding hosted by {List.ownerName}</p>
                             </div>
                             <div className="owner-text-des">
-                                <p>6 guests · 6 bedroom · 3 bed · 1 private bathroom</p>
+                                <p>{List.membersCount} guests · {List.noOfRooms} bedroom · {List.membersCount} bed · 1
+                                    private bathroom</p>
                             </div>
                         </div>
                         <div>
@@ -119,7 +197,7 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Accommodation Name</h4>
-                            <p className="detail-description">Deva Residence</p>
+                            <p className="detail-description">{List.boardingName}</p>
                         </div>
                     </div>
                     <div className="row pb-3">
@@ -128,7 +206,8 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Location</h4>
-                            <p className="detail-description">No. 123, XYZ Lane, Nugegoda, Colombo, Sri Lanka.</p>
+                            <p className="detail-description">{List.street}, {List.city}, {List.district}, Sri
+                                Lanka.</p>
                         </div>
                     </div>
                     <div className="row pb-3">
@@ -137,9 +216,9 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Distance to University</h4>
-                            <p className="detail-description">Deva is conveniently located within walking distance of
-                                the University of Colombo, making it
-                                an ideal choice for students seeking proximity to campus.</p>
+                            <p className="detail-description">{List.boardingName} is conveniently located
+                                just {List.distance} from the {List.nearestUniversity},
+                                making it an ideal choice for students seeking proximity to campus.</p>
                         </div>
                     </div>
                     <div className="row pb-3">
@@ -148,7 +227,8 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Room Types</h4>
-                            <p className="detail-description">Deva offers a variety of room types to suit your needs,
+                            <p className="detail-description">{List.boardingName} offers a variety of room types to suit
+                                your needs,
                                 including spacious single rooms and
                                 cozy shared rooms. Each room is furnished with a comfortable bed, study desk, chair, and
                                 ample storage space.</p>
@@ -192,7 +272,8 @@ function BoardingDetails() {
                         </div>
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Price</h4>
-                            <p className="detail-description">Advance: Rs. 5,000 & Rent: Rs. 4,000 per month for a
+                            <p className="detail-description">Advance:{List.advancedPayment} &
+                                Rent: {List.pricePerMonth} per month for a
                                 person.</p>
                         </div>
                     </div>
@@ -203,7 +284,7 @@ function BoardingDetails() {
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Transportation Options</h4>
                             <p className="detail-description">Public transportation options, including buses and trains,
-                                are easily accessible from Deva.
+                                are easily accessible from {List.boardingName}.
                                 Additionally, bicycle rental services are available nearby for students who prefer
                                 eco-friendly
                                 commuting options.</p>
@@ -223,7 +304,7 @@ function BoardingDetails() {
                 </div>
                 <div className="col-lg-4 d-flex justify-content-end">
                     <div className="card price-card border p-4">
-                        <p className="detail-heading">Rs. 4000 (per month)</p>
+                        <p className="detail-heading">RS.{advancedPayment.toLocaleString()} (per month)</p>
                         <div className="row">
                             <div className="col-md-6 mb-3">
                                 <label htmlFor="checkInDate" className="form-label price-card-text">Check-in
@@ -246,7 +327,8 @@ function BoardingDetails() {
                                             type="button"
                                             className="btn btn-decrease d-flex align-items-center justify-content-center"
                                             onClick={decrementGuestCount}
-                                        >-
+                                        >
+                                            -
                                         </button>
                                     </div>
                                     <input
@@ -261,28 +343,29 @@ function BoardingDetails() {
                                             type="button"
                                             className="btn btn-increase d-flex align-items-center justify-content-center"
                                             onClick={incrementGuestCount}
-                                        >+
+                                        >
+                                            +
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="col p-2">
-                            <button type={"button"} className="btn login-btn w-100 fw-semibold p-2">Reserve
-                            </button>
+                            <button type="button" className="btn login-btn w-100 fw-semibold p-2">Reserve</button>
                         </div>
                         <p className="text-muted mb-3 text-center">You will not be charged yet</p>
                         <div className="d-flex justify-content-between mb-3 price-card-text">
-                            <span className={"fw-bold"}>Price Reason:</span>
-                            <span>Price: Rs. 4000 (per month)</span>
+                            <span className="fw-bold">Price Reason:</span>
+                            <span>RS.{advancedPayment.toLocaleString()} (Advanced Payment)</span>
                         </div>
                         <hr/>
                         <div className="d-flex justify-content-between mb-3 price-card-text">
-                            <span className={"fw-bold"}>Total Price:</span>
-                            <span>Rs. 4000</span>
+                            <span className="fw-bold">Total Price:</span>
+                            <span>RS {totalPrice.toLocaleString()}</span>
                         </div>
                     </div>
                 </div>
+
                 <hr className="my-4"/>
             </div>
             <div className="row">
