@@ -24,7 +24,7 @@ function ListingsForm(props) {
 
     const [selectedBuyer, setSelectedBuyer] = useState([]);
     const [listingsList, setListingsList] = useState([]);
-    const [singleSelections, setSingleSelections] = useState([]);
+    // const [singleSelections, setSingleSelections] = useState([]);
     const [isSubmit, setIsSubmit] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const dispatch = useDispatch();
@@ -107,7 +107,7 @@ function ListingsForm(props) {
             }).catch((err) => {
             toast.error("Something went wrong")
         }).finally(() => {
-            // dispatch(setLoading(false))
+            dispatch(setLoading(false))
             setIsSubmit(false)
             resetForm()
             props.onHide()
@@ -589,6 +589,7 @@ function ListingsForm(props) {
                                                             <div className={"admin-boarding-type-home-button pb-2"}>
                                                                 <Form.Check
                                                                     type="radio"
+                                                                    value={values.stayPreference}
                                                                     name="stayPreference"
                                                                     onChange={handleChange}
                                                                     label={

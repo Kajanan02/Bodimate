@@ -18,30 +18,25 @@ function AdminListings() {
     const [listingsAllList, setListingsAllList] = useState([])
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
-    const [listingsList, setListingsList] = useState([
-
-    ]);
+    const [listingsList, setListingsList] = useState([]);
 
 
 
-    const confirmationDialog = useSelector(state => {
-        return state.setting?.confirmationDialog
-    });
+    const confirmationDialog = useSelector(state => state.confirmationDialog);
 
     function handleDelete(id) {
         dispatch(toggleConfirmationDialog({
             isVisible: true,
-            confirmationHeading: ('ARE YOU SURE YOU WANT TO DELETE THIS STUDENT DATA'),
-            confirmationDescription: ('THE DELETE ACTION WILL REMOVE THE THIS STUDENT DATA')
+            confirmationHeading: 'ARE YOU SURE YOU WANT TO DELETE THIS STUDENT DATA',
+            confirmationDescription: 'THE DELETE ACTION WILL REMOVE THIS STUDENT DATA',
+            onSuccess: false // Ensure this is added to track success
         }));
-        setDeletedId(id)
-        console.log("ads")
+        setDeletedId(id);
+        console.log("Delete initiated for ID:", id);
     }
 
-
-
-    console.log(confirmationDialog)
-    console.log(deletedId)
+    // Debugging: log the current state of confirmation dialog and deletedId
+    console.log("Current Deleted ID:", deletedId);
 
 
 
@@ -62,6 +57,7 @@ function AdminListings() {
 
     useEffect(() => {
         dispatch(setLoading(true));
+        console.log(import.meta.env.VITE_REACT_APP_HOST)
 
         axiosInstance.get(`/boardings/getAllBoarding`)
             .then((res) => {
@@ -70,34 +66,37 @@ function AdminListings() {
                 setListingsAllList(res.data);
             })
             .catch((err) => {
-                console.error("Error fetching boardings:", err);
+                // console.error("Error fetching boardings:", err);
+                console.log(err)
             })
             .finally(() => {
                 dispatch(setLoading(false));
+                // setDeletedId(null)
             });
     }, [update]);
 
     useEffect(() => {
-        if (!confirmationDialog || !confirmationDialog.onSuccess || !deletedId) {
-            console.log("asdf")
+        if (!confirmationDialog || !confirmationDialog.confirmationDialog.onSuccess || !deletedId) {
+            console.log("Deletion conditions not met");
             return;
         }
-        console.log("asdasd")
-        dispatch(setLoading(true))
 
+        dispatch(setLoading(true)); // Optional: set loading state if needed
+
+        // Axios delete request
         axiosInstance.delete(`/boardings/deleteBoarding/${deletedId}`)
             .then((res) => {
-                console.log(res.data);
-                setUpdate(!update)
-                toast.success(`Successfully Deleted`)
-
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-            setDeletedId(null)
-        })
-    }, [confirmationDialog])
+                setUpdate(!update); // Trigger re-render of updated listings
+                toast.success('Successfully Deleted'); // Optional: Toast notification
+            })
+            .catch((err) => {
+                console.log("Delete error:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Optional: remove loading state
+                setDeletedId(null); // Reset after deletion
+            });
+    }, [confirmationDialog, deletedId]);
 
     return (
         <div className={"container mb-4 p-5"}>
@@ -123,22 +122,25 @@ function AdminListings() {
                                 Near By University
                             </button>
                             <ul className={"dropdown-menu dropdown-menu-dark"}>
-                                <li><a className={"dropdown-item cursor-pointer"}
+                                <li>
+                                    <a className={"dropdown-item cursor-pointer"}
                                        onClick={() => setListingsList(filterDataByKey(listingsAllList, "All"))}
-                                >
-                                    All
-                                </a>
+                                    >
+                                        All
+                                    </a>
                                 </li>
-                                {uniq(pluck(listingsAllList, "nearestUniversity")).map((item, index) => (
-                                    <li key={index + item}>
-                                        <a
-                                            className={"dropdown-item cursor-pointer"}
-                                            onClick={() => setListingsList(filterDataByKey(listingsAllList, item))}
-                                        >
-                                            {/*{item.replace("_", " ")}*/}
-                                        </a>
-                                    </li>
-                                ))}
+                                {uniq(pluck(listingsAllList, "nearestUniversity"))
+                                    .filter(item => item) // Filter out undefined or null values
+                                    .map((item, index) => (
+                                        <li key={index + item}>
+                                            <a
+                                                className={"dropdown-item cursor-pointer"}
+                                                onClick={() => setListingsList(filterDataByKey(listingsAllList, item))}
+                                            >
+                                                {item?.replace("_", " ") || "Unknown University"} {/* Safely handle undefined item */}
+                                            </a>
+                                        </li>
+                                    ))}
                             </ul>
                         </div>
                         <button type="button" className={"btn text-white students-dropdown-btn admin-dropdown"}
@@ -164,35 +166,33 @@ function AdminListings() {
                         </tr>
                         </thead>
                         <tbody>
-                        {listingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
-                            <tr key={index + "asd"}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{data.boardingNo}</td>
-                                <td>{data.boardingName}</td>
-                                <td>{data.nearestUniversity}</td>
-                                <td>{data.pricePerMonth}</td>
-                                <td>
-                                    <FeatherIcon className={"admin-action-icons"} icon={"eye"}
-                                                 onClick={() => {
-                                                     setModalType("View");
-                                                     setSelectedListings(data)
-                                                     setModalShow(true)
-                                                 }}/>
-                                    <FeatherIcon className={"admin-action-icons"} icon={"edit"}
-                                                 onClick={() => {
-                                                     setSelectedListings(data)
-                                                     setModalType("Edit");
-                                                     setModalShow(true)
-                                                 }}/>
+                        {Array.isArray(listingsList) && listingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                            .map((data, index) => (
+                                <tr key={index + "asd"}>
+                                    <td scope="row">{index + 1}</td>
+                                    <td>{data.boardingNo}</td>
+                                    <td>{data.boardingName}</td>
+                                    <td>{data.nearestUniversity}</td>
+                                    <td>{data.pricePerMonth}</td>
+                                    <td>
+                                        <FeatherIcon className={"admin-action-icons"} icon={"eye"}
+                                                     onClick={() => {
+                                                         setModalType("View");
+                                                         setSelectedListings(data);
+                                                         setModalShow(true);
+                                                     }} />
+                                        <FeatherIcon className={"admin-action-icons"} icon={"edit"}
+                                                     onClick={() => {
+                                                         setSelectedListings(data);
+                                                         setModalType("Edit");
+                                                         setModalShow(true);
+                                                     }} />
+                                        <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
+                                                     onClick={() => handleDelete(data._id)} />
+                                    </td>
+                                </tr>
+                            ))}
 
-                                    <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
-                                                 onClick={() => handleDelete(data._id)}
-
-
-                                    />
-
-                                </td>
-                            </tr>))}
                         </tbody>
                     </table>
                     {listingsList.length === 0 &&
