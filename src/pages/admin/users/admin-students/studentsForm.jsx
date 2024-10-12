@@ -35,17 +35,17 @@ function StudentsForm(props) {
         initForm({});
     }
 
-    useEffect(() => {
-        dispatch(setLoading(true))
-        axiosInstance.get(`/admin/users-boarding-owner`)
-            .then((res) => {
-                setStudentsList(res.data)
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-        })
-    }, [])
+    // useEffect(() => {
+    //     dispatch(setLoading(true))
+    //     axiosInstance.get(`/admin/users-boarding-owner`)
+    //         .then((res) => {
+    //             setStudentsList(res.data)
+    //         }).catch((err) => {
+    //         console.log(err)
+    //     }).finally(() => {
+    //         dispatch(setLoading(false))
+    //     })
+    // }, [])
 
     useEffect(() => {
         if (["View", "Edit"].includes(props.type) && !isEmpty(props.selectedStudents)) {
