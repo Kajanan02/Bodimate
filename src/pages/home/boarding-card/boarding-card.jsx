@@ -5,7 +5,6 @@ import FeatherIcon from "feather-icons-react";
 import './boarding-card.css';
 import {useNavigate} from "react-router-dom";
 // import Heart from "react-heart";
-import {toggleLoader} from "../../../redux/action.js";
 import axiosInstance from "../../../utils/axiosInstance.js";
 import {useDispatch} from "react-redux";
 import axios from "axios";

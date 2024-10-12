@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {NavLink, Outlet, useLocation} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {NavLink, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import Logo from "../../assets/logo.svg";
 import FeatherIcon from 'feather-icons-react';
 import SideClose from "../../assets/admin-layout/carbon_side-panel-close.svg";
@@ -7,6 +7,7 @@ import ProfilePic from "../../assets/admin-layout/DefaultProfile.jpg";
 import Msg from "../../assets/admin-layout/msg-icon.svg";
 import Bell from "../../assets/admin-layout/bell-icon.svg";
 import NotificationBox from './NotificationBox.jsx';
+import {useSelector} from "react-redux";
 
 function AdminLayout() {
     const [show, setShow] = useState(false);
@@ -15,6 +16,16 @@ function AdminLayout() {
     const [notifications, setNotifications] = useState([]);
     const [usersDropdown, setUsersDropdown] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+    const token = localStorage.getItem('ACCESS_TOKEN');
+
+    const userDetail = useSelector(state => state.userData.userDetails);
+
+    useEffect(() => {
+        if(!token){
+            navigate('/login')
+        }
+    }, [userDetail]);
 
     const toggleNotification = () => setShowNotification(!showNotification);
 
@@ -184,7 +195,7 @@ function AdminLayout() {
                         </div>
                         <div className={'w-100 border-bottom-d1d1d1 mb-3'}/>
                         <div className={"w-100 px-sm-2"}>
-                            <NavLink
+                            <NavLink onClick={()=> localStorage.clear()}
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/login"}>
                                 <div className={'d-flex'}>
@@ -216,9 +227,9 @@ function AdminLayout() {
                                         </a>
                                     </li>
                                     <li className="admin-nav-item px-2 flex-column nav-profile">
-                                        <p className="nav-profileName mb-0">Janushankan<br/>
+                                        <p className="nav-profileName mb-0">{userDetail?.lastName ||"Guest"}<br/>
                                             <small
-                                                className="text-muted mt-0 mb-0 py-0 nav-profileName nav-profileRole">Admin</small>
+                                                className="text-muted mt-0 mb-0 py-0 nav-profileName nav-profileRole">{userDetail?.role ||"Guest"}</small>
                                         </p>
                                     </li>
                                     <li className="nav-item">

@@ -13,6 +13,7 @@ import { setLoading } from "../../redux/features/loaderSlice.js";
 import { FileUploader } from 'react-drag-drop-files';
 import uploadIcon from "../../assets/admin-listings/camera.svg";
 import './Bodimateyourhome .css';
+import axios from "axios";
 
 function Owner_Register() {
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,7 +25,7 @@ function Owner_Register() {
     const navigate = useNavigate();
 
 
-    const { handleChange, handleSubmit, errors, values } = FormHandler(isOwnerRegister, validateUserRegistration);
+    const { handleChange, handleSubmit, errors, values ,setValue} = FormHandler(isOwnerRegister, validateUserRegistration);
 
     function isOwnerRegister() {
         const validationErrors = validateUserRegistration(values);
@@ -35,21 +36,33 @@ function Owner_Register() {
         }
     }
 
+
+    function imageUpload(file, key) {
+        console.log("File")
+
+        dispatch(setLoading(true))
+        const data = new FormData()
+        data.append("file", file)
+        data.append("upload_preset", "xi7icexi")
+        data.append("cloud_name", "dacrccjrm")
+        axios.put("https://api.cloudinary.com/v1_1/dacrccjrm/image/upload", data)
+            .then((res) => {
+                console.log(res.data.url)
+                setValue({[key]: res.data.url})
+            }).finally(() => dispatch(setLoading(false)))
+    }
+
     useEffect(() => {
         if (!isSubmitted) return;
 
 
-        const data = {
-            ...values,
-            nicFront,
-            nicBack,
-            profilePicture,
-        };
 
         dispatch(setLoading(true));
 
+      values.role = "boardingOwner";
 
-        axiosInstance.post('/users/register', data)
+
+        axiosInstance.post('/users/register', values)
             .then(res => {
                 console.log(res.data);
                 loadCredential(res.data);
@@ -63,19 +76,23 @@ function Owner_Register() {
                 setIsSubmitted(false);
                 dispatch(setLoading(false)); // Hide loading indicator
             });
-    }, [isSubmitted, dispatch, navigate, nicFront, nicBack, profilePicture, values]);
+    }, [isSubmitted]);
 
     const handleChangeNicFront = (file) => {
         setNicFront(file);
+        imageUpload(file, "nicFront")
     };
 
     const handleChangeNicBack = (file) => {
         setNicBack(file);
+        imageUpload(file, "nicBack")
     };
 
     const handleChangeProfilePicture = (file) => {
         setProfilePicture(file);
+        imageUpload(file, "profilePic")
     };
+
 
     return (
         <div className="container-fluid align-middle">
@@ -126,9 +143,9 @@ function Owner_Register() {
                             <div className="row mb-3">
                                 <div className="col-md-6">
                                     <label className="form-label">Contact Number</label>
-                                    <input className="form-control" name="contactNumber" onChange={handleChange}
+                                    <input className="form-control" name="contactNo" onChange={handleChange}
                                            placeholder="Enter Contact Number"/>
-                                    {errors.contactNumber && <div className="text-danger">{errors.contactNumber}</div>}
+                                    {errors.contactNo && <div className="text-danger">{errors.contactNo}</div>}
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label">Gender</label>
@@ -158,7 +175,7 @@ function Owner_Register() {
 
                             <div className="row mb-3">
                                 <label className="form-label d-block">NIC Front</label>
-                                <FileUploader handleChange={handleChangeNicFront}>
+                                <FileUploader handleChange={handleChangeNicFront} types={["JPEG", "PNG","JPG"]}>
                                     <div className="file-uploader-container d-flex flex-column align-items-center">
                                         <img src={uploadIcon} alt="Upload Icon"/>
                                         {!nicFront?.name ? (  // Changed condition to check for `name` property
@@ -179,7 +196,7 @@ function Owner_Register() {
                             {/* Full-width NIC Back */}
                             <div className="row mb-3">
                                 <label className="form-label d-block">NIC Back</label>
-                                <FileUploader handleChange={handleChangeNicBack}>
+                                <FileUploader handleChange={handleChangeNicBack} types={["JPEG", "PNG","JPG"]}>
                                     <div className="file-uploader-container d-flex flex-column align-items-center">
                                         <img src={uploadIcon} alt="Upload Icon"/>
                                         {!nicBack?.name ? (  // Changed condition to check for `name` property
@@ -200,7 +217,7 @@ function Owner_Register() {
 
                             <div className="row mb-3">
                                 <label className="form-label d-block">Profile Picture</label>
-                                <FileUploader handleChange={handleChangeProfilePicture}>
+                                <FileUploader handleChange={handleChangeProfilePicture} types={["JPEG", "PNG","JPG"]}>
                                     <div className="file-uploader-container d-flex flex-column align-items-center">
                                         <img src={uploadIcon} alt="Upload Icon"/>
                                         {!profilePicture?.name ? (

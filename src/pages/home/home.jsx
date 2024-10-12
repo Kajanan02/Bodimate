@@ -5,11 +5,12 @@ import homeContact from "../../assets/neaby-university/contact us.png";
 import uva from '../../assets/neaby-university/uwu.jpg'
 
 import './home.css';
-import {toggleLoader} from "../../redux/action.js";
 import axiosInstance from "../../utils/axiosInstance.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {setLoading} from "../../redux/features/loaderSlice.js";
+import BoardingOwnerHome from "../admin/home/boarding-owner-home.jsx";
 
 function Home() {
 
@@ -36,6 +37,7 @@ function Home() {
         "Wayamba University of Sri Lanka (WUSL)"
     ];
     const nearestUniversitySet = new Set(nearestUniversity);
+    const userDetail = useSelector(state => state.userData.userDetails);
 
 
     const uniqueUniversitiesMap = new Map();
@@ -50,7 +52,7 @@ function Home() {
 
 
     useEffect(() => {
-        dispatch(toggleLoader(true));
+        dispatch(setLoading(true));
 
         axiosInstance.get("/boardings/getAllBoarding")
             .then((res) => {
@@ -62,13 +64,14 @@ function Home() {
                 console.error("Error fetching boardings:", err);
             })
             .finally(() => {
-                dispatch(toggleLoader(false));
+                dispatch(setLoading(false));
             });
     }, [update]);
 
 
 
     return (
+
         <div>
             <div className="container padx-sm-3 padx-md-4 pad-lg-20 home-container">
                 <div className="main-image-container">

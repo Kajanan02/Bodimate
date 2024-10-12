@@ -3,9 +3,9 @@ import FeatherIcon from "feather-icons-react";
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Dropdown, DropdownMenu, DropdownToggle, Form, FormCheck, FormControl, Modal, Row} from "react-bootstrap";
 import FormHandler from "react-form-buddy";
-import {validateListings} from "../../../utils/validation";
+import {validateListings, validateListingsBoardingOwner} from "../../../utils/validation";
 import {setLoading} from "../../../redux/features/loaderSlice.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "underscore";
 import {toast} from "react-toastify";
 import homeIcon from "../../../assets/admin-listings/homeIcon.svg";
@@ -17,18 +17,21 @@ import personIcon from "../../../assets/person-svgrepo-com.svg";
 import camera from "../../../assets/admin-listings/camera.svg";
 import addIcon from "../../../assets/admin-listings/plus-circle.svg";
 import axiosInstance from "../../../utils/axiosInstance.js";
-import profileImage from "../../../assets/admin-setting/admin-profile.png";
+import BoardingLocation from "./boardingLocation.jsx";
+import axios from "axios";
 
 
 function ListingsForm(props) {
 
     const [selectedBuyer, setSelectedBuyer] = useState([]);
     const [listingsList, setListingsList] = useState([]);
-    // const [singleSelections, setSingleSelections] = useState([]);
     const [isSubmit, setIsSubmit] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const dispatch = useDispatch();
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState({});
+    const [imagesList,setImageList]=useState([])
+
+    const userDetail = useSelector(state => state.userData.userDetails);
 
     const {
         handleChange,
@@ -37,9 +40,10 @@ function ListingsForm(props) {
         initForm,
         values,
         errors,
-    } = FormHandler(stateListings, validateListings);
+    } = FormHandler(stateListings, props.from ==="boardingOwner" ? validateListingsBoardingOwner :validateListings);
 
     function stateListings() {
+        console.log("State Listings")
         setIsSubmit(true)
     }
 
@@ -57,28 +61,19 @@ function ListingsForm(props) {
         setValue({nearestUniversity: selected});
     }
 
-    const handleChangeSettingsProfileImage = (file) => {
+    const handleChangeSettingsProfileImage = (file,key) => {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setSelectedImage(reader.result);
+                setSelectedImage({...selectedImage, [key]: reader.result});
             };
             reader.readAsDataURL(file);
+            imageUpload(file,key)
         }
+
     }
     console.log(selectedImage)
 
-    useEffect(() => {
-        dispatch(setLoading(true))
-        axiosInstance.get("/boardings/getAllBoarding")
-            .then((res) => {
-                setListingsList(res.data)
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-        })
-    }, [])
 
     useEffect(() => {
         if (["View", "Edit"].includes(props.type) && !isEmpty(props.selectedListings)) {
@@ -89,8 +84,6 @@ function ListingsForm(props) {
     console.log(props.selectedListings)
 
 
-
-
     useEffect(() => {
         if (!isSubmit || props.type !== "Edit") {
             return
@@ -98,8 +91,7 @@ function ListingsForm(props) {
         dispatch(setLoading(true))
 
 
-
-            axiosInstance.put(`/boardings/editBoarding/${values._id}`, values)
+        axiosInstance.put(`/boardings/editBoarding/${values._id}`, values)
             .then((res) => {
                 console.log(res.data)
                 toast.success(`Successfully Updated`)
@@ -116,21 +108,38 @@ function ListingsForm(props) {
     }, [isSubmit])
 
 
-
     console.log(props.type)
     console.log(errors)
     console.log(values)
 
 
+    function imageUpload(file, key) {
+        console.log("File")
 
+        dispatch(setLoading(true))
+        const data = new FormData()
+        data.append("file", file)
+        data.append("upload_preset", "xi7icexi")
+        data.append("cloud_name", "dacrccjrm")
+        axios.put("https://api.cloudinary.com/v1_1/dacrccjrm/image/upload", data)
+            .then((res) => {
+                console.log(res.data.url)
+                setImageList([...imagesList,res.data.url])
+            }).finally(() => dispatch(setLoading(false)))
+    }
 
 
     useEffect(() => {
 
         if (!isSubmit || props.type !== "Add") {
-                    return
-                }
+            return
+        }
 
+        values.boardingPic= imagesList
+        dispatch(setLoading(true))
+        if(props.from ==="boardingOwner"){
+            values.boardingOwner=userDetail._id
+        }
         axiosInstance.post(`/boardings/createBoarding`, values)
             .then((res) => {
                 console.log(res.data)
@@ -145,7 +154,17 @@ function ListingsForm(props) {
             resetForm()
 
         })
+
+
+
     }, [isSubmit]);
+
+
+    function boardingGeoLocation(position) {
+        let data = {}
+        data.gpscoordinates = position
+        setValue({location: position});
+    }
 
     const districts = [
         "Ampara",
@@ -205,6 +224,12 @@ function ListingsForm(props) {
         "Wayamba University of Sri Lanka (WUSL)"
     ];
 
+    function removeImage(key) {
+        let image = {...selectedImage}
+        delete image[key]
+        setSelectedImage(image)
+    }
+
     return (
         <Modal
             {...props}
@@ -246,23 +271,23 @@ function ListingsForm(props) {
                                             <p className={"admin-text-red"}>{errors.boardingName}</p>}
                                     </div>
                                 </div>
-                                <div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
-                                            Registration No</label>
-                                        <input name={"boardingNo"} placeholder={"Enter Boarding Registration No"}
-                                               className={`form-control ${errors.boardingNo ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.boardingNo || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.boardingNo &&
-                                            <p className={"admin-text-red"}>{errors.boardingNo}</p>}
-                                    </div>
-                                </div>
-                                <div className={"col-md-6"}>
+                                {/*<div className={"col-md-6"}>*/}
+                                {/*    <div className="mb-3">*/}
+                                {/*        <label htmlFor="exampleInputEmail1"*/}
+                                {/*               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding*/}
+                                {/*            Registration No</label>*/}
+                                {/*        <input name={"boardingNo"} placeholder={"Enter Boarding Registration No"}*/}
+                                {/*               className={`form-control ${errors.boardingNo ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                {/*               id="exampleInputEmail5"*/}
+                                {/*               onChange={handleChange}*/}
+                                {/*               value={values.boardingNo || ""}*/}
+                                {/*               disabled={["View", "State"].includes(props.type)}*/}
+                                {/*        />*/}
+                                {/*        {errors.boardingNo &&*/}
+                                {/*            <p className={"admin-text-red"}>{errors.boardingNo}</p>}*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {props.from !=="boardingOwner" ?<div className={"col-md-6"}>
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputEmail1"
                                                className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
@@ -277,8 +302,8 @@ function ListingsForm(props) {
                                         {errors.ownerName &&
                                             <p className={"admin-text-red"}>{errors.ownerName}</p>}
                                     </div>
-                                </div>
-                                <div className={"col-md-6"}>
+                                </div>:null}
+                                {props.from !=="boardingOwner" ?<div className={"col-md-6"}>
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputEmail1"
                                                className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
@@ -293,7 +318,7 @@ function ListingsForm(props) {
                                         {errors.ownerNIC &&
                                             <p className={"admin-text-red"}>{errors.ownerNIC}</p>}
                                     </div>
-                                </div>
+                                </div>:null}
                                 <div className={"col-md-6"}>
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputEmail1"
@@ -581,338 +606,406 @@ function ListingsForm(props) {
                                 {/*    </fieldset>*/}
                                 {/*</Col>*/}
 
-                                            <Col md={12} className={"ps-3"}>
-                                                <fieldset>
-                                                    <Form.Group as={Row} className="mb-3">
-                                                        <h5 className={'mb-3 admin-form-head fw-semibold'}>Stay Preference</h5>
-                                                        <Col sm={12} className={"pe-1"}>
-                                                            <div className={"admin-boarding-type-home-button pb-2"}>
-                                                                <Form.Check
-                                                                    type="radio"
-                                                                    value={values.stayPreference}
-                                                                    name="stayPreference"
-                                                                    onChange={handleChange}
-                                                                    label={
-                                                                        <div
-                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
-                                                                            <div
-                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
-                                                                                <div>
-                                                                                    <div className={"admin-form-radio-head"}>Male
-                                                                                        Only
-                                                                                    </div>
-                                                                                    <div className={"admin-radio-btn"}>
-                                                                                        Only Boys can stay.
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className={"ps-5 pe-2"}>
-                                                                                    <img src={maleIcon} alt={"maleIcon"}/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>}
-                                                                    id="formHorizontalRadios4"
-                                                                />
-                                                            </div>
-                                                            <div className={"admin-boarding-type-home-button pb-2"}>
-                                                                <Form.Check
-                                                                    type="radio"
-                                                                    name="stayPreference"
-                                                                    value="female"
-                                                                    onChange={handleChange}
-                                                                    label={
-                                                                        <div
-                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
-                                                                            <div
-                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
-                                                                                <div>
-                                                                                    <div className={"admin-form-radio-head"}>Female
-                                                                                        Only
-                                                                                    </div>
-                                                                                    <div className={"admin-radio-btn"}>
-                                                                                        Only Girls can stay.
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className={"ps-5 pe-2"}>
-                                                                                    <img src={femaleIcon} alt={"femaleIcon"}/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>}
-                                                                    id="formHorizontalRadios5"
-                                                                />
-                                                            </div>
-                                                            <div className={"admin-boarding-type-home-button pb-2"}>
-                                                                <Form.Check
-                                                                    type="radio"
-                                                                    name="stayPreference"
-                                                                    onChange={handleChange}
-                                                                    label={
-                                                                        <div
-                                                                            className={`admin-boarding-type-home-container w-100 ps-3 `}>
-                                                                            <div
-                                                                                className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
-                                                                                <div>
-                                                                                    <div className={"admin-form-radio-head"}>No
-                                                                                        Gender Restriction
-                                                                                    </div>
-                                                                                    <div className={"admin-radio-btn"}>
-                                                                                        Boys or Girls can stay.
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div className={"ps-5 pe-2"}>
-                                                                                    <img src={personIcon} alt={"personIcon"}/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>}
-                                                                    id="formHorizontalRadios6"
-                                                                />
-                                                            </div>
-                                                            {errors.stayPreference &&
-                                                                <p className={"admin-text-red"}>{errors.stayPreference}</p>}
-                                                        </Col>
-                                                    </Form.Group>
-                                                </fieldset>
-                                            </Col>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Facilities
-                                                        Listing</label>
-                                                    <Dropdown>
-                                                        <DropdownToggle variant="secondary" id="facilities-dropdown"
-                                                                        onChange={handleChange}
-                                                                        value={values.facilities}
-                                                                        disabled={["View", "State"].includes(props.type)}
-                                                                        className={`admin-input-border-color admin-form-dropdown-btn ${errors.facilities ? "border-danger" : ""}`}>
+                                <Col md={12} className={"ps-3"}>
+                                    <fieldset>
+                                        <Form.Group as={Row} className="mb-3">
+                                            <h5 className={'mb-3 admin-form-head fw-semibold'}>Stay Preference</h5>
+                                            <Col sm={12} className={"pe-1"}>
+                                                <div className={"admin-boarding-type-home-button pb-2"}>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        value={values.stayPreference}
+                                                        name="stayPreference"
+                                                        onChange={handleChange}
+                                                        label={
                                                             <div
-                                                                className={"admin-form-facility-dropdown d-flex align-items-center justify-content-between"}>
-                                                                <div className="flex-grow-1">
-                                                                    Select what are the Facilities available
-                                                                </div>
+                                                                className={`admin-boarding-type-home-container w-100 ps-3 `}>
                                                                 <div
-                                                                    className={"admin-facility-dropdown-icon ps-5 pe-0"}>
-                                                                    <FeatherIcon icon="chevron-down" color="#024950"/>
-                                                                </div>
-                                                            </div>
-                                                        </DropdownToggle>
-                                                        {errors.facilities &&
-                                                            <p className={"admin-text-red"}>{errors.facilities}</p>}
-                                                        <DropdownMenu className={"w-100"}>
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>WiFi</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Water
-                                                                           Heater</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Study Hall</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Kitchen</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Fan</div>}
-                                                                       className="mx-3 my-1 "
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Cooker</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <FormCheck name={"facilities"}
-                                                                       label={<div className={"ps-3"}>Other
-                                                                           Facilities</div>}
-                                                                       className="mx-3 my-1"
-                                                                       onChange={handleChange}
-                                                            />
-                                                            <div className={"w-100 ps-3 pe-3 pt-3"}>
-                                                                <FormControl name={"facilities"} id=""
-                                                                             onChange={handleChange}
-                                                                             className={"admin-input-border-color checkbox-input "}
-                                                                             placeholder="If other facilities specify here"/>
-                                                            </div>
-                                                        </DropdownMenu>
-                                                    </Dropdown>
-                                                </div>
-                                            </div>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Members
-                                                        Count</label>
-                                                    <FormControl id="membersCount" name={"membersCount"}
-                                                                 className={`admin-input-border-color ${errors.membersCount ? "border-danger" : ""}`}
-                                                                 onChange={handleChange}
-                                                                 value={values.membersCount || ""}
-                                                                 disabled={["View", "State"].includes(props.type)}
-                                                                 placeholder="Enter How Many Members Can Stay"
-                                                                 type={"number"}
-                                                                 min="1"
-                                                                 max="50"
-                                                    />
-                                                    {errors.membersCount &&
-                                                        <p className={"admin-text-red"}>{errors.membersCount}</p>}
-                                                </div>
-                                            </div>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>No
-                                                        of Rooms</label>
-                                                    <input name={"noOfRooms"} placeholder={"Enter No of Rooms"}
-                                                           className={`form-control ${errors.noOfRooms ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                                           id="exampleInputEmail5"
-                                                           onChange={handleChange}
-                                                           value={values.noOfRooms || ""}
-                                                           disabled={["View", "State"].includes(props.type)}
-                                                    />
-                                                    {errors.noOfRooms &&
-                                                        <p className={"admin-text-red"}>{errors.noOfRooms}</p>}
-                                                </div>
-                                            </div>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Distance</label>
-                                                    <input name={"distance"} placeholder={"Enter Distance"}
-                                                           className={`form-control ${errors.distance ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                                           id="exampleInputEmail5"
-                                                           onChange={handleChange}
-                                                           value={values.distance || ""}
-                                                           disabled={["View", "State"].includes(props.type)}
-                                                    />
-                                                    {errors.distance &&
-                                                        <p className={"admin-text-red"}>{errors.distance}</p>}
-                                                </div>
-                                            </div>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Advance
-                                                        Payment</label>
-                                                    <input name={"advancedPayment"} placeholder={"Enter Advance Payment"}
-                                                           className={`form-control ${errors.advancedPayment ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                                           id="exampleInputEmail5"
-                                                           onChange={handleChange}
-                                                           value={values.advancedPayment || ""}
-                                                           disabled={["View", "State"].includes(props.type)}
-                                                    />
-                                                    {errors.advancedPayment &&
-                                                        <p className={"admin-text-red"}>{errors.advancedPayment}</p>}
-                                                </div>
-                                            </div>
-                                            <div className={"col-md-6"}>
-                                                <div className="mb-3">
-                                                    <label htmlFor="exampleInputEmail1"
-                                                           className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Price
-                                                        Per Month</label>
-                                                    <input name={"pricePerMonth"} placeholder={"Enter Price Per Month"}
-                                                           className={`form-control ${errors.pricePerMonth ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                                           id="exampleInputEmail5"
-                                                           onChange={handleChange}
-                                                           value={values.pricePerMonth || ""}
-                                                           disabled={["View", "State"].includes(props.type)}
-                                                    />
-                                                    {errors.pricePerMonth &&
-                                                        <p className={"admin-text-red"}>{errors.pricePerMonth}</p>}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="admin-boarding-image-uploader mb-3">
-                                                    <div>
-                                                        <h5 className='admin-form-head fw-semibold'>Upload Boarding</h5>
-                                                        <div className="admin-form-sub-head fw-light fs-normal">
-                                                            Add 360 degree view Images of your Boarding
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-1 g-3">
-                                                        <div className="col-md-6">
-                                                            <FileUploader handleChange={handleChangeSettingsProfileImage}>
-                                                                <div className="admin-file-uploader-container-main">
-
-                                                                    {!selectedImage ? <img src={camera}
-                                                                                           alt="camera" width="80px"
-                                                                                           className="admin-img-upload m-auto" /> :
-                                                                        <img src={selectedImage}
-                                                                             alt="camera" width="80px"
-                                                                             className="admin-img-upload m-auto"/>}
-                                                                </div>
-                                                            </FileUploader>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <div className="row g-3">
-                                                                <div className="col-6">
-                                                                    <FileUploader>
-                                                                        <div
-                                                                            className="admin-file-uploader-container-main">
-                                                                            <img src={camera} alt="camera" width="50px"
-                                                                                 className="admin-img-upload m-auto"/>
+                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                    <div>
+                                                                        <div className={"admin-form-radio-head"}>Male
+                                                                            Only
                                                                         </div>
-                                                                    </FileUploader>
-                                                                </div>
-                                                                <div className="col-6">
-                                                                    <FileUploader>
-                                                                        <div
-                                                                            className="admin-file-uploader-container-main">
-                                                                            <img src={camera} alt="camera" width="50px"
-                                                                                 className="admin-img-upload m-auto"/>
+                                                                        <div className={"admin-radio-btn"}>
+                                                                            Only Boys can stay.
                                                                         </div>
-                                                                    </FileUploader>
+                                                                    </div>
+                                                                    <div className={"ps-5 pe-2"}>
+                                                                        <img src={maleIcon} alt={"maleIcon"}/>
+                                                                    </div>
                                                                 </div>
-                                                                <div className="col-6">
-                                                                    <FileUploader>
-                                                                        <div
-                                                                            className="admin-file-uploader-container-main">
-                                                                            <img src={camera} alt="camera" width="50px"
-                                                                                 className="admin-img-upload m-auto"/>
-                                                                        </div>
-                                                                    </FileUploader>
-                                                                </div>
-                                                                <div className="col-6">
-                                                                    <FileUploader>
-                                                                        <div
-                                                                            className="admin-file-uploader-container-main">
-                                                                            <img src={camera} alt="camera" width="50px"
-                                                                                 className="admin-img-upload m-auto"/>
-                                                                        </div>
-                                                                    </FileUploader>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                            </div>}
+                                                        id="formHorizontalRadios4"
+                                                    />
                                                 </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="admin-boarding-image-uploader mb-3">
-                                                    <div>
-                                                        <FileUploader>
+                                                <div className={"admin-boarding-type-home-button pb-2"}>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        name="stayPreference"
+                                                        value="female"
+                                                        onChange={handleChange}
+                                                        label={
                                                             <div
-                                                                className={"admin-file-uploader-container-main admin-form-more-upload d-flex justify-content-center align-items-center"}>
-                                                                <img src={addIcon} alt={"camera"} width={"50px"}
-                                                                     className={"more-image-upload"}/>
-                                                                <div className={"admin-file-upload-text fw-semibold"}>
-                                                                    Add More Images Here
+                                                                className={`admin-boarding-type-home-container w-100 ps-3 `}>
+                                                                <div
+                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                    <div>
+                                                                        <div className={"admin-form-radio-head"}>Female
+                                                                            Only
+                                                                        </div>
+                                                                        <div className={"admin-radio-btn"}>
+                                                                            Only Girls can stay.
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className={"ps-5 pe-2"}>
+                                                                        <img src={femaleIcon} alt={"femaleIcon"}/>
+                                                                    </div>
                                                                 </div>
+                                                            </div>}
+                                                        id="formHorizontalRadios5"
+                                                    />
+                                                </div>
+                                                <div className={"admin-boarding-type-home-button pb-2"}>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        name="stayPreference"
+                                                        onChange={handleChange}
+                                                        label={
+                                                            <div
+                                                                className={`admin-boarding-type-home-container w-100 ps-3 `}>
+                                                                <div
+                                                                    className={`admin-boarding-type-home d-flex align-items-center justify-content-between text-start ps-3 fw-semibold ${errors.boardingType ? "border-danger" : ""}`}>
+                                                                    <div>
+                                                                        <div className={"admin-form-radio-head"}>No
+                                                                            Gender Restriction
+                                                                        </div>
+                                                                        <div className={"admin-radio-btn"}>
+                                                                            Boys or Girls can stay.
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className={"ps-5 pe-2"}>
+                                                                        <img src={personIcon} alt={"personIcon"}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>}
+                                                        id="formHorizontalRadios6"
+                                                    />
+                                                </div>
+                                                {errors.stayPreference &&
+                                                    <p className={"admin-text-red"}>{errors.stayPreference}</p>}
+                                            </Col>
+                                        </Form.Group>
+                                    </fieldset>
+                                </Col>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Facilities
+                                            Listing</label>
+                                        <Dropdown>
+                                            <DropdownToggle variant="secondary" id="facilities-dropdown"
+                                                            onChange={handleChange}
+                                                            value={values.facilities}
+                                                            disabled={["View", "State"].includes(props.type)}
+                                                            className={`admin-input-border-color admin-form-dropdown-btn ${errors.facilities ? "border-danger" : ""}`}>
+                                                <div
+                                                    className={"admin-form-facility-dropdown d-flex align-items-center justify-content-between"}>
+                                                    <div className="flex-grow-1">
+                                                        Select what are the Facilities available
+                                                    </div>
+                                                    <div
+                                                        className={"admin-facility-dropdown-icon ps-5 pe-0"}>
+                                                        <FeatherIcon icon="chevron-down" color="#024950"/>
+                                                    </div>
+                                                </div>
+                                            </DropdownToggle>
+                                            {errors.facilities &&
+                                                <p className={"admin-text-red"}>{errors.facilities}</p>}
+                                            <DropdownMenu className={"w-100"}>
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>WiFi</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Water
+                                                               Heater</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Study Hall</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Kitchen</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Fan</div>}
+                                                           className="mx-3 my-1 "
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Cooker</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <FormCheck name={"facilities"}
+                                                           label={<div className={"ps-3"}>Other
+                                                               Facilities</div>}
+                                                           className="mx-3 my-1"
+                                                           onChange={handleChange}
+                                                />
+                                                <div className={"w-100 ps-3 pe-3 pt-3"}>
+                                                    <FormControl name={"facilities"} id=""
+                                                                 onChange={handleChange}
+                                                                 className={"admin-input-border-color checkbox-input "}
+                                                                 placeholder="If other facilities specify here"/>
+                                                </div>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Members
+                                            Count</label>
+                                        <FormControl id="membersCount" name={"membersCount"}
+                                                     className={`admin-input-border-color ${errors.membersCount ? "border-danger" : ""}`}
+                                                     onChange={handleChange}
+                                                     value={values.membersCount || ""}
+                                                     disabled={["View", "State"].includes(props.type)}
+                                                     placeholder="Enter How Many Members Can Stay"
+                                                     type={"number"}
+                                                     min="1"
+                                                     max="50"
+                                        />
+                                        {errors.membersCount &&
+                                            <p className={"admin-text-red"}>{errors.membersCount}</p>}
+                                    </div>
+                                </div>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>No
+                                            of Rooms</label>
+                                        <input name={"noOfRooms"} placeholder={"Enter No of Rooms"}
+                                               className={`form-control ${errors.noOfRooms ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                               id="exampleInputEmail5"
+                                               onChange={handleChange}
+                                               value={values.noOfRooms || ""}
+                                               disabled={["View", "State"].includes(props.type)}
+                                        />
+                                        {errors.noOfRooms &&
+                                            <p className={"admin-text-red"}>{errors.noOfRooms}</p>}
+                                    </div>
+                                </div>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Distance</label>
+                                        <input name={"distance"} placeholder={"Enter Distance"}
+                                               className={`form-control ${errors.distance ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                               id="exampleInputEmail5"
+                                               onChange={handleChange}
+                                               value={values.distance || ""}
+                                               disabled={["View", "State"].includes(props.type)}
+                                        />
+                                        {errors.distance &&
+                                            <p className={"admin-text-red"}>{errors.distance}</p>}
+                                    </div>
+                                </div>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Advance
+                                            Payment</label>
+                                        <input name={"advancedPayment"} placeholder={"Enter Advance Payment"}
+                                               className={`form-control ${errors.advancedPayment ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                               id="exampleInputEmail5"
+                                               onChange={handleChange}
+                                               value={values.advancedPayment || ""}
+                                               disabled={["View", "State"].includes(props.type)}
+                                        />
+                                        {errors.advancedPayment &&
+                                            <p className={"admin-text-red"}>{errors.advancedPayment}</p>}
+                                    </div>
+                                </div>
+                                <div className={"col-md-6"}>
+                                    <div className="mb-3">
+                                        <label htmlFor="exampleInputEmail1"
+                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Price
+                                            Per Month</label>
+                                        <input name={"pricePerMonth"} placeholder={"Enter Price Per Month"}
+                                               className={`form-control ${errors.pricePerMonth ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
+                                               id="exampleInputEmail5"
+                                               onChange={handleChange}
+                                               value={values.pricePerMonth || ""}
+                                               disabled={["View", "State"].includes(props.type)}
+                                        />
+                                        {errors.pricePerMonth &&
+                                            <p className={"admin-text-red"}>{errors.pricePerMonth}</p>}
+                                    </div>
+                                </div>
+                                <div className="col-md-12">
+                                    <div>
+                                        <h5 className='admin-form-head fw-semibold'>Location</h5>
+                                    </div>
+                                    <BoardingLocation onChange={boardingGeoLocation} location={values.location}/>
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="admin-boarding-image-uploader mb-3">
+                                        <div>
+                                            <h5 className='admin-form-head fw-semibold'>Upload Boarding</h5>
+                                            <div className="admin-form-sub-head fw-light fs-normal">
+                                                Add 360 degree view Images of your Boarding
+                                            </div>
+                                        </div>
+                                        <div className="row mt-1 g-3">
+                                            <div className="col-md-6 position-relative">
+                                                {selectedImage && selectedImage.first && (
+                                                    <span onClick={() => removeImage("first")}>
+                                                        <FeatherIcon
+                                                            icon={"x-circle"}
+                                                            size={20}
+                                                            className={"admin-close-icon float-end cursor-pointer position-absolute"}
+                                                            style={{right: -5, top: -9}}
+                                                        />
+                                                      </span>
+                                                )}
+                                                <FileUploader handleChange={(file)=>handleChangeSettingsProfileImage(file,"first")}>
+                                                    <div className="admin-file-uploader-container-main">
+
+
+                                                        {!selectedImage.first ? <img src={camera}
+                                                                                      alt="camera" width="80px"
+                                                                                      className="admin-img-upload m-auto"/> :
+                                                            <img src={selectedImage.first}
+                                                                 alt="camera" width="80px"
+                                                                 className="admin-img-upload m-auto"/>}
+                                                    </div>
+                                                </FileUploader>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="row g-3">
+                                                    <div className="col-6 position-relative">
+                                                        {selectedImage && selectedImage.second && (
+                                                            <span onClick={() => removeImage("second")}>
+                                                        <FeatherIcon
+                                                            icon={"x-circle"}
+                                                            size={20}
+                                                            className={"admin-close-icon float-end cursor-pointer position-absolute"}
+                                                            style={{right: -5, top: -9}}
+                                                        />
+                                                      </span>
+                                                        )}
+                                                        <FileUploader handleChange={(file)=>handleChangeSettingsProfileImage(file,"second")}>
+                                                            <div
+                                                                className="admin-file-uploader-container-main">
+                                                                {!selectedImage.second ? <img src={camera}
+                                                                                             alt="camera" width="80px"
+                                                                                             className="admin-img-upload m-auto"/> :
+                                                                    <img src={selectedImage.second}
+                                                                         alt="camera" width="80px"
+                                                                         className="admin-img-upload m-auto"/>}
+                                                            </div>
+                                                        </FileUploader>
+                                                    </div>
+                                                    <div className="col-6 position-relative">
+                                                        {selectedImage && selectedImage.third && (
+                                                        <span onClick={() => removeImage("third")}>
+                                                        <FeatherIcon
+                                                            icon={"x-circle"}
+                                                            size={20}
+                                                            className={"admin-close-icon float-end cursor-pointer position-absolute"}
+                                                            style={{right: -5, top: -9}}
+                                                        />
+                                                      </span>
+                                                        )}
+                                                        <FileUploader handleChange={(file)=>handleChangeSettingsProfileImage(file,"third")}>
+                                                            <div
+                                                                className="admin-file-uploader-container-main">
+                                                                {!selectedImage.third ? <img src={camera}
+                                                                                             alt="camera" width="80px"
+                                                                                             className="admin-img-upload m-auto"/> :
+                                                                    <img src={selectedImage.third}
+                                                                         alt="camera" width="80px"
+                                                                         className="admin-img-upload m-auto"/>}
+                                                            </div>
+                                                        </FileUploader>
+                                                    </div>
+                                                    <div className="col-6 position-relative" >
+                                                        {selectedImage && selectedImage.fouth && (
+                                                        <span onClick={() => removeImage("fouth")}>
+                                                        <FeatherIcon
+                                                            icon={"x-circle"}
+                                                            size={20}
+                                                            className={"admin-close-icon float-end cursor-pointer position-absolute"}
+                                                            style={{right: -5, top: -9}}
+                                                        />
+                                                      </span>
+                                                        )}
+                                                        <FileUploader handleChange={(file)=>handleChangeSettingsProfileImage(file,"fouth")}>
+                                                            <div
+                                                                className="admin-file-uploader-container-main">
+                                                                {!selectedImage.fouth ? <img src={camera}
+                                                                                             alt="camera" width="80px"
+                                                                                             className="admin-img-upload m-auto"/> :
+                                                                    <img src={selectedImage.fouth}
+                                                                         alt="camera" width="80px"
+                                                                         className="admin-img-upload m-auto"/>}
+                                                            </div>
+                                                        </FileUploader>
+                                                    </div>
+                                                    <div className="col-6 position-relative">
+                                                        {selectedImage && selectedImage.fifth && (
+                                                        <span onClick={() => removeImage("fifth")}>
+                                                        <FeatherIcon
+                                                            icon={"x-circle"}
+                                                            size={20}
+                                                            className={"admin-close-icon float-end cursor-pointer position-absolute"}
+                                                            style={{right: -5, top: -9}}
+                                                        />
+                                                      </span>
+                                                        )}
+                                                        <FileUploader handleChange={(file)=>handleChangeSettingsProfileImage(file,"fifth")}>
+                                                            <div
+                                                                className="admin-file-uploader-container-main">
+                                                                {!selectedImage.fifth ? <img src={camera}
+                                                                                             alt="camera" width="80px"
+                                                                                             className="admin-img-upload m-auto"/> :
+                                                                    <img src={selectedImage.fifth}
+                                                                         alt="camera" width="80px"
+                                                                         className="admin-img-upload m-auto"/>}
                                                             </div>
                                                         </FileUploader>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-12">
-                                                <div>
-                                                    <h5 className='admin-form-head fw-semibold'>Location</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="admin-boarding-image-uploader mb-3">
+                                        <div>
+                                            <FileUploader>
+                                                <div
+                                                    className={"admin-file-uploader-container-main admin-form-more-upload d-flex justify-content-center align-items-center"}>
+                                                    <img src={addIcon} alt={"camera"} width={"50px"}
+                                                         className={"more-image-upload"}/>
+                                                    <div className={"admin-file-upload-text fw-semibold"}>
+                                                        Add More Images Here
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </FileUploader>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -949,7 +1042,7 @@ function ListingsForm(props) {
                 </button>}
             </Modal.Footer>
         </Modal>
-);
+    );
 }
 
 export default ListingsForm;

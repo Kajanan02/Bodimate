@@ -29,16 +29,28 @@ import Analytics from "./pages/admin/analytics/analytics.jsx";
 import ConfirmationDialog from "./components/confirmation-dialog.jsx";
 import Register_Now from "./pages/Bodimate-your-home/bodimte-register-now.jsx";
 import Owner_Register from "./pages/Bodimate-your-home/bodimate-owner-register.jsx";
+import {AccountCategory, Payhere} from "@payhere-js-sdk/client";
+import {useDispatch} from "react-redux";
+import {userUpdate} from "./redux/features/userDataSlice.js";
 
+Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
 
 
 function App() {
 
     const location = useLocation()
+    const userDetails = JSON.parse(localStorage.getItem("user"))
+    const dispatch = useDispatch()
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [location.pathname])
+
+    useEffect(() => {
+        if(userDetails){
+            dispatch(userUpdate(userDetails))
+        }
+    }, [userDetails]);
 
     return (
         <>

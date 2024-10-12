@@ -112,7 +112,6 @@ function PaymentsForm(props) {
 
     function imageUpload(file, key) {
         console.log("File")
-
         dispatch(setLoading(true))
         const data = new FormData()
         data.append("file", file)

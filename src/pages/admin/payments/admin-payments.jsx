@@ -3,10 +3,10 @@ import FeatherIcon from "feather-icons-react";
 import {toast} from "react-toastify";
 import axiosInstance from "../../../utils/axiosInstance.js";
 import PaymentsForm from "./paymentsForm.jsx";
-import {toggleConfirmationDialog} from "../../../redux/action.js";
 import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
+import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
 
 function AdminPayments() {
     const [modalType, setModalType] = useState("view")

@@ -9,8 +9,9 @@ import FormHandler from "react-form-buddy";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {loadCredential} from "../../utils/Authentication.js";
+import {loadCredential, navigationDefault} from "../../utils/Authentication.js";
 import {setLoading} from "../../redux/features/loaderSlice.js";
+import {userUpdate} from "../../redux/features/userDataSlice.js";
 
 function Login() {
 
@@ -42,8 +43,10 @@ function Login() {
         axiosInstance.post("/users/login", data)
             .then(res => {
                 console.log(res.data)
+                localStorage.setItem("user", JSON.stringify(res.data))
                 loadCredential(res.data)
-                navigate("/")
+                dispatch(userUpdate(res.data))
+                navigate(navigationDefault(res.data.role))
                 toast.success("Successfully Login");
             })
             .catch(err => {

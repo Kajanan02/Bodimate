@@ -1503,9 +1503,9 @@ footer ul li:hover {
     height: 100%;
 }
 
-.admin-boarding-image-uploader {
-    overflow-x: hidden;
-}
+/*.admin-boarding-image-uploader {*/
+/*    overflow-x: hidden;*/
+/*}*/
 
 @media (max-width: 768px) {
     .table-container {
@@ -1880,4 +1880,6 @@ footer ul li:hover {
     color: #fff !important;
     font-size: 14px !important;
 }
-
+.pac-container {
+    z-index: 1100 !important;
+}

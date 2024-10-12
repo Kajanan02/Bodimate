@@ -1,3 +1,5 @@
+import {includes} from "underscore";
+
 export function loadCredential(credential) {
     localStorage.setItem('ACCESS_TOKEN', credential.token);
     localStorage.setItem('EMAIL', credential.email);
@@ -28,5 +30,13 @@ export function getUserId() {
 
 export function getName() {
     return localStorage.getItem('NAME');
+}
+
+export function navigationDefault(role) {
+    console.log("Role", role)
+    if(['admin','boardingOwner'].includes(role)) {
+        return '/admin'
+    }
+    return '/'
 }
 

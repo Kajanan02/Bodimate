@@ -4,6 +4,8 @@ import FeatherIcon from 'feather-icons-react';
 import hotel from "../../../assets/admin-home/hotel.svg";
 import income from "../../../assets/admin-home/income.svg";
 import boarding from "../../../assets/admin-home/boarding.svg";
+import {useSelector} from "react-redux";
+import BoardingOwnerHome from "./boarding-owner-home.jsx";
 
 function AdminHome() {
     const [state, setState] = useState({
@@ -66,6 +68,9 @@ function AdminHome() {
             }
         ]
     });
+
+    const userDetail = useSelector(state => state.userData.userDetails);
+
 
     const pieChartOptions = {
         labels: ['UOM', 'UOJ', 'UOR', 'UWU'],
@@ -177,7 +182,7 @@ function AdminHome() {
         }
     ];
 
-    return (
+    return ( userDetail.role === "admin" ?
         <div className="container mt-4 mb-4">
             <div className="row p-4">
                 <div className="col-sm-3 mb-3 mb-sm-0">
@@ -309,7 +314,7 @@ function AdminHome() {
                 </div>
             </div>
 
-        </div>
+        </div> : <BoardingOwnerHome/>
     );
 }
 

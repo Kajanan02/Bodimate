@@ -5,21 +5,100 @@ import verifiedIcon from "../../assets/boarding-details/verified.svg"
 import ownerProfile from "../../assets/boarding-details/OwnerProfile.jpg"
 import DegreeView from "./degreeView.jsx";
 import {useDispatch} from "react-redux";
-import {toggleLoader} from "../../redux/action.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {useParams} from "react-router-dom";
 // import Heart from "react-heart";
 import axios from "axios";
+import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
+import {setLoading} from "../../redux/features/loaderSlice.js";
 
 function BoardingDetails() {
 
     const [expanded, setExpanded] = useState(false);
     const [showButton, setShowButton] = useState(false);
     const reviewRef = useRef(null);
+    const [active, setActive] = useState(false)
+    const [update, setUpdate] = useState(false);
+    const dispatch = useDispatch();
+    const [List, setList] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const imageSrc = "https://via.placeholder.com/800x400";
+    const [guestCount, setGuestCount] = useState(0);
     const {id} = useParams()
+    const extractNumericValue = (currencyString) => {
+        if (typeof currencyString === 'string') {
+            return parseInt(currencyString.replace(/[^\d]/g, ''), 10);
+        }
+        return 0;
+    };
+
+    const customerAttributes = {
+        first_name: 'John',
+        last_name: 'Doe',
+        phone: '+94771234567',
+        email: 'john@johndoe.com',
+        address: 'No. 50, Highlevel Road',
+        city: 'Panadura',
+        country: 'Sri Lanka',
+    };
 
 
-    console.log(id)
+    function onPayhereCheckoutError(errorMsg) {
+        alert(errorMsg);
+    }
+
+    async function checkout(hash, amount, orderId) {
+        // using async await
+        try {
+            const customer = new Customer(customerAttributes);
+
+            const checkoutData = new CheckoutParams({
+                returnUrl: 'http://localhost:3000/payment',
+                cancelUrl: 'http://localhost:3000/payment',
+                notifyUrl: 'http://localhost:8080/payment',
+                order_id: orderId,
+                itemTitle: 'Fees',
+                currency: CurrencyType.LKR,
+                amount: amount,
+                hash: hash,
+            });
+
+            const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
+            checkout.start();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        if (!formSubmitted) {
+            return
+        }
+        dispatch(setLoading(true))
+        let data = {}
+        data.amount = 1000
+        data.orderId = parseInt(Math.random() * 10000000000000000)
+        console.log(data)
+        axiosInstance.post(`/payment/payment-hash`, data)
+            .then((res) => {
+                console.log(res)
+                if (res.data) {
+                    checkout(res.data, data.amount, data.orderId)
+                }
+            }).catch((err) => {
+            console.log(err)
+        }).finally(() => {
+            setFormSubmitted(false)
+            dispatch(setLoading(false))
+
+        })
+    }, [formSubmitted]);
+
+    const advancedPayment = extractNumericValue(List.advancedPayment) || 500;
+    const totalPrice = advancedPayment * guestCount;
+
+
     useEffect(() => {
         if (reviewRef.current) {
             const lineHeight = parseInt(window.getComputedStyle(reviewRef.current).lineHeight);
@@ -30,13 +109,15 @@ function BoardingDetails() {
         }
     }, []);
 
+    function reserve() {
+        setFormSubmitted(true)
+    }
+
     const toggleExpanded = () => {
         setExpanded(!expanded);
     };
 
-    const [modalShow, setModalShow] = useState(false);
-    const imageSrc = "https://via.placeholder.com/800x400";
-    const [guestCount, setGuestCount] = useState(0);
+
 
     const incrementGuestCount = () => {
         setGuestCount((prevCount) => Math.min(prevCount + 1, 20));
@@ -46,14 +127,10 @@ function BoardingDetails() {
         setGuestCount((prevCount) => Math.max(prevCount - 1, 0));
     };
 
-    const [update, setUpdate] = useState(false);
-    const dispatch = useDispatch();
-    const [List, setList] = useState([
 
-    ]);
 
     useEffect(() => {
-        dispatch(toggleLoader(true));
+        dispatch(setLoading(true));
 
         axiosInstance.get(`/boardings/getOneBoarding/${id}`)
             .then((res) => {
@@ -65,13 +142,13 @@ function BoardingDetails() {
                 console.error("Error fetching boardings:", err);
             })
             .finally(() => {
-                dispatch(toggleLoader(false));
+                dispatch(setLoading(false));
             });
     }, []);
 
     useEffect(() => {
         if (update) {
-            dispatch(toggleLoader(true));
+            dispatch(setLoading(true));
 
             axios.put(`http://localhost:5000/api/saveboarding/user/${values._id}/boarding/${values._id}`, values)
                 .then((res) => {
@@ -82,21 +159,11 @@ function BoardingDetails() {
                     console.error("Error updating boarding state:", err);
                 })
                 .finally(() => {
-                    dispatch(toggleLoader(false));
+                    dispatch(setLoading(false));
                 });
         }
     }, [update]);
 
-    const extractNumericValue = (currencyString) => {
-        if (typeof currencyString === 'string') {
-            return parseInt(currencyString.replace(/[^\d]/g, ''), 10);
-        }
-
-        return 0;
-    };
-    const [active, setActive] = useState(false)
-    const advancedPayment = extractNumericValue(List.advancedPayment) || 500;
-    const totalPrice = advancedPayment * guestCount;
 
     return (
         <div className="container padx-sm-3 padx-md-4 pad-lg-20">
@@ -351,7 +418,7 @@ function BoardingDetails() {
                             </div>
                         </div>
                         <div className="col p-2">
-                            <button type="button" className="btn login-btn w-100 fw-semibold p-2">Reserve</button>
+                            <button type="button" onClick={reserve} className="btn login-btn w-100 fw-semibold p-2">Reserve</button>
                         </div>
                         <p className="text-muted mb-3 text-center">You will not be charged yet</p>
                         <div className="d-flex justify-content-between mb-3 price-card-text">

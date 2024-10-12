@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "./admin-Setting.css"
 import profileImage from "../../../assets/admin-setting/admin-profile.png"
 import {FileUploader} from "react-drag-drop-files";
@@ -8,12 +8,15 @@ import {validateAdminSettings} from "../../../utils/validation.js";
 import maleIcon from "../../../assets/male-student-5-svgrepo-com.svg";
 import femaleIcon from "../../../assets/female-doctor-2-svgrepo-com.svg";
 import FormHandler from "react-form-buddy";
+import {useSelector} from "react-redux";
 
 
 function AdminSetting() {
     const inputRef = useRef(null)
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+
+    const userDetail = useSelector(state => state.userData.userDetails);
 
 
     const handleChangeSettingsProfileImage = (file) => {
@@ -31,6 +34,7 @@ function AdminSetting() {
         handleSubmit,
         handleChange,
         values,
+        initForm,
         errors,
     } = FormHandler(submitSettings, validateAdminSettings)
 
@@ -39,6 +43,12 @@ function AdminSetting() {
     function submitSettings() {
         setFormSubmitted(true)
     }
+
+    useEffect(() => {
+        if(userDetail){
+            initForm(userDetail)
+        }
+    },[userDetail])
 
 
     return (
@@ -144,10 +154,10 @@ function AdminSetting() {
                                 <Col md={6} className={"ps-3 ps-lg-5"}>
                                     <h6><label htmlFor="phoneNo" className="">Contact No</label></h6>
                                     <FormControl id="phoneNo"
-                                                 className={`input-border-color ${errors.phoneNo ? "border-danger" : ""}`}
+                                                 className={`input-border-color ${errors.contactNo ? "border-danger" : ""}`}
                                                  onChange={handleChange}
-                                                 value={values.phoneNo || ""}
-                                                 placeholder="Enter Phone No" name={"phoneNo"}
+                                                 value={values.contactNo || ""}
+                                                 placeholder="Enter Phone No" name={"contactNo"}
                                     />
                                     {errors.phoneNo &&
                                         <p className={"error-message text-danger"}>{errors.phoneNo}</p>}

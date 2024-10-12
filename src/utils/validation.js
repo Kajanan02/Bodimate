@@ -196,14 +196,60 @@ export function validateListings(values) {
     if (!values.boardingName) {
         errors.boardingName = "Boarding Name is Required"
     }
-    if (!values.boardingNo) {
-        errors.boardingNo = "Boarding Registration No is Required"
-    }
     if (!values.ownerName) {
         errors.ownerName = "Boarding Owner Name is Required"
     }
     if (!values.ownerNIC) {
         errors.ownerNIC = "Boarding Owner NIC No is Required"
+    }
+    if (!values.street) {
+        errors.street = "Street Address is Required"
+    }
+    if (!values.city) {
+        errors.city = "City is Required"
+    }
+    if (!values.district) {
+        errors.district = "District is Required"
+    }
+    if (!values.province) {
+        errors.province = "Province is Required"
+    }
+    if (!values.nearestUniversity) {
+        errors.nearestUniversity = "Near By University is Required"
+    }
+    if (!values.boardingType) {
+        errors.boardingType = "Boarding Type is Required"
+    }
+    if (!values.stayPreference) {
+        errors.stayPreference = "Stay Preference is Required"
+    }
+    if (!values.facilities) {
+        errors.facilities = "Facilities is Required"
+    }
+    if (!values.membersCount) {
+        errors.membersCount = "Members Count is Required"
+    }
+    if (!values.noOfRooms) {
+        errors.noOfRooms = "No of Rooms is Required"
+    }
+    if (!values.distance) {
+        errors.distance = "Distance is Required"
+    }
+    if (!values.advancedPayment) {
+        errors.advancedPayment = "Advance Payment is Required"
+    }
+    if (!values.pricePerMonth) {
+        errors.pricePerMonth = "Price Per Month is Required"
+    }
+    return errors;
+}
+
+export function validateListingsBoardingOwner(values) {
+    console.log(values)
+    let errors = {};
+
+    if (!values.boardingName) {
+        errors.boardingName = "Boarding Name is Required"
     }
     if (!values.street) {
         errors.street = "Street Address is Required"
@@ -318,9 +364,9 @@ export function validateBookings(values) {
     } else if (!/^([+]\d{2})?\d{10}$/.test(values.boardingOwnerContactNo)) {
         errors.boardingOwnerContactNo = 'Student Contact No is Not Valid';
     }
-    if (!values.boardingRegNo) {
-        errors.boardingRegNo = "Boarding Registration No is Required"
-    }
+    // if (!values.boardingRegNo) {
+    //     errors.boardingRegNo = "Boarding Registration No is Required"
+    // }
     if (!values.noOfRooms) {
         errors.noOfRooms = "No of Rooms is Required"
     }
@@ -549,6 +595,7 @@ export function validateUserRegistration(values) {
     console.log(values);
     let errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const slNICRegExp = /^(?:19|20)?\d{2}[0-9]{10}|[0-9]{9}[x|X|v|V]$/;
 
 
     if (!values.firstName) {
@@ -575,10 +622,10 @@ export function validateUserRegistration(values) {
     }
 
 
-    if (!values.contactNumber) {
-        errors.contactNumber = "Contact Number is Required";
-    } else if (!/^([+]\d{2})?\d{10}$/.test(values.contactNumber)) {
-        errors.contactNumber = "Contact Number is Not Valid";
+    if (!values.contactNo) {
+        errors.contactNo = "Contact Number is Required";
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.contactNo)) {
+        errors.contactNo = "Contact Number is Not Valid";
     }
 
 
@@ -594,6 +641,8 @@ export function validateUserRegistration(values) {
 
     if (!values.nicNo) {
         errors.nicNo = "NIC Number is Required";
+    } else if (!slNICRegExp.test(values.nicNo)) {
+        errors.nicNo = "NIC Number is Not Valid";
     }
 
 

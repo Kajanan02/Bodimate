@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import BoardingCard from "../home/boarding-card/boarding-card.jsx";
 import './nearby-university.css';
 import { useDispatch } from "react-redux";
-import { toggleLoader } from "../../redux/action.js";
 import axiosInstance from "../../utils/axiosInstance.js";
+import {setLoading} from "../../redux/features/loaderSlice.js";
 
 function NearbyUniversity() {
     const { universityName } = useParams();
@@ -14,7 +14,7 @@ function NearbyUniversity() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(toggleLoader(true));
+        dispatch(setLoading(true));
 
         axiosInstance.get("/boardings/getAllBoarding")
             .then((res) => {
@@ -25,7 +25,7 @@ function NearbyUniversity() {
                 console.error("Error fetching boardings:", err);
             })
             .finally(() => {
-                dispatch(toggleLoader(false));
+                dispatch(setLoading(false));
             });
     }, [dispatch]);
 
