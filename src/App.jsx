@@ -20,7 +20,7 @@ import AdminHome from "./pages/admin/home/admin-home.jsx";
 import AdminListings from "./pages/admin/listings/admin-listings.jsx";
 import ContactUs from "./pages/contact-us/contact-us.jsx";
 import AdminBookings from "./pages/admin/bookings/admin-bookings.jsx";
-// import AdminBoardingOwners from "./pages/admin/users/admin-boarding-owners/admin-boarding-owners.jsx";
+import AdminBoardingOwners from "./pages/admin/users/admin-boarding-owners/admin-boarding-owners.jsx";
 import AdminStudents from "./pages/admin/users/admin-students/admin-students.jsx";
 import AdminPayments from "./pages/admin/payments/admin-payments.jsx";
 import Loader from "./components/loader.jsx";
@@ -71,7 +71,7 @@ function App() {
                     <Route path="" element={<AdminHome/>}/>
                     <Route path="listings" element={<AdminListings/>}/>
                     <Route path="bookings" element={<AdminBookings/>}/>
-                    {/*<Route path="users-boarding-owners" element={<AdminBoardingOwners/>}/>*/}
+                    <Route path="users-boarding-owners" element={<AdminBoardingOwners/>}/>
                     <Route path="users-students" element={<AdminStudents/>}/>
                     <Route path="payments" element={<AdminPayments/>}/>
                     <Route path="chat-box" element={<ChatBox/>}/>

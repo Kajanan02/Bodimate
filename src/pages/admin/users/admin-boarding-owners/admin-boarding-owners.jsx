@@ -16,190 +16,49 @@ function AdminBoardingOwners() {
     const [boardingOwnersAllList, setBoardingOwnersAllList] = useState([])
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
-    const [boardingOwnersList, setBoardingOwnersList] = useState([
-        {
-            id: '0o1',
-            boardingOwnerRegNo: 'BO/KLN/CBO/045',
-            boardingOwnerFirstName: 'Kamal',
-            boardingOwnerLastName: 'Perera',
-            boardingOwnerNicNo: '199012345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o2',
-            boardingOwnerRegNo: 'BO/GAM/PDN/027',
-            boardingOwnerFirstName: 'Nuwan',
-            boardingOwnerLastName: 'Jayasinghe',
-            boardingOwnerNicNo: '198901234V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o3',
-            boardingOwnerRegNo: 'BO/KAL/SJP/089',
-            boardingOwnerFirstName: 'Sajith',
-            boardingOwnerLastName: 'Bandara',
-            boardingOwnerNicNo: '198712345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o4',
-            boardingOwnerRegNo: 'BO/GAM/KLN/053',
-            boardingOwnerFirstName: 'Chathura',
-            boardingOwnerLastName: 'Wickramasinghe',
-            boardingOwnerNicNo: '198512345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o5',
-            boardingOwnerRegNo: 'BO/KAL/MRT/012',
-            boardingOwnerFirstName: 'Isuru',
-            boardingOwnerLastName: 'Weerasinghe',
-            boardingOwnerNicNo: '198312345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o6',
-            boardingOwnerRegNo: 'BO/ANU/UJA/076',
-            boardingOwnerFirstName: 'Amila',
-            boardingOwnerLastName: 'Rathnayake',
-            boardingOwnerNicNo: '198112345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o7',
-            boardingOwnerRegNo: 'BO/KAN/OUSL/038',
-            boardingOwnerFirstName: 'Nishantha',
-            boardingOwnerLastName: 'Abeysekara',
-            boardingOwnerNicNo: '197912345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o8',
-            boardingOwnerRegNo: 'BO/MAT/RUH/055',
-            boardingOwnerFirstName: 'Tharindu',
-            boardingOwnerLastName: 'Perera',
-            boardingOwnerNicNo: '197712345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o9',
-            boardingOwnerRegNo: 'BO/BAD/EUSL/033',
-            boardingOwnerFirstName: 'Kasun',
-            boardingOwnerLastName: 'Samarasinghe',
-            boardingOwnerNicNo: '197512345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o10',
-            boardingOwnerRegNo: 'BO/MON/RUSL/065',
-            boardingOwnerFirstName: 'Saman',
-            boardingOwnerLastName: 'Ekanayake',
-            boardingOwnerNicNo: '197312345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o11',
-            boardingOwnerRegNo: 'BO/SAB/SUSL/094',
-            boardingOwnerFirstName: 'Dilan',
-            boardingOwnerLastName: 'Karunaratne',
-            boardingOwnerNicNo: '197112345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o12',
-            boardingOwnerRegNo: 'BO/TRI/SEUSL/021',
-            boardingOwnerFirstName: 'Udara',
-            boardingOwnerLastName: 'Gunasekara',
-            boardingOwnerNicNo: '196912345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o13',
-            boardingOwnerRegNo: 'BO/KUR/WUSL/077',
-            boardingOwnerFirstName: 'Ravindu',
-            boardingOwnerLastName: 'Madushanka',
-            boardingOwnerNicNo: '196712345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o14',
-            boardingOwnerRegNo: 'BO/BAD/UWU/040',
-            boardingOwnerFirstName: 'Charith',
-            boardingOwnerLastName: 'Fernando',
-            boardingOwnerNicNo: '196512345V',
-            boardingOwnerGender: 'Male',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        },
-        {
-            id: '0o15',
-            boardingOwnerRegNo: 'BO/COL/UVPA/083',
-            boardingOwnerFirstName: 'Pasindu',
-            boardingOwnerLastName: 'Jayawardena',
-            boardingOwnerNicNo: '196312345V',
-            boardingOwnerGender: 'Female',
-            nicFront: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD35-ANjy-2PGvOr1OZOwQR9lF6zfU59qYkWYARxnKiZluFboR4DHshjkU2FnLhktWvs4&usqp=CAU', // Example placeholder for NIC Front image
-            nicBack: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpLscY3h1M1URtc3CYkyChsQNaJkAOxtpfuEKywmeek2bRyeYUOWNEF4vaCka9mWb7gGs&usqp=CAU'
-        }
-    ]);
+    const [boardingOwnersList, setBoardingOwnersList] = useState([]);
 
-    const confirmationDialog = useSelector(state => state.confirmationDialog.confirmationDialog);
+    const confirmationDialog = useSelector(state => state.confirmationDialog);
 
     function handleDelete(id) {
         dispatch(toggleConfirmationDialog({
             isVisible: true,
-            confirmationHeading: ('Are you sure you want to delete this listing data'),
-            confirmationDescription: ('The delete action will remove the this listing data')
+            confirmationHeading: 'ARE YOU SURE YOU WANT TO DELETE THIS STUDENT DATA',
+            confirmationDescription: 'THE DELETE ACTION WILL REMOVE THIS STUDENT DATA',
+            onSuccess: false // Ensure this is added to track success
         }));
-        setDeletedId(id)
+        setDeletedId(id);
+        console.log("Delete initiated for ID:", id);
     }
+
+    // Debugging: log the current state of confirmation dialog and deletedId
+    console.log("Current Deleted ID:", deletedId);
 
 
     useEffect(() => {
-        if (!confirmationDialog || !confirmationDialog.onSuccess || !deletedId) {
-            console.log("deleted")
+        console.log("Checking conditions:", confirmationDialog, deletedId);
+        if (!confirmationDialog || !confirmationDialog.confirmationDialog.onSuccess || !deletedId) {
+            console.log("Deletion conditions not met");
             return;
         }
-        console.log("deleted")
-        dispatch(setLoading(true))
 
-        axiosInstance.delete(`/admin/users-boarding-owner/${deletedId}`)
+        dispatch(setLoading(true)); // Optional: set loading state if needed
+
+        // Axios delete request
+        axiosInstance.delete(`/users/deleteUser/${deletedId}`)
             .then((res) => {
-                setUpdate(!update)
-                toast.success(`Successfully Deleted`)
-            }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            dispatch(setLoading(false))
-            setDeletedId(null)
-        })
-    }, [confirmationDialog, deletedId, dispatch])
+                console.log(res.data)
+                setUpdate(!update); // Trigger re-render of updated listings
+                toast.success('Successfully Deleted'); // Optional: Toast notification
+            })
+            .catch((err) => {
+                console.log("Delete error:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Optional: remove loading state
+                setDeletedId(null); // Reset after deletion
+            });
+    }, [confirmationDialog, deletedId]);
 
     function handleSearch(e) {
         let val = e.target.value;
@@ -214,20 +73,21 @@ function AdminBoardingOwners() {
         }
     }
 
-    // useEffect(() => {
-    //     dispatch(setLoading(true));
-    //     axiosInstance.get(`/getAllBoardingOwners`)
-    //         .then((res) => {
-    //             setBoardingOwnersList(res.data)
-    //             setBoardingOwnersAllList(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         })
-    //         .finally(() => {
-    //             dispatch(setLoading(false));
-    //         });
-    // }, [update]);
+    useEffect(() => {
+        dispatch(setLoading(true));
+        axiosInstance.get(`/users/getBoardingOwners`)
+            .then((res) => {
+                console.log(res.data)
+                setBoardingOwnersList(res.data)
+                setBoardingOwnersAllList(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, [update]);
 
     return (
         <div className={"container mb-4 p-5"}>
@@ -265,11 +125,11 @@ function AdminBoardingOwners() {
                         {boardingOwnersList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
                             <tr key={index + "asd"}>
                                 <th scope="row">{index + 1}</th>
-                                <td>{data.boardingOwnerRegNo}</td>
-                                <td>{data.boardingOwnerFirstName}</td>
-                                <td>{data.boardingOwnerLastName}</td>
-                                <td>{data.boardingOwnerNicNo}</td>
-                                <td>{data.boardingOwnerGender}</td>
+                                <td>{data._id}</td>
+                                <td>{data.firstName}</td>
+                                <td>{data.lastName}</td>
+                                <td>{data.role}</td>
+                                <td>{data.gender}</td>
                                 <td>
                                     <FeatherIcon className={"admin-action-icons"} icon={"eye"}
                                                  onClick={() => {
@@ -285,7 +145,7 @@ function AdminBoardingOwners() {
                                                  }}/>
 
                                     <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
-                                                 onClick={() => handleDelete(data.id)}
+                                                 onClick={() => handleDelete(data._id)}
                                     />
                                 </td>
                             </tr>))}
