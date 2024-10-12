@@ -26,11 +26,13 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Build Application
         env:
           VITE_REACT_APP_HOST: ${{ secrets.VITE_REACT_APP_HOST }}
+          VITE_REACT_APP_PAYHERE_MERCHANT_ID: ${{ secrets.VITE_REACT_APP_PAYHERE_MERCHANT_ID }}
+          VITE_REACT_APP_GOOGLE_MAP: ${{ secrets.VITE_REACT_APP_GOOGLE_MAP }}
         run: npm run build
 
       - name: Prepare Deployment Package
