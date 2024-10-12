@@ -20,6 +20,7 @@
     "chart.js": "^4.4.3",
     "express": "^4.21.1",
     "feather-icons-react": "^0.7.0",
+    "photo-sphere-viewer": "^4.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.2",
