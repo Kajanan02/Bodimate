@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import DefaultProfilePic from "../../../assets/admin-chatbox/DefaultProfile.jpg";
 import FeatherIcon from 'feather-icons-react';
 import axiosInstance from "../../../utils/axiosInstance.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {MoonLoader} from "react-spinners";
+import {toast} from "react-toastify";
 
 
 const sampleUsers = [
@@ -100,16 +101,22 @@ const sampleMessages = [
 function ChatBox() {
     const [selectedUser, setSelectedUser] = useState(sampleUsers[0]);
     const [users, setUsers] = useState(sampleUsers);
+    const [userList, setUserList] = useState([])
     const [messages, setMessages] = useState(sampleMessages);
+    const [allMessages, setAllMessages] = useState([])
     const [newMessage, setNewMessage] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [sendingMessage, setSendingMessage] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
     const role = localStorage.getItem("ROLE")
     const name = localStorage.getItem("NAME")
     const userId = localStorage.getItem("USER_ID")
+    const adminId = "6706daa45592c323718263b7"
 
-    const dispatch = useDispatch();
+    const userDetail = useSelector(state => state.userData.userDetails);
+
+    const dispatch = useDispatch()
 
     const handleSelectUser = (user) => {
         setSelectedUser(user);
@@ -130,6 +137,19 @@ function ChatBox() {
         sendChatMessage()
     };
 
+    useEffect(() => {
+        if(role !=="admin"){
+            return
+        }
+
+        if(selectedUser){
+            let temp = [...allMessages]
+            let userMsg = temp.filter(message => message.senderId === selectedUser._id || message.receiverId === selectedUser._id)
+            setMessages(userMsg)
+        }
+
+    },[selectedUser])
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -141,15 +161,16 @@ function ChatBox() {
         setSelectedFile(null);
     };
 
-    const filteredUsers = users.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // const filteredUsers = users.filter((user) =>
+    //     user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
 
     function sendChatMessage() {
         setSendingMessage(true)
-        let data ={
-            name: name,
-            userId: userId,
+        let data = {
+            name: userDetail.lastName,
+            senderId: role==="admin" ? selectedUser._id: adminId,
+            receiverId: role==="admin" ? adminId: userId,
             message: newMessage,
             userType: role
         }
@@ -160,31 +181,62 @@ function ChatBox() {
                 text: newMessage,
                 userType: role
             }])
+            setIsUpdating(!isUpdating)
         }).catch(err => {
             console.log(err.response.data)
         }).finally(() => {
-           setSendingMessage(false)
+            setSendingMessage(false)
         })
-
     }
 
     useEffect(() => {
         dispatch(setLoading(true))
-        axiosInstance.get("/chat/messages")
+        axiosInstance.get("/users/getAllUsers")
             .then(res => {
-                setMessages(res.data)
+                setSelectedUser(res.data[0])
+              setUsers(res.data)
+            })
+            .catch(err => {
+                console.log(err.response.data)
+                toast.error(err.response.data.message)
+            }).finally(() => {
+            dispatch(setLoading(false))
+        })
+    },[])
+
+    useEffect(() => {
+        dispatch(setLoading(true))
+        axiosInstance.get("/chat/messages")
+            // senderId: role==="admin" ? selectedUser._id: adminId,
+            //             receiverId: role==="admin" ? adminId: userId,
+            .then(res => {
+                setAllMessages(res.data)
+                let tmp = [...res.data]
+                let data = tmp.filter(message => {
+                    // Check if the role is admin
+                    if (role === "admin") {
+                        // If role is admin, check sender or receiver matches the adminId
+
+                        return message.senderId === selectedUser._id && message.receiverId === adminId || message.senderId === adminId && message.receiverId === selectedUser._id;
+                    } else {
+                        // If role is not admin, check sender or receiver matches the userId
+                        return message.senderId === adminId && message.receiverId === userId || message.senderId === userId && message.receiverId === adminId;
+                    }
+                });
+                console.log(data)
+                setMessages(data)
             }).catch(err => {
             console.log(err.response.data)
         }).finally(() => {
             dispatch(setLoading(false))
         })
-    }, []);
+    }, [isUpdating]);
 
 
     return (
         <div className="container-fluid admin-chatbox-container d-flex flex-column">
             <div className="row">
-                {role === "admin" ?<div className="col-md-4 admin-chatbox-user-list-container flex-grow-1">
+                {role === "admin" ? <div className="col-md-4 admin-chatbox-user-list-container flex-grow-1">
                     <div className="chat-search-box py-3">
                         <input
                             type="text"
@@ -195,64 +247,65 @@ function ChatBox() {
                         />
                     </div>
                     <ul className="chat-user-list px-3 overflow-y-auto">
-                        {filteredUsers.length === 0 && searchQuery && (
+                        {users.length === 0 && searchQuery && (
                             <li className="text-muted">No matching results</li>
                         )}
-                        {filteredUsers.map((user) => (
+                        {users.map((user) => (
                             <li
-                                key={user.id}
+                                key={user._id}
                                 className={`chat-user-item row ${user.unread ? 'unread-message' : ''}`}
                                 onClick={() => handleSelectUser(user)}
                             >
                                 <div className="d-flex px-2 py-2">
                                     <div className="col-2 d-flex align-items-center">
                                         <img
-                                            src={user.profilePic}
+                                            src={DefaultProfilePic}
                                             className="rounded-circle chat-user-profile"
                                             alt="Profile"
                                         />
                                     </div>
                                     <div className="col-10 d-flex flex-column">
                                         <div className="d-flex justify-content-between">
-                                            <p className="chat-user-heading m-0 fw-medium">{user.name}</p>
-                                            <p className="chat-user-time m-0 fw-medium">{user.time}</p>
+                                            <p className="chat-user-heading m-0 fw-medium">{user?.lastName || "Guest"}</p>
+                                            {/*<p className="chat-user-time m-0 fw-medium">{user.time}</p>*/}
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <div className="chat-user-text fw-medium">
-                                                {user.lastMessage.length > 30 ? `${user.lastMessage.slice(0, 35)}...` : user.lastMessage}
-                                            </div>
-                                            {user.unread && (
-                                                <div className="d-flex align-items-center justify-content-center">
-                                                    <div
-                                                        className="message-count-circle text-center text-white p-2">1
-                                                    </div>
-                                                </div>
-                                            )}
+                                            {/*<div className="chat-user-text fw-medium">*/}
+                                            {/*    {user.lastMessage.length > 30 ? `${user.lastMessage.slice(0, 35)}...` : user.lastMessage}*/}
+                                            {/*</div>*/}
+                                            {/*{user.unread && (*/}
+                                            {/*    <div className="d-flex align-items-center justify-content-center">*/}
+                                            {/*        <div*/}
+                                            {/*            className="message-count-circle text-center text-white p-2">1*/}
+                                            {/*        </div>*/}
+                                            {/*    </div>*/}
+                                            {/*)}*/}
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         ))}
                     </ul>
-                </div>:null}
+                </div> : null}
                 <div
                     className="col-md-8 admin-chatbox-messages-container d-flex flex-column h-100 pt-2 flex-grow-1 overflow-hidden chat-container">
                     <div>
                         <div
                             className="chat-messages-header d-flex align-items-center justify-content-between position-sticky">
                             <div className="d-flex align-items-center">
-                                <img src={selectedUser.profilePic} className="rounded-circle chat-profile-pic"
+                                <img src={selectedUser?.profilePic || DefaultProfilePic} className="rounded-circle chat-profile-pic"
                                      alt="Profile"/>
                                 <div
-                                    className="chat-messages-header-text fw-semibold ps-3">{selectedUser.name}</div>
+                                    className="chat-messages-header-text fw-semibold ps-3">{role !=="admin" ? "Admin": selectedUser.lastName}</div>
                             </div>
                         </div>
                         <div className="chat-messages-body d-flex flex-column overflow-y-auto flex-grow-1">
                             {messages.map((chatMessage) => (
-                                <div key={chatMessage._id} className={`message ${chatMessage.userType === role ? "admin":"user"}`}>
+                                <div key={chatMessage._id}
+                                     className={`message ${chatMessage.userType === role ? "admin" : "user"}`}>
                                     {chatMessage.userType !== role && (
                                         <>
-                                            <img src={selectedUser.profilePic} className="body-profile-pic"
+                                            <img src={selectedUser.profilePic || DefaultProfilePic} className="body-profile-pic"
                                                  alt="Profile"/>
                                             <div>
                                                 <div className="chat-message-box mb-2">{chatMessage.message}</div>
@@ -287,13 +340,13 @@ function ChatBox() {
                                              className="chat-file-preview"/>
                                     </div>
                                     <div className="chat-file-preview-footer d-flex justify-content-center w-100">
-                                        {sendingMessage?
+                                        {sendingMessage ?
                                             <MoonLoader size={2}
                                                         color={"#024950"}
                                                         loading={sendingMessage}/> :
                                             <button className="btn chat-send-btn mt-3" onClick={handleSendMessage}>
-                                            <FeatherIcon icon="send"/>
-                                        </button>}
+                                                <FeatherIcon icon="send"/>
+                                            </button>}
                                     </div>
                                 </div>
                             )}
@@ -319,17 +372,17 @@ function ChatBox() {
                                 <FeatherIcon icon="paperclip" color="#024950"/>
                             </button>
                         </div>
-                        {sendingMessage?
+                        {sendingMessage ?
                             <MoonLoader size={30}
                                         color={"#024950"}
                                         loading={sendingMessage}/> :
-                        <div className="input-group-append ps-4">
+                            <div className="input-group-append ps-4">
 
                                 <button className="btn chat-send-btn mt-3" onClick={handleSendMessage}>
                                     <FeatherIcon icon="send"/>
                                 </button>
 
-                        </div>}
+                            </div>}
                     </div>
                 </div>
             </div>
