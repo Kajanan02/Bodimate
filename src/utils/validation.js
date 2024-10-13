@@ -32,8 +32,19 @@ export function validateRegister(values) {
             errors.email = "This Email address is Not Allowed";
         }
     }
-    if (!values.username) {
-        errors.username = "Name is Required";
+    if (!values.contactNo) {
+        errors.contactNo = "Contact Number is Required";
+    } else if (!/^([+]\d{2})?\d{10}$/.test(values.contactNo)) {
+        errors.contactNo = "Contact Number is Not Valid";
+    }
+    if (!values.firstName) {
+        errors.firstName = "First Name is Required";
+    }
+    if (!values.lastName) {
+        errors.lastName = "Last Name is Required";
+    }
+    if (!values.address) {
+        errors.address = "Address is Required";
     }
     if (!values.password) {
         errors.password = "Password is Required"

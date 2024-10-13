@@ -4,7 +4,7 @@ import FeatherIcon from 'feather-icons-react';
 import verifiedIcon from "../../assets/boarding-details/verified.svg"
 import ownerProfile from "../../assets/boarding-details/OwnerProfile.jpg"
 import DegreeView from "./degreeView.jsx";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {useParams} from "react-router-dom";
 // import Heart from "react-heart";
@@ -32,17 +32,18 @@ function BoardingDetails() {
         }
         return 0;
     };
+    const [err,setErr] = useState(null)
 
-    const customerAttributes = {
-        first_name: 'John',
-        last_name: 'Doe',
-        phone: '+94771234567',
-        email: 'john@johndoe.com',
-        address: 'No. 50, Highlevel Road',
-        city: 'Panadura',
-        country: 'Sri Lanka',
-    };
+    const userDetail = useSelector(state => state.userData.userDetails);
+    const [value,setValue] = useState({})
 
+
+
+    function handleChange(event) {
+        setValue(value => ({...value, [event.target.name]: event.target.value}));
+    }
+
+    console.log(value)
 
     function onPayhereCheckoutError(errorMsg) {
         alert(errorMsg);
@@ -51,18 +52,29 @@ function BoardingDetails() {
     async function checkout(hash, amount, orderId) {
         // using async await
         try {
+            const customerAttributes = {
+                first_name: userDetail?.firstName,
+                last_name: userDetail?.lastName,
+                phone: userDetail?.contactNo,
+                email: userDetail?.email,
+                address: userDetail?.address,
+                city: userDetail?.address,
+                country: 'Sri Lanka',
+            };
             const customer = new Customer(customerAttributes);
 
+
             const checkoutData = new CheckoutParams({
-                returnUrl: 'http://localhost:3000/payment',
-                cancelUrl: 'http://localhost:3000/payment',
-                notifyUrl: 'http://localhost:8080/payment',
+                returnUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+                cancelUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+                notifyUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
                 order_id: orderId,
-                itemTitle: 'Fees',
+                itemTitle: 'Boarding Fees',
                 currency: CurrencyType.LKR,
                 amount: amount,
                 hash: hash,
             });
+
 
             const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
             checkout.start();
@@ -71,20 +83,30 @@ function BoardingDetails() {
         }
     }
 
+
     useEffect(() => {
         if (!formSubmitted) {
             return
         }
         dispatch(setLoading(true))
         let data = {}
-        data.amount = 1000
+        data.amount = totalPrice
+        data.checkInDate= value.checkInDate
+        data.checkOutDate = value.checkOutDate
+        data.boardingId = List._id
+        data.ownerId = List.boardingOwner
+        data.studentId = userDetail._id
+        data.memberCount= guestCount
         data.orderId = parseInt(Math.random() * 10000000000000000)
         console.log(data)
         axiosInstance.post(`/payment/payment-hash`, data)
             .then((res) => {
                 console.log(res)
+                console.log(res.data)
                 if (res.data) {
-                    checkout(res.data, data.amount, data.orderId)
+                    console.log(data.amount)
+                    console.log(res.data.booking._id)
+                     checkout(res.data.hash, data.amount, res.data.booking._id)
                 }
             }).catch((err) => {
             console.log(err)
@@ -120,10 +142,19 @@ function BoardingDetails() {
 
 
     const incrementGuestCount = () => {
+        if(guestCount +1 >List.membersCount){
+            setErr("Maximum members count is "+ List.membersCount)
+            return
+        }
         setGuestCount((prevCount) => Math.min(prevCount + 1, 20));
     };
 
     const decrementGuestCount = () => {
+        console.log(List.membersCount)
+        console.log(guestCount)
+        if(List.membersCount > guestCount){
+            return
+        }
         setGuestCount((prevCount) => Math.max(prevCount - 1, 0));
     };
 
@@ -376,12 +407,12 @@ function BoardingDetails() {
                             <div className="col-md-6 mb-3">
                                 <label htmlFor="checkInDate" className="form-label price-card-text">Check-in
                                     Date</label>
-                                <input type="date" className="form-control" id="checkInDate"/>
+                                <input type="date" className="form-control" id="checkInDate" name={"checkInDate"} onChange={handleChange}/>
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label htmlFor="checkOutDate" className="form-label price-card-text">Check-out
                                     Date</label>
-                                <input type="date" className="form-control" id="checkOutDate"/>
+                                <input type="date" className="form-control" id="checkOutDate" name={"checkOutDate"} onChange={handleChange}/>
                             </div>
                         </div>
                         <div className="row">
@@ -414,8 +445,10 @@ function BoardingDetails() {
                                             +
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
+                            {err ? <div className={"text-danger"}>{err}</div>:null}
                         </div>
                         <div className="col p-2">
                             <button type="button" onClick={reserve} className="btn login-btn w-100 fw-semibold p-2">Reserve</button>

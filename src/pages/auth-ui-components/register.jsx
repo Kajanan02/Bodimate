@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../../assets/logo.svg";
 import LoginBanner from "../../assets/login-banner.jpeg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {validateRegister} from "../../utils/validation.js";
 import FormHandler from "react-form-buddy";
 import axiosInstance from "../../utils/axiosInstance.js";
@@ -20,6 +20,7 @@ function Register() {
     } = FormHandler(isRegister, validateRegister);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     console.log(values)
 
@@ -29,6 +30,7 @@ function Register() {
             .then(res => {
                 console.log(res.data)
                 toast.success("Successfully Registered")
+                navigate("/login")
             })
             .catch(err => {
                 console.log(err.response.data)
@@ -63,20 +65,48 @@ function Register() {
                         <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
+                                       className="form-label fw-normal login-font">First Name</label>
+                                <input className={`form-control fw-normal ${errors.firstName ? "border-red" : ""}`}
+                                       id="exampleInputEmail1"
+                                       name={"firstName"} onChange={handleChange} placeholder="Enter Email"
+                                       aria-describedby="emailHelp"/>
+                                {errors.firstName && <p className={"text-red"}>{errors.firstName}</p>}
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="exampleInputEmail1"
+                                       className="form-label fw-normal login-font">Last Name</label>
+                                <input className={`form-control fw-normal ${errors.lastName ? "border-red" : ""}`}
+                                       type="text"
+                                       name={"lastName"} onChange={handleChange} placeholder="Enter Username"/>
+                                {errors.lastName && <p className={"text-red"}>{errors.lastName}</p>}
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="exampleInputEmail1"
                                        className="form-label fw-normal login-font">Email</label>
                                 <input className={`form-control fw-normal ${errors.email ? "border-red" : ""}`}
                                        id="exampleInputEmail1"
                                        name={"email"} onChange={handleChange} placeholder="Enter Email"
                                        aria-describedby="emailHelp"/>
+                                <div id="emailHelp" className="form-text">Please Use University Email Address,(If you don't have Email address Please contact Admin)
+                                </div>
+
                                 {errors.email && <p className={"text-red"}>{errors.email}</p>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1"
-                                       className="form-label fw-normal login-font">Name</label>
-                                <input className={`form-control fw-normal ${errors.username ? "border-red" : ""}`}
+                                       className="form-label fw-normal login-font">Contact No</label>
+                                <input className={`form-control fw-normal ${errors.contactNo ? "border-red" : ""}`}
                                        type="text"
-                                       name={"username"} onChange={handleChange} placeholder="Enter Username"/>
-                                {errors.username && <p className={"text-red"}>{errors.username}</p>}
+                                       name={"contactNo"} onChange={handleChange} placeholder="Enter Username"/>
+                                {errors.contactNo && <p className={"text-red"}>{errors.contactNo}</p>}
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="exampleInputEmail1"
+                                       className="form-label fw-normal login-font">Address</label>
+                                <input className={`form-control fw-normal ${errors.address ? "border-red" : ""}`}
+                                       type="text"
+                                       name={"address"} onChange={handleChange} placeholder="Enter Username"/>
+                                {errors.address && <p className={"text-red"}>{errors.address}</p>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputPassword1"
