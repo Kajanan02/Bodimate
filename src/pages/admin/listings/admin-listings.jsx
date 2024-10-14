@@ -158,7 +158,6 @@ function AdminListings() {
                         <thead className={"top-0 position-sticky h-45"}>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Boarding Reg.No</th>
                             <th scope="col">Boarding Name</th>
                             <th scope="col">Near By University</th>
                             <th scope="col">Price Per Month</th>
@@ -170,7 +169,7 @@ function AdminListings() {
                             .map((data, index) => (
                                 <tr key={index + "asd"}>
                                     <td scope="row">{index + 1}</td>
-                                    <td>{data.boardingNo}</td>
+
                                     <td>{data.boardingName}</td>
                                     <td>{data.nearestUniversity}</td>
                                     <td>{data.pricePerMonth}</td>
