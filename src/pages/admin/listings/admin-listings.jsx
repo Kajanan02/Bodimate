@@ -169,7 +169,6 @@ function AdminListings() {
                             .map((data, index) => (
                                 <tr key={index + "asd"}>
                                     <td scope="row">{index + 1}</td>
-
                                     <td>{data.boardingName}</td>
                                     <td>{data.nearestUniversity}</td>
                                     <td>{data.pricePerMonth}</td>
