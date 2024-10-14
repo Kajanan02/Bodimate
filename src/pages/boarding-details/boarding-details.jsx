@@ -11,6 +11,8 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
 import {setLoading} from "../../redux/features/loaderSlice.js";
+import BoardingLocation from "./boarding-location.jsx";
+import {DirectionsRenderer, LoadScript,GoogleMap} from "@react-google-maps/api";
 
 function BoardingDetails() {
 
@@ -33,9 +35,60 @@ function BoardingDetails() {
         return 0;
     };
     const [err,setErr] = useState(null)
+    const [directions, setDirections] = useState(null);
+    const [distance, setDistance] = useState('');
 
     const userDetail = useSelector(state => state.userData.userDetails);
     const [value,setValue] = useState({})
+    const UWU = {lat: 6.983186099999999, lng: 81.0793705}
+
+    const calculateDistance = (originLatLng, destinationLatLng) => {
+        const directionsService = new window.google.maps.DirectionsService();
+        directionsService.route(
+            {
+                origin: originLatLng,
+                destination: destinationLatLng,
+                travelMode: window.google.maps.TravelMode.DRIVING,
+            },
+            (result, status) => {
+                if (status === window.google.maps.DirectionsStatus.OK) {
+                    setDirections(result);
+                    const distanceText = result.routes[0].legs[0].distance.text;
+                    setDistance(distanceText);
+                } else {
+                    console.error(`Error fetching directions: ${result}`);
+                }
+            }
+        );
+    };
+
+    useEffect(() => {
+        const originLatLng = { lat: 40.7128, lng: -74.0060 }; // New York City
+        const destinationLatLng = { lat: 34.0522, lng: -118.2437 }; // Los Angeles
+
+        const calculateDistance = (originLatLng, destinationLatLng) => {
+            const directionsService = new window.google.maps.DirectionsService();
+            directionsService.route(
+                {
+                    origin: originLatLng,
+                    destination: destinationLatLng,
+                    travelMode: window.google.maps.TravelMode.DRIVING,
+                },
+                (result, status) => {
+                    if (status === window.google.maps.DirectionsStatus.OK) {
+                        setDirections(result);
+                        const distanceText = result.routes[0].legs[0].distance.text;
+                        setDistance(distanceText);
+                    } else {
+                        console.error(`Error fetching directions: ${status}`);
+                    }
+                }
+            );
+        };
+
+        // Automatically calculate distance on mount
+        calculateDistance(originLatLng, destinationLatLng);
+    }, []);
 
 
 
@@ -167,6 +220,9 @@ function BoardingDetails() {
             .then((res) => {
                 console.log(res.data);
                 setList(res.data);
+                console.log(res.data)
+                let distace = calculateDistance(UWU, res.data.location)
+                console.log(distace)
 
             })
             .catch((err) => {
@@ -497,7 +553,32 @@ function BoardingDetails() {
 
                 <hr className="my-4"/>
             </div>
-            <div className="row">
+            <div className="row mb-5">
+                <h3 className="review-heading pb-3">Location</h3>
+                {/*<BoardingLocation location={List?.location}/>*/}
+
+                <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
+                    <GoogleMap mapContainerStyle={{
+                        width: '100%',
+                        height: '400px',
+                    }} center={{
+                        lat: 37.7749, // Default latitude
+                        lng: -122.4194, // Default longitude
+                    }} zoom={10}>
+                        {directions && (
+                            <DirectionsRenderer directions={directions} />
+                        )}
+                    </GoogleMap>
+                    <button
+                        onClick={() =>
+                            calculateDistance({ lat: 40.7128, lng: -74.0060 }, { lat: 34.0522, lng: -118.2437 })
+                        }
+                    >
+                        Calculate Distance
+                    </button>
+                    {distance && <div>Distance: {distance}</div>}
+                </LoadScript>
+
             {/*    <h3 className="review-heading pb-3">Reviews</h3>*/}
             {/*    <div className="row">*/}
             {/*        <div className="col-md-6">*/}

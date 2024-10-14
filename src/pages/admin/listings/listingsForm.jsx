@@ -233,13 +233,18 @@ function ListingsForm(props) {
     }
 
     function handleChangeFacilities(event) {
+        console.log("event.target.value")
         let value = event.target.value
-        if(values.facilities.includes(value)){
+        if(values?.facilities?.includes(value)){
             let index = values.facilities.indexOf(value)
             values.facilities.splice(index,1)
             setValue({facilities:values.facilities})
         }else {
-            setValue({facilities:[...values.facilities,value]})
+            if(values?.facilities){
+                setValue({facilities:[...values?.facilities,value]})
+            } else {
+                setValue({facilities:[value]})
+            }
         }
 
         // if(values.facilities.includes(value)){
