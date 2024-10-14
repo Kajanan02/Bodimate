@@ -36,7 +36,7 @@ jobs:
         run: npm run build
 
       - name: Prepare Deployment Package
-        run: zip -r deploy.zip . -x "node_modules/*" -x "deploy.zip" -x ".git/*" -x ".github/*" -x ".gitignore" -x "README.md" -x "LICENSE" -x ".idea/*" -x "src/*" -x "public/*" -x ".env*" -x "vercel.json" -x ".eslintrc.cjs"
+        run: zip -r deploy.zip . -x "node_modules/*" -x ".git/*" -x ".env*" -x "*.md" -x "src/*" -x "tests/*"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2

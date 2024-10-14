@@ -32,6 +32,7 @@ import Owner_Register from "./pages/Bodimate-your-home/bodimate-owner-register.j
 import {AccountCategory, Payhere} from "@payhere-js-sdk/client";
 import {useDispatch} from "react-redux";
 import {userUpdate} from "./redux/features/userDataSlice.js";
+import PaymentComplete from "./pages/payment-complete/payment-complete.jsx";
 
 Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
 
@@ -64,6 +65,7 @@ function App() {
                     <Route path="/nearby-university/:universityName" element={<NearbyUniversity />} />
                     <Route path="settings" element={<Settings/>}/>
                     <Route path="contact-us" element={<ContactUs/>}/>
+                    <Route path="payment-complete" element={<PaymentComplete/>}/>
 
                 </Route>
 

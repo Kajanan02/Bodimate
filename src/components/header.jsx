@@ -9,7 +9,7 @@ import {NavLink} from "react-router-dom";
 function Header() {
 
 
-    const [username, setUsername] = React.useState(localStorage.getItem('NAME'));
+    const [username, setUsername] = React.useState(localStorage.getItem('LAST_NAME'));
 
     return (
 
@@ -65,7 +65,7 @@ function Header() {
                                          id="navbarDropdown"
                                          role="button"
                                          data-bs-toggle="dropdown" aria-expanded="false">
-                                    {username ? <span className={"text-center"}>{username?.slice(0, 1)}</span> :
+                                    {username ? <span className={"text-center fw-bolder"}>{username?.slice(0, 1)}</span> :
                                         <div>
                                             <FeatherIcon className="" icon={"menu"}/>
                                             <span className="ms-1">
