@@ -17,7 +17,7 @@ import personIcon from "../../../assets/person-svgrepo-com.svg";
 import camera from "../../../assets/admin-listings/camera.svg";
 import addIcon from "../../../assets/admin-listings/plus-circle.svg";
 import axiosInstance from "../../../utils/axiosInstance.js";
-import BoardingLocation from "./boardingLocation.jsx";
+// import BoardingLocation from "./boardingLocation.jsx";
 import axios from "axios";
 
 
@@ -856,7 +856,7 @@ function ListingsForm(props) {
                                     <div>
                                         <h5 className='admin-form-head fw-semibold'>Location</h5>
                                     </div>
-                                    <BoardingLocation onChange={boardingGeoLocation} location={values.location}/>
+                                    {/*<BoardingLocation onChange={boardingGeoLocation} location={values.location}/>*/}
                                 </div>
                                 <div className="col-md-12">
                                     <div className="admin-boarding-image-uploader mb-3">
