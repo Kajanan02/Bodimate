@@ -25,7 +25,7 @@ const BoardingCard = ({data}) => {
 
         <div className="card bodimate-card " >
             <div className="position-relative">
-                <img src={bording} alt="Listing" className="img-fluid w-100 h-auto"/>
+                <img src={data.boardingPic[0]} alt="Listing" className="img-fluid w-100 h-auto"/>
                 <div className="heart-icon">
                     <div
                         className="btn btn-heart ms-auto p-0"

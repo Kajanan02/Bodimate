@@ -247,7 +247,7 @@ function BoardingDetails() {
                                         <img src={List.boardingPic[1]} alt="Boarding Image"
                                              className="img-fluid rounded-20"/>
                                     ) : (
-                                        <p>No second image
+                                        <p>No image
                                             available</p>
                                     )}
                                 </div>
@@ -256,7 +256,7 @@ function BoardingDetails() {
                                         <img src={List.boardingPic[2]} alt="Boarding Image"
                                              className="img-fluid rounded-20"/>
                                     ) : (
-                                        <p>No second image
+                                        <p>No image
                                             available</p>
                                     )}
                                 </div>
@@ -265,7 +265,7 @@ function BoardingDetails() {
                                         <img src={List.boardingPic[3]} alt="Boarding Image"
                                              className="img-fluid rounded-20"/>
                                     ) : (
-                                        <p>No second image
+                                        <p>No image
                                             available</p>
                                     )}
                                 </div>
@@ -274,7 +274,7 @@ function BoardingDetails() {
                                         <img src={List.boardingPic[4]} alt="Boarding Image"
                                              className="img-fluid rounded-20"/>
                                     ) : (
-                                        <p>No second image
+                                        <p>No image
                                             available</p>
                                     )}
                                     <div>

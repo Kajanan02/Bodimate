@@ -43,6 +43,16 @@ function PaymentComplete(props) {
             <div className={"shadow-lg py-5 my-5 text-center"}>
                 <FeatherIcon icon={"check-circle"} className={"text-success"} size={100}/>
                 <h1 className={"my-3 "}>Payment Complete Successfully</h1>
+                <div className={"ps-5 ms-5 pt-5 text-start"}>
+                    <h5>Student Name : </h5>
+                    <h5>Boarding Name : </h5>
+                    <h5>Boarding Owner Name : </h5>
+                    <h5>Boarding Address : </h5>
+                    <h5>Payment : </h5>
+                    <h5>Date : </h5>
+                    <h5>Ref.Number : </h5>
+
+                </div>
             </div>
         </div>
     );
