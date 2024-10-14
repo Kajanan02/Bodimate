@@ -195,8 +195,8 @@ function BoardingDetails() {
 
 
     const incrementGuestCount = () => {
-        if(guestCount +1 >List.membersCount){
-            setErr("Maximum members count is "+ List.membersCount)
+        if(guestCount +1 >List.availableSlots){
+            setErr("Maximum members count is "+ List.availableSlots)
             return
         }
         setGuestCount((prevCount) => Math.min(prevCount + 1, 20));
@@ -205,7 +205,7 @@ function BoardingDetails() {
     const decrementGuestCount = () => {
         console.log(List.membersCount)
         console.log(guestCount)
-        if(List.membersCount > guestCount){
+        if(List.availableSlots > guestCount){
             return
         }
         setGuestCount((prevCount) => Math.max(prevCount - 1, 0));
