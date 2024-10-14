@@ -32,6 +32,7 @@ function ListingsForm(props) {
     const [imagesList,setImageList]=useState([])
 
     const userDetail = useSelector(state => state.userData.userDetails);
+    console.log(props)
 
     const {
         handleChange,
@@ -72,7 +73,8 @@ function ListingsForm(props) {
         }
 
     }
-    console.log(selectedImage)
+
+
 
 
     useEffect(() => {
@@ -229,6 +231,27 @@ function ListingsForm(props) {
         delete image[key]
         setSelectedImage(image)
     }
+
+    function handleChangeFacilities(event) {
+        let value = event.target.value
+        if(values.facilities.includes(value)){
+            let index = values.facilities.indexOf(value)
+            values.facilities.splice(index,1)
+            setValue({facilities:values.facilities})
+        }else {
+            setValue({facilities:[...values.facilities,value]})
+        }
+
+        // if(values.facilities.includes(value)){
+        //     let index = values.facilities.indexOf(value)
+        //     values.facilities.splice(index,1)
+        //     setValue({facilities:values.facilities})
+        // }else {
+        //     setValue({facilities:[...values.facilities,value]})
+        // }
+    }
+
+    console.log(values)
 
     return (
         <Modal
@@ -424,6 +447,8 @@ function ListingsForm(props) {
                                                     <Form.Check
                                                         type="radio"
                                                         name="boardingType"
+                                                        value="Entire Home"
+                                                        checked={values.boardingType === "Entire Home"}
                                                         onChange={handleChange}
                                                         label={
                                                             <div
@@ -452,6 +477,8 @@ function ListingsForm(props) {
                                                     <Form.Check
                                                         type="radio"
                                                         name="boardingType"
+                                                        value={"Room"}
+                                                        checked={values.boardingType === "Room"}
                                                         onChange={handleChange}
                                                         label={
                                                             <div
@@ -480,6 +507,8 @@ function ListingsForm(props) {
                                                         type="radio"
                                                         name="boardingType"
                                                         id="formHorizontalRadios3"
+                                                        value={"Shared Room"}
+                                                        checked={values.boardingType === "Shared Room"}
                                                         onChange={handleChange}
                                                         label={
                                                             <div
@@ -614,7 +643,8 @@ function ListingsForm(props) {
                                                 <div className={"admin-boarding-type-home-button pb-2"}>
                                                     <Form.Check
                                                         type="radio"
-                                                        value={values.stayPreference}
+                                                        value={"Male"}
+                                                        checked={values.stayPreference === "Male"}
                                                         name="stayPreference"
                                                         onChange={handleChange}
                                                         label={
@@ -642,7 +672,8 @@ function ListingsForm(props) {
                                                     <Form.Check
                                                         type="radio"
                                                         name="stayPreference"
-                                                        value="female"
+                                                        value={"Female"}
+                                                        checked={values.stayPreference === "Female"}
                                                         onChange={handleChange}
                                                         label={
                                                             <div
@@ -669,6 +700,8 @@ function ListingsForm(props) {
                                                     <Form.Check
                                                         type="radio"
                                                         name="stayPreference"
+                                                        value={"Boys or Girls"}
+                                                        checked={values.stayPreference === "Boys or Girls"}
                                                         onChange={handleChange}
                                                         label={
                                                             <div
@@ -724,41 +757,54 @@ function ListingsForm(props) {
                                                 <p className={"admin-text-red"}>{errors.facilities}</p>}
                                             <DropdownMenu className={"w-100"}>
                                                 <FormCheck name={"facilities"}
+                                                           value={"WiFi"}
                                                            label={<div className={"ps-3"}>WiFi</div>}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                           checked={values.facilities?.includes("WiFi")}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
-                                                           label={<div className={"ps-3"}>Water
-                                                               Heater</div>}
+                                                           label={<div className={"ps-3"}>Water Heater</div>}
+                                                           value={"Water Heater"}
+                                                           checked={values.facilities?.includes("Water Heater")}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
+                                                           value={"Study Hall"}
+                                                           checked={values.facilities?.includes("Study Hall")}
                                                            label={<div className={"ps-3"}>Study Hall</div>}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
                                                            label={<div className={"ps-3"}>Kitchen</div>}
+                                                           value={"Kitchen"}
+                                                           checked={values.facilities?.includes("Kitchen")}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
                                                            label={<div className={"ps-3"}>Fan</div>}
                                                            className="mx-3 my-1 "
-                                                           onChange={handleChange}
+                                                              value={"Fan"}
+                                                              checked={values.facilities?.includes("Fan")}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
                                                            label={<div className={"ps-3"}>Cooker</div>}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                              value={"Cooker"}
+                                                                checked={values.facilities?.includes("Cooker")}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <FormCheck name={"facilities"}
                                                            label={<div className={"ps-3"}>Other
                                                                Facilities</div>}
+                                                           value={"Other Facilities"}
+                                                              checked={values.facilities?.includes("Other Facilities")}
                                                            className="mx-3 my-1"
-                                                           onChange={handleChange}
+                                                           onChange={handleChangeFacilities}
                                                 />
                                                 <div className={"w-100 ps-3 pe-3 pt-3"}>
                                                     <FormControl name={"facilities"} id=""
