@@ -32,11 +32,9 @@ function AdminListings() {
             onSuccess: false // Ensure this is added to track success
         }));
         setDeletedId(id);
-        console.log("Delete initiated for ID:", id);
     }
 
     // Debugging: log the current state of confirmation dialog and deletedId
-    console.log("Current Deleted ID:", deletedId);
 
 
 

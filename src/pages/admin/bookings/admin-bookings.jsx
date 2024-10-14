@@ -37,20 +37,14 @@ function AdminBookings() {
     }
 
     // Debugging: log the current state of confirmation dialog and deletedId
-    console.log("Current Confirmation Dialog:", confirmationDialog);
-    console.log("Current Deleted ID:", deletedId);
 
-    console.log(confirmationDialog)
-    console.log(deletedId)
 
     useEffect(() => {
-        console.log("Checking conditions:", confirmationDialog, deletedId);
         if (!confirmationDialog || !confirmationDialog.confirmationDialog.onSuccess || !deletedId) {
             console.log("Deletion conditions not met");
             return;
         }
 
-        console.log("Conditions met, proceeding with delete for ID:", deletedId);
         dispatch(setLoading(true)); // Optional: set loading state if needed
 
         // Axios delete request
