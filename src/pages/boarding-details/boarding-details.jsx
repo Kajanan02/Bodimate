@@ -62,33 +62,33 @@ function BoardingDetails() {
         );
     };
 
-    useEffect(() => {
-        const originLatLng = { lat: 40.7128, lng: -74.0060 }; // New York City
-        const destinationLatLng = { lat: 34.0522, lng: -118.2437 }; // Los Angeles
-
-        const calculateDistance = (originLatLng, destinationLatLng) => {
-            const directionsService = new window.google.maps.DirectionsService();
-            directionsService.route(
-                {
-                    origin: originLatLng,
-                    destination: destinationLatLng,
-                    travelMode: window.google.maps.TravelMode.DRIVING,
-                },
-                (result, status) => {
-                    if (status === window.google.maps.DirectionsStatus.OK) {
-                        setDirections(result);
-                        const distanceText = result.routes[0].legs[0].distance.text;
-                        setDistance(distanceText);
-                    } else {
-                        console.error(`Error fetching directions: ${status}`);
-                    }
-                }
-            );
-        };
-
-        // Automatically calculate distance on mount
-        calculateDistance(originLatLng, destinationLatLng);
-    }, []);
+    // useEffect(() => {
+    //     const originLatLng = { lat: 40.7128, lng: -74.0060 }; // New York City
+    //     const destinationLatLng = { lat: 34.0522, lng: -118.2437 }; // Los Angeles
+    //
+    //     const calculateDistance = (originLatLng, destinationLatLng) => {
+    //         const directionsService = new window.google.maps.DirectionsService();
+    //         directionsService.route(
+    //             {
+    //                 origin: originLatLng,
+    //                 destination: destinationLatLng,
+    //                 travelMode: window.google.maps.TravelMode.DRIVING,
+    //             },
+    //             (result, status) => {
+    //                 if (status === window.google.maps.DirectionsStatus.OK) {
+    //                     setDirections(result);
+    //                     const distanceText = result.routes[0].legs[0].distance.text;
+    //                     setDistance(distanceText);
+    //                 } else {
+    //                     console.error(`Error fetching directions: ${status}`);
+    //                 }
+    //             }
+    //         );
+    //     };
+    //
+    //     // Automatically calculate distance on mount
+    //     calculateDistance(originLatLng, destinationLatLng);
+    // }, []);
 
 
 
