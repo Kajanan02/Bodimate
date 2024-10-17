@@ -130,8 +130,6 @@ function ListingsForm(props) {
     }, [isSubmit])
 
 
-
-
     console.log(props.type)
     console.log(errors)
     console.log(values)
@@ -149,11 +147,8 @@ function ListingsForm(props) {
             .then((res) => {
                 console.log(res.data.url)
                 setImageList([...imagesList,res.data.url])
-                console.log(imagesList)
             }).finally(() => dispatch(setLoading(false)))
     }
-
-    console.log(imagesList)
 
 
     useEffect(() => {
@@ -273,9 +268,7 @@ function ListingsForm(props) {
             setValue({ facilities: [...values.facilities, value] });
         }
 
-
-
-    // if(values.facilities.includes(value)){
+        // if(values.facilities.includes(value)){
         //     let index = values.facilities.indexOf(value)
         //     values.facilities.splice(index,1)
         //     setValue({facilities:values.facilities})
