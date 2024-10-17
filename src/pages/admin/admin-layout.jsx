@@ -193,11 +193,21 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
+                        <div className={"w-100 px-sm-2"}>
+                            <NavLink
+                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
+                                to={"/admin/contact"}>
+                                <div className={'d-flex'}>
+                                    <FeatherIcon icon="mail" className={!toggle ? 'me-2' : "ms-1"}/>
+                                    {!toggle && <div className={''}>Contact</div>}
+                                </div>
+                            </NavLink>
+                        </div>
                         <div className={'w-100 border-bottom-d1d1d1 mb-3'}/>
                         <div className={"w-100 px-sm-2"}>
-                            <NavLink onClick={()=> localStorage.clear()}
-                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/login"}>
+                            <NavLink onClick={() => localStorage.clear()}
+                                     className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
+                                     to={"/login"}>
                                 <div className={'d-flex'}>
                                     <FeatherIcon icon="log-out" className={!toggle ? 'me-2' : "ms-1"}/>
                                     {!toggle && <div className={''}>Logout</div>}

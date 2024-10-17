@@ -46,7 +46,8 @@ function BoardingOwnerHome(props) {
         <div className={"p-5"}>
             <div className={"container"}>
                 <div className={"text-end"}>
-                    <button onClick={() => setIsOpened(true)}
+                    <button onClick={() => {setIsOpened(true);
+                    setModalType("Add");}}
                             className={"login-btn btn-primary p-2 rounded px-3 mt-3"}>Add Boarding
                     </button>
                 </div>
