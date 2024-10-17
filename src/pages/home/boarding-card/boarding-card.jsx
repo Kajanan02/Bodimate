@@ -65,7 +65,7 @@ const BoardingCard = ({data, from = "",...props}) => {
                     <h5 className="d-flex align-items-center fs-6 p-0 m-0">
                         {data.street},{data.district}
 
-                        <img src={verifiedIcon} alt="Verified Icon" className="verified-icon"/>
+                        {data.isVerified && <img src={verifiedIcon} alt="Verified Icon" className="verified-icon"/>}
                     </h5>
                     <p className="card-text p-0 m-0">{data.nearestUniversity}
                         <br/>

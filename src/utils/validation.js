@@ -243,9 +243,9 @@ export function validateListings(values) {
     if (!values.noOfRooms) {
         errors.noOfRooms = "No of Rooms is Required"
     }
-    if (!values.distance) {
-        errors.distance = "Distance is Required"
-    }
+    // if (!values.distance) {
+    //     errors.distance = "Distance is Required"
+    // }
     if (!values.advancedPayment) {
         errors.advancedPayment = "Advance Payment is Required"
     }
@@ -292,9 +292,9 @@ export function validateListingsBoardingOwner(values) {
     if (!values.noOfRooms) {
         errors.noOfRooms = "No of Rooms is Required"
     }
-    if (!values.distance) {
-        errors.distance = "Distance is Required"
-    }
+    // if (!values.distance) {
+    //     errors.distance = "Distance is Required"
+    // }
     if (!values.advancedPayment) {
         errors.advancedPayment = "Advance Payment is Required"
     }

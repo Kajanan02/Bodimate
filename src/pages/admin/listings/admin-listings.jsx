@@ -159,6 +159,7 @@ function AdminListings() {
                             <th scope="col">Boarding Name</th>
                             <th scope="col">Near By University</th>
                             <th scope="col">Price Per Month</th>
+                            <th scope={"col"}>Verified</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -170,8 +171,16 @@ function AdminListings() {
                                     <td>{data.boardingName}</td>
                                     <td>{data.nearestUniversity}</td>
                                     <td>{data.pricePerMonth}</td>
+                                    {data.isVerified == true ?
+                                        <td><span className="badge text-bg-primary">Verified</span></td> :
+                                        <td><span className="badge text-bg-danger"
+                                                  onClick={() =>{
+                                                      setModalType("State");
+                                                      setSelectedListings(data);
+                                                      setModalShow(true)}}
+                                        >Not Verified</span></td>}
                                     <td>
-                                        <FeatherIcon className={"admin-action-icons"} icon={"eye"}
+                                    <FeatherIcon className={"admin-action-icons"} icon={"eye"}
                                                      onClick={() => {
                                                          setModalType("View");
                                                          setSelectedListings(data);

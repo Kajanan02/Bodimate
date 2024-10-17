@@ -33,6 +33,7 @@ import {AccountCategory, Payhere} from "@payhere-js-sdk/client";
 import {useDispatch} from "react-redux";
 import {userUpdate} from "./redux/features/userDataSlice.js";
 import PaymentComplete from "./pages/payment-complete/payment-complete.jsx";
+import Contact from "./pages/admin/contact/contact.jsx";
 
 Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
 
@@ -79,6 +80,7 @@ function App() {
                     <Route path="chat-box" element={<ChatBox/>}/>
                     <Route path="settings" element={<AdminSetting/>}/>
                     <Route path="analytics" element={<Analytics/>}/>
+                    <Route path="contact" element={<Contact/>}/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
