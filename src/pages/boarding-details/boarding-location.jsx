@@ -1,31 +1,36 @@
 import React from 'react';
-import {GoogleMap, Marker, withGoogleMap, withScriptjs,} from "react-google-maps";
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
-const MapWithAMarker = withScriptjs(withGoogleMap(props =>
+const containerStyle = {
+    height: '400px',
+    width: '100%',
+};
 
-    <GoogleMap
-        defaultZoom={15}
-        defaultCenter={{lat: props.location.lat, lng: props.location.lng}}
-    >
-        <Marker
-            position={{lat: props.location.lat, lng: props.location.lng}}
-        />
-    </GoogleMap>
-));
+export default function BoardingLocation({ location }) {
 
-export default function BoardingLocation({location}) {
+    // Log location to check passed props
+    console.log(location);
 
-    console.log(location)
+    // Load Google Maps API
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.VITE_REACT_APP_GOOGLE_MAP, // Use environment variable
+        libraries: ['geometry', 'drawing', 'places'],
+    });
 
-    return (location ?
-        <div>
-            <MapWithAMarker
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_REACT_APP_GOOGLE_MAP}&v=3.exp&libraries=geometry,drawing,places`}
-                loadingElement={<div style={{height: `100%`}}/>}
-                containerElement={<div style={{height: `400px`}}/>}
-                mapElement={<div style={{height: `100%`}}/>}
-                location={location}
-            />
-        </div> : null
+    // Return null if location is not provided
+    if (!location) return null;
+
+    // Render the map once API is loaded
+    return isLoaded ? (
+        <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={{ lat: location.lat, lng: location.lng }}
+            zoom={15}
+        >
+            {/* Place a marker at the specified location */}
+            <Marker position={{ lat: location.lat, lng: location.lng }} />
+        </GoogleMap>
+    ) : (
+        <div>Loading...</div>
     );
 }

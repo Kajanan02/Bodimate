@@ -99,6 +99,7 @@ function ListingsForm(props) {
     useEffect(() => {
         if (["View", "Edit", "State"].includes(props.type) && !isEmpty(props.selectedListings)) {
             initForm(props.selectedListings)
+            setImageList(props.selectedListings.boardingPic)
         }
     }, [props.type, props.selectedListings])
 
