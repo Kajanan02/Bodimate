@@ -62,6 +62,25 @@ function ListingsForm(props) {
         setValue({nearestUniversity: selected});
     }
 
+    function verified() {
+        values.isVerified = true
+        axiosInstance.put(`/boardings/editBoarding/${values._id}`, values)
+            .then((res) => {
+                console.log(res.data);
+                toast.success('Successfully Updated');
+                props.update();
+            })
+            .catch((err) => {
+                toast.error('Something went wrong');
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+                setIsSubmit(false);
+                resetForm();
+                props.onHide();
+            });
+    }
+
     const handleChangeSettingsProfileImage = (file,key) => {
         if (file) {
             const reader = new FileReader();
@@ -78,7 +97,7 @@ function ListingsForm(props) {
 
 
     useEffect(() => {
-        if (["View", "Edit"].includes(props.type) && !isEmpty(props.selectedListings)) {
+        if (["View", "Edit", "State"].includes(props.type) && !isEmpty(props.selectedListings)) {
             initForm(props.selectedListings)
         }
     }, [props.type, props.selectedListings])
@@ -90,6 +109,7 @@ function ListingsForm(props) {
         if (!isSubmit || props.type !== "Edit") {
             return
         }
+        values.boardingPic= imagesList
         dispatch(setLoading(true))
 
 
@@ -233,18 +253,19 @@ function ListingsForm(props) {
     }
 
     function handleChangeFacilities(event) {
-        console.log("event.target.value")
-        let value = event.target.value
-        if(values?.facilities?.includes(value)){
-            let index = values.facilities.indexOf(value)
-            values.facilities.splice(index,1)
-            setValue({facilities:values.facilities})
-        }else {
-            if(values?.facilities){
-                setValue({facilities:[...values?.facilities,value]})
-            } else {
-                setValue({facilities:[value]})
-            }
+        let value = event.target.value;
+
+        // Check if values.facilities is defined, if not initialize it as an empty array
+        if (!values.facilities) {
+            values.facilities = [];
+        }
+
+        if (values.facilities.includes(value)) {
+            let index = values.facilities.indexOf(value);
+            values.facilities.splice(index, 1);
+            setValue({ facilities: [...values.facilities] });
+        } else {
+            setValue({ facilities: [...values.facilities, value] });
         }
 
         // if(values.facilities.includes(value)){
@@ -276,6 +297,7 @@ function ListingsForm(props) {
                     {props.type === "Add" && <div> Add Boarding Details</div>}
                     {props.type === "View" && <div> View Boarding Details</div>}
                     {props.type === "Edit" && <div> Edit Boarding Details</div>}
+                    {props.type === "State" && <div> Verify Boarding Details</div>}
                 </Modal.Title>}
             </Modal.Header>
             <Modal.Body scrollable>
@@ -856,21 +878,21 @@ function ListingsForm(props) {
                                             <p className={"admin-text-red"}>{errors.noOfRooms}</p>}
                                     </div>
                                 </div>
-                                <div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Distance</label>
-                                        <input name={"distance"} placeholder={"Enter Distance"}
-                                               className={`form-control ${errors.distance ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.distance || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.distance &&
-                                            <p className={"admin-text-red"}>{errors.distance}</p>}
-                                    </div>
-                                </div>
+                                {/*<div className={"col-md-6"}>*/}
+                                    {/*<div className="mb-3">*/}
+                                        {/*<label htmlFor="exampleInputEmail1"*/}
+                                        {/*       className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Distance</label>*/}
+                                        {/*<input name={"distance"} placeholder={"Enter Distance"}*/}
+                                        {/*       className={`form-control ${errors.distance ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                        {/*       id="exampleInputEmail5"*/}
+                                        {/*       onChange={handleChange}*/}
+                                        {/*       value={values.distance || ""}*/}
+                                        {/*       disabled={["View", "State"].includes(props.type)}*/}
+                                        {/*/>*/}
+                                        {/*{errors.distance &&*/}
+                                        {/*    <p className={"admin-text-red"}>{errors.distance}</p>}*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
                                 <div className={"col-md-6"}>
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputEmail1"
@@ -1090,6 +1112,13 @@ function ListingsForm(props) {
                     onClick={handleSubmit}
                 >
                     Update
+                </button>}
+                {props.type === "State" && <button
+                    type="button"
+                    className={"btn btn-secondary students-dropdown-btn"}
+                    onClick={verified}
+                >
+                    Verified
                 </button>}
             </Modal.Footer>
         </Modal>
