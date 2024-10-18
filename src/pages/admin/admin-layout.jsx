@@ -83,7 +83,7 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
-                        <div className={"w-100 px-sm-2"}>
+                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/admin/listings"}>
@@ -92,7 +92,7 @@ function AdminLayout() {
                                     {!toggle && <div className={''}>Listings</div>}
                                 </div>
                             </NavLink>
-                        </div>
+                        </div>:null}
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
@@ -103,7 +103,7 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
-                        <div className={"w-100 px-sm-2"}>
+                        {userDetail.role === "admin" ? <div className={"w-100 px-sm-2"}>
                             <div
                                 className={`side-menu-item d-flex justify-content-between align-items-center ${isUsersActive ? 'side-menu-active' : ''}`}
                                 onClick={toggleUsersDropdown}
@@ -152,7 +152,7 @@ function AdminLayout() {
                                     </NavLink>
                                 </div>
                             )}
-                        </div>
+                        </div> : null}
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
@@ -163,7 +163,7 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
-                        <div className={"w-100 px-sm-2"}>
+                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/admin/analytics"}>
@@ -172,8 +172,8 @@ function AdminLayout() {
                                     {!toggle && <div className={''}>Analytics</div>}
                                 </div>
                             </NavLink>
-                        </div>
-                        <div className={"w-100 px-sm-2"}>
+                        </div>:null}
+                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/admin/payments"}>
@@ -182,7 +182,7 @@ function AdminLayout() {
                                     {!toggle && <div className={''}>Payments</div>}
                                 </div>
                             </NavLink>
-                        </div>
+                        </div>:null}
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
