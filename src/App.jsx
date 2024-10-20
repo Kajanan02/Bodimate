@@ -34,6 +34,7 @@ import {useDispatch} from "react-redux";
 import {userUpdate} from "./redux/features/userDataSlice.js";
 import PaymentComplete from "./pages/payment-complete/payment-complete.jsx";
 import Contact from "./pages/admin/contact/contact.jsx";
+import AdminUniversity from "./pages/admin/university/university.jsx";
 
 Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
 
@@ -77,6 +78,7 @@ function App() {
                     <Route path="users-boarding-owners" element={<AdminBoardingOwners/>}/>
                     <Route path="users-students" element={<AdminStudents/>}/>
                     <Route path="payments" element={<AdminPayments/>}/>
+                    <Route path="university" element={<AdminUniversity/>}/>
                     <Route path="chat-box" element={<ChatBox/>}/>
                     <Route path="settings" element={<AdminSetting/>}/>
                     <Route path="analytics" element={<Analytics/>}/>
