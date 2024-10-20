@@ -19,6 +19,7 @@ import addIcon from "../../../assets/admin-listings/plus-circle.svg";
 import axiosInstance from "../../../utils/axiosInstance.js";
 import BoardingLocation from "./boardingLocation.jsx";
 import axios from "axios";
+import {useJsApiLoader} from "@react-google-maps/api";
 
 
 function ListingsForm(props) {
@@ -30,9 +31,14 @@ function ListingsForm(props) {
     const dispatch = useDispatch();
     const [selectedImage, setSelectedImage] = useState({});
     const [imagesList,setImageList]=useState([])
+    const [universityList, setUniversityList] = useState([]);
 
     const userDetail = useSelector(state => state.userData.userDetails);
-    console.log(props)
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAP,
+        libraries: ['places', 'geometry', 'drawing'],
+    });
 
     const {
         handleChange,
@@ -131,9 +137,6 @@ function ListingsForm(props) {
     }, [isSubmit])
 
 
-    console.log(props.type)
-    console.log(errors)
-    console.log(values)
 
 
     function imageUpload(file, key) {
@@ -247,6 +250,20 @@ function ListingsForm(props) {
         "Wayamba University of Sri Lanka (WUSL)"
     ];
 
+
+    useEffect(() => {
+        dispatch(setLoading(true))
+        axiosInstance.get(`/university/getAllUniversity`)
+            .then((res) => {
+                setUniversityList(res.data)
+            }).catch((err) => {
+            console.log(err)
+        }).finally(() => {
+            dispatch(setLoading(false))
+        })
+    }, [])
+
+
     function removeImage(key) {
         let image = {...selectedImage}
         delete image[key]
@@ -268,17 +285,7 @@ function ListingsForm(props) {
         } else {
             setValue({ facilities: [...values.facilities, value] });
         }
-
-        // if(values.facilities.includes(value)){
-        //     let index = values.facilities.indexOf(value)
-        //     values.facilities.splice(index,1)
-        //     setValue({facilities:values.facilities})
-        // }else {
-        //     setValue({facilities:[...values.facilities,value]})
-        // }
     }
-
-    console.log(values)
 
     return (
         <Modal
@@ -456,9 +463,9 @@ function ListingsForm(props) {
                                             name={"nearestUniversity"}
                                             aria-label="Default select example">
                                             <option hidden>Select Near By University</option>
-                                            {nearestUniversity.map((nearestUniversity) => (
-                                                <option key={nearestUniversity} value={nearestUniversity}>
-                                                    {nearestUniversity}
+                                            {universityList.map((nearestUniversity) => (
+                                                <option key={nearestUniversity} value={nearestUniversity?.universityName}>
+                                                    {nearestUniversity?.universityName}
                                                 </option>
                                             ))}
                                         </select>

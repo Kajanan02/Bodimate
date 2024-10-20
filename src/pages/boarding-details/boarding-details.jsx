@@ -11,7 +11,6 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
 import {setLoading} from "../../redux/features/loaderSlice.js";
-import BoardingLocation from "./boarding-location.jsx";
 import {DirectionsRenderer, LoadScript,GoogleMap} from "@react-google-maps/api";
 
 function BoardingDetails() {
@@ -41,6 +40,7 @@ function BoardingDetails() {
     const userDetail = useSelector(state => state.userData.userDetails);
     const [value,setValue] = useState({})
     const UWU = {lat: 6.983186099999999, lng: 81.0793705}
+    const [universityList, setUniversityList] = useState([])
 
     const calculateDistance = (originLatLng, destinationLatLng) => {
         const directionsService = new window.google.maps.DirectionsService();
@@ -218,20 +218,30 @@ function BoardingDetails() {
 
         axiosInstance.get(`/boardings/getOneBoarding/${id}`)
             .then((res) => {
-                console.log(res.data);
                 setList(res.data);
-                console.log(res.data)
-                let distace = calculateDistance(UWU, res.data.location)
-                console.log(distace)
-
             })
             .catch((err) => {
-                console.error("Error fetching boardings:", err);
+                console.error("Error fetching boarding details:", err);
             })
             .finally(() => {
                 dispatch(setLoading(false));
             });
     }, []);
+
+
+    useEffect(() => {
+        dispatch(setLoading(true));
+        axiosInstance.get(`/university/getAllUniversity`)
+            .then((res) => {
+                setUniversityList(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, [update]);
 
     useEffect(() => {
         if (update) {
@@ -250,6 +260,17 @@ function BoardingDetails() {
                 });
         }
     }, [update]);
+
+    useEffect(() => {
+        if (List && universityList.length > 0) {
+            const university = universityList.find((uni) => uni.universityName === List.nearestUniversity);
+            console.log("University", university);
+            if (university) {
+                calculateDistance(university.location,List.location);
+            }
+        }
+
+    }, [List,universityList]);
 
 
     return (
@@ -400,7 +421,7 @@ function BoardingDetails() {
                         <div className="col-lg-10 col-10">
                             <h4 className="detail-heading">Distance to University</h4>
                             <p className="detail-description">{List.boardingName} is conveniently located
-                                just {List.distance} from the {List.nearestUniversity},
+                                just {distance} from the {List.nearestUniversity},
                                 making it an ideal choice for students seeking proximity to campus.</p>
                         </div>
                     </div>
@@ -555,240 +576,20 @@ function BoardingDetails() {
             </div>
             <div className="row mb-5">
                 <h3 className="review-heading pb-3">Location</h3>
-                {/*<BoardingLocation location={List?.location}/>*/}
 
-                <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
+                {import.meta.env.VITE_REACT_APP_GOOGLE_MAP ? <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
                     <GoogleMap mapContainerStyle={{
                         width: '100%',
                         height: '400px',
-                    }} center={{
-                        lat: 37.7749, // Default latitude
-                        lng: -122.4194, // Default longitude
-                    }} zoom={10}>
+                    }} center={{lat: 6.927079, lng: 79.861244}} zoom={10}>
                         {directions && (
-                            <DirectionsRenderer directions={directions} />
+                            <DirectionsRenderer directions={directions}/>
                         )}
                     </GoogleMap>
-                    <button
-                        onClick={() =>
-                            calculateDistance({ lat: 40.7128, lng: -74.0060 }, { lat: 34.0522, lng: -118.2437 })
-                        }
-                    >
-                        Calculate Distance
-                    </button>
-                    {distance && <div>Distance: {distance}</div>}
-                </LoadScript>
+                    {distance && <div className={"fs-6 mt-2 text-dark fw-semibold"}>Distance: {distance}</div>}
+                </LoadScript>: null}
 
-            {/*    <h3 className="review-heading pb-3">Reviews</h3>*/}
-            {/*    <div className="row">*/}
-            {/*        <div className="col-md-6">*/}
-            {/*            <div className="row">*/}
-            {/*                <div className="col-md-11 mb-4">*/}
-            {/*                    <div className="row d-flex align-items-center align-middle">*/}
-            {/*                        <div className="col-md-3 review-category">*/}
-            {/*                            <p className={"para-margin"}>Check-in</p>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-10 col-lg-8">*/}
-            {/*                            <div className="review-rate-bar">*/}
-            {/*                                <div className="review-rate-fill" style={{width: '90%'}}></div>*/}
-            {/*                            </div>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-2 col-lg-1">*/}
-            {/*                            <p className="review-rate-text">4.5</p>*/}
-            {/*                        </div>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        <div className="col-md-6">*/}
-            {/*            <div className="row">*/}
-            {/*                <div className="col-md-11 mb-4">*/}
-            {/*                    <div className="row d-flex align-items-center align-middle">*/}
-            {/*                        <div className="col-md-3 review-category">*/}
-            {/*                            <p className={"para-margin"}>Value</p>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-10 col-lg-8">*/}
-            {/*                            <div className="review-rate-bar">*/}
-            {/*                                <div className="review-rate-fill" style={{width: '90%'}}></div>*/}
-            {/*                            </div>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-1 col-lg-1">*/}
-            {/*                            <p className="review-rate-text">4.5</p>*/}
-            {/*                        </div>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        <div className="col-md-6">*/}
-            {/*            <div className="row">*/}
-            {/*                <div className="col-md-11 mb-4">*/}
-            {/*                    <div className="row d-flex align-items-center align-middle">*/}
-            {/*                        <div className="col-md-3 review-category">*/}
-            {/*                            <p className={"para-margin"}>Accuracy</p>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-10 col-lg-8">*/}
-            {/*                            <div className="review-rate-bar">*/}
-            {/*                                <div className="review-rate-fill" style={{width: '90%'}}></div>*/}
-            {/*                            </div>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-1 col-lg-1">*/}
-            {/*                            <p className="review-rate-text">4.5</p>*/}
-            {/*                        </div>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        <div className="col-md-6">*/}
-            {/*            <div className="row">*/}
-            {/*                <div className="col-md-11 mb-4">*/}
-            {/*                    <div className="row d-flex align-items-center align-middle">*/}
-            {/*                        <div className="col-md-3 review-category">*/}
-            {/*                            <p className={"para-margin"}>Location</p>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-10 col-lg-8">*/}
-            {/*                            <div className="review-rate-bar">*/}
-            {/*                                <div className="review-rate-fill" style={{width: '60%'}}></div>*/}
-            {/*                            </div>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="col-1 col-lg-1">*/}
-            {/*                            <p className="review-rate-text">3.5</p>*/}
-            {/*                        </div>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<hr className="my-4"/>*/}
-            {/*<div className="row pb-5">*/}
-            {/*    <div className="col-md-6 col-12">*/}
-            {/*        <div className="row pb-5">*/}
-            {/*            <div className="col-md-2 col-3">*/}
-            {/*                <img src={ownerProfile} alt="Profile Picture" className="reviewer-profile"/>*/}
-            {/*            </div>*/}
-            {/*            <div className="col-md-9 col-9">*/}
-            {/*                <p className="reviewer-name para-margin">John Doe</p>*/}
-            {/*                <p className="review-date para-margin pb-3">January 1, 2024</p>*/}
-            {/*                <div>*/}
-            {/*                    <p ref={reviewRef} className="reviewer-review" style={{*/}
-            {/*                        maxHeight: expanded ? 'none' : '3.6em',*/}
-            {/*                        overflow: 'hidden',*/}
-            {/*                        textOverflow: 'ellipsis',*/}
-            {/*                        lineHeight: '1.2em',*/}
-            {/*                        marginBottom: '0',*/}
-            {/*                        fontSize: '16px',*/}
-            {/*                        fontFamily: 'Inter',*/}
-            {/*                        color: 'var(--secondary-text-color)'*/}
-            {/*                    }}>*/}
-            {/*                        This boarding booking system has been a lifesaver! Before, managing reservations was*/}
-            {/*                        a nightmare of phone calls and emails. Now, everything is online and streamlined.*/}
-            {/*                        Customers can easily book appointments, see availability, and even upload pet*/}
-            {/*                        documents. It is saved me tons of time and reduced confusion.*/}
-            {/*                    </p>*/}
-            {/*                    {showButton && (*/}
-            {/*                        <button className="btn btn-link text-dark"*/}
-            {/*                                onClick={toggleExpanded}>{expanded ? 'Show less' : 'Show more'}</button>*/}
-            {/*                    )}*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="col-md-6 col-12">*/}
-            {/*        <div className="row pb-5">*/}
-            {/*            <div className="col-md-2 col-3">*/}
-            {/*                <img src={ownerProfile} alt="Profile Picture" className="reviewer-profile"/>*/}
-            {/*            </div>*/}
-            {/*            <div className="col-md-9 col-9">*/}
-            {/*                <p className="reviewer-name para-margin">Jane Smith</p>*/}
-            {/*                <p className="review-date para-margin pb-3">January 1, 2024</p>*/}
-            {/*                <div>*/}
-            {/*                    <p ref={reviewRef} className="reviewer-review" style={{*/}
-            {/*                        maxHeight: expanded ? 'none' : '3.6em',*/}
-            {/*                        overflow: 'hidden',*/}
-            {/*                        textOverflow: 'ellipsis',*/}
-            {/*                        lineHeight: '1.2em',*/}
-            {/*                        marginBottom: '0',*/}
-            {/*                        fontSize: '16px',*/}
-            {/*                        fontFamily: 'Inter',*/}
-            {/*                        color: 'var(--secondary-text-color)'*/}
-            {/*                    }}>*/}
-            {/*                        This boarding booking system has been a lifesaver! Before, managing reservations was*/}
-            {/*                        a nightmare of phone calls and emails. Now, everything is online and streamlined.*/}
-            {/*                        Customers can easily book appointments, see availability, and even upload pet*/}
-            {/*                        documents. It is saved me tons of time and reduced confusion.*/}
-            {/*                    </p>*/}
-            {/*                    {showButton && (*/}
-            {/*                        <button className="btn btn-link text-dark"*/}
-            {/*                                onClick={toggleExpanded}>{expanded ? 'Show less' : 'Show more'}</button>*/}
-            {/*                    )}*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="col-md-6 col-12">*/}
-            {/*        <div className="row pb-5">*/}
-            {/*            <div className="col-md-2 col-3">*/}
-            {/*                <img src={ownerProfile} alt="Profile Picture" className="reviewer-profile"/>*/}
-            {/*            </div>*/}
-            {/*            <div className="col-md-9 col-9">*/}
-            {/*                <p className="reviewer-name para-margin">Jane Smith</p>*/}
-            {/*                <p className="review-date para-margin pb-3">January 1, 2024</p>*/}
-            {/*                <div>*/}
-            {/*                    <p ref={reviewRef} className="reviewer-review" style={{*/}
-            {/*                        maxHeight: expanded ? 'none' : '3.6em',*/}
-            {/*                        overflow: 'hidden',*/}
-            {/*                        textOverflow: 'ellipsis',*/}
-            {/*                        lineHeight: '1.2em',*/}
-            {/*                        marginBottom: '0',*/}
-            {/*                        fontSize: '16px',*/}
-            {/*                        fontFamily: 'Inter',*/}
-            {/*                        color: 'var(--secondary-text-color)'*/}
-            {/*                    }}>*/}
-            {/*                        This boarding booking system has been a lifesaver! Before, managing reservations was*/}
-            {/*                        a nightmare of phone calls and emails. Now, everything is online and streamlined.*/}
-            {/*                        Customers can easily book appointments, see availability, and even upload pet*/}
-            {/*                        documents. It is saved me tons of time and reduced confusion.*/}
-            {/*                    </p>*/}
-            {/*                    {showButton && (*/}
-            {/*                        <button className="btn btn-link text-dark"*/}
-            {/*                                onClick={toggleExpanded}>{expanded ? 'Show less' : 'Show more'}</button>*/}
-            {/*                    )}*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="col-md-6 col-12">*/}
-            {/*        <div className="row pb-5">*/}
-            {/*            <div className="col-md-2 col-3">*/}
-            {/*                <img src={ownerProfile} alt="Profile Picture" className="reviewer-profile"/>*/}
-            {/*            </div>*/}
-            {/*            <div className="col-md-9 col-9">*/}
-            {/*                <p className="reviewer-name para-margin">Jane Smith</p>*/}
-            {/*                <p className="review-date para-margin pb-3">January 1, 2024</p>*/}
-            {/*                <div>*/}
-            {/*                    <p ref={reviewRef} className="reviewer-review" style={{*/}
-            {/*                        maxHeight: expanded ? 'none' : '3.6em',*/}
-            {/*                        overflow: 'hidden',*/}
-            {/*                        textOverflow: 'ellipsis',*/}
-            {/*                        lineHeight: '1.2em',*/}
-            {/*                        marginBottom: '0',*/}
-            {/*                        fontSize: '16px',*/}
-            {/*                        fontFamily: 'Inter',*/}
-            {/*                        color: 'var(--secondary-text-color)'*/}
-            {/*                    }}>*/}
-            {/*                        This boarding booking system has been a lifesaver! Before, managing reservations was*/}
-            {/*                        a nightmare of phone calls and emails. Now, everything is online and streamlined.*/}
-            {/*                        Customers can easily book appointments, see availability, and even upload pet*/}
-            {/*                        documents. It is saved me tons of time and reduced confusion.*/}
-            {/*                    </p>*/}
-            {/*                    {showButton && (*/}
-            {/*                        <button className="btn btn-link text-dark"*/}
-            {/*                                onClick={toggleExpanded}>{expanded ? 'Show less' : 'Show more'}</button>*/}
-            {/*                    )}*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
+
             </div>
 
         </div>
