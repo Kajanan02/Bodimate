@@ -81,6 +81,22 @@ function AdminHome() {
     const [pieChartOptions, setPieChartOptions] = useState([]);
     const [bookingsList, setBookingsList] = useState([]);
     const [barChartData, setBarChartData] = useState([]);
+    const [adminList, setAdminList] = useState([]);
+
+
+    useEffect(() => {
+        dispatch(setLoading(true));
+        axiosInstance.get(`/admin/admin-dashboard`)
+            .then((res) => {
+                setAdminList(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, []);
 
 
 
@@ -392,7 +408,7 @@ function AdminHome() {
                                 </div>
                                 <div className="row align-items-center">
                                     <div className="col-8 d-flex align-items-center fw-semibold text-white">
-                                        <p className="admin-home-card-text mb-0">Rs. 60000</p>
+                                        <p className="admin-home-card-text mb-0">{adminList.totalAmountForCurrentMonth}</p>
                                     </div>
                                     <div className="col-4 d-flex justify-content-end admin-home-icon">
                                         <img src={income} alt="income"/>
@@ -410,7 +426,7 @@ function AdminHome() {
                                 </div>
                                 <div className="row align-items-center">
                                     <div className="col-8 fw-semibold text-white">
-                                        <p className="admin-home-card-text mb-0">25</p>
+                                        <p className="admin-home-card-text mb-0">{adminList.currentBookingCount}</p>
                                     </div>
                                     <div className="col-4 d-flex justify-content-end admin-home-icon">
                                         <img src={hotel} alt={"hotel"}/>
@@ -428,7 +444,7 @@ function AdminHome() {
                                 </div>
                                 <div className="row align-items-center">
                                     <div className="col-8 fw-semibold text-white">
-                                        <p className="admin-home-card-text mb-0">550</p>
+                                        <p className="admin-home-card-text mb-0">{adminList.currentBoardingCount}</p>
                                     </div>
                                     <div className="col-4 d-flex justify-content-end admin-home-icon">
                                         <img src={boarding} alt={"boarding"}/>
@@ -454,7 +470,7 @@ function AdminHome() {
                                         <p className="admin-home-card-sub-text">Boarding Owners</p>
                                     </div>
                                     <div className="col-4 fw-semibold text-white text-end">
-                                        <p className="admin-home-card-sub-text">25</p>
+                                        <p className="admin-home-card-sub-text">{adminList.BoardingUserCount}</p>
                                     </div>
                                     <div className="col-8 fw-semibold text-white">
                                         <p className="admin-home-card-sub-text">Students</p>

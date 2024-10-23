@@ -44,13 +44,14 @@ function PaymentComplete(props) {
                 <FeatherIcon icon={"check-circle"} className={"text-success"} size={100}/>
                 <h1 className={"my-3 "}>Payment Complete Successfully</h1>
                 <div className={"ps-5 ms-5 pt-5 text-start"}>
-                    <h5>Student Name : </h5>
-                    <h5>Boarding Name : </h5>
-                    <h5>Boarding Owner Name : </h5>
-                    <h5>Boarding Address : </h5>
-                    <h5>Payment : </h5>
-                    <h5>Date : </h5>
-                    <h5>Ref.Number : </h5>
+
+                    <h5>Student Name : {orderData?.studentId?.lastName}</h5>
+                    <h5>Boarding Name : {orderData?.boardingId?.boardingName}</h5>
+                    <h5>Boarding Owner Name : {orderData?.ownerId?.lastName}</h5>
+                    <h5>Boarding Address : {orderData?.boardingId?.street},{orderData?.boardingId?.city}</h5>
+                    <h5>Payment : {orderData?.amount}</h5>
+                    <h5>Date : {orderData?.createdAt?.slice(0, 10)}</h5>
+                    <h5>Ref.Number : {orderData?._id}</h5>
 
                 </div>
             </div>
