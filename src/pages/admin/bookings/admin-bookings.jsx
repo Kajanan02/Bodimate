@@ -140,7 +140,7 @@ function AdminBookings() {
                             <th scope="col">Boarding Name</th>
                             <th scope="col">Check-in Date</th>
                             <th scope="col">Check-out Date</th>
-                            <th scope="col">Status</th>
+                            {/*<th scope="col">Status</th>*/}
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -149,27 +149,27 @@ function AdminBookings() {
                             Array.isArray(bookingsList) && bookingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
                                 <tr key={data.id || index}>
                                     <th scope="row">{index + 1}</th>
-                                    <td>{data.studentName}</td>
-                                    <td>{data.boardingName}</td>
+                                    <td>{data.studentId.lastName}</td>
+                                    <td>{data.boardingId.boardingName}</td>
                                     <td>{data.checkInDate?.slice(0, 10)}</td>
                                     <td>{data.checkOutDate?.slice(0, 10)}</td>
-                                    <td>
-                                        <div
-                                            className={"booking-state " + colorChange(data.status)}
-                                            onClick={() => {
-                                                if (data.status === "BOOKING") {
-                                                    return;
-                                                }
-                                                let temp = { ...data };
-                                                temp.date = data.date?.slice(0, 10);
-                                                setSelectedBookings(temp);
-                                                setModalShow(true);
-                                                setModalType("State");
-                                            }}
-                                        >
-                                            {data.status}
-                                        </div>
-                                    </td>
+                                    {/*<td>*/}
+                                    {/*    <div*/}
+                                    {/*        className={"booking-state " + colorChange(data.status)}*/}
+                                    {/*        onClick={() => {*/}
+                                    {/*            if (data.status === "BOOKING") {*/}
+                                    {/*                return;*/}
+                                    {/*            }*/}
+                                    {/*            let temp = { ...data };*/}
+                                    {/*            temp.date = data.date?.slice(0, 10);*/}
+                                    {/*            setSelectedBookings(temp);*/}
+                                    {/*            setModalShow(true);*/}
+                                    {/*            setModalType("State");*/}
+                                    {/*        }}*/}
+                                    {/*    >*/}
+                                    {/*        {data.status}*/}
+                                    {/*    </div>*/}
+                                    {/*</td>*/}
                                     <td>
                                         <FeatherIcon className={"admin-action-icons"} icon={"eye"}
                                                      onClick={() => {
