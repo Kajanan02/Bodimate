@@ -141,14 +141,14 @@ function AdminListings() {
                                     ))}
                             </ul>
                         </div>
-                        <button type="button" className={"btn text-white students-dropdown-btn admin-dropdown"}
-                                onClick={() => {
-                                    setModalType("Add");
-                                    setModalShow(true)
-                                }}>
-                            <FeatherIcon className={"admin-action-icons text-white me-1"} icon={"plus"}/>
-                            Add
-                        </button>
+                        {/*<button type="button" className={"btn text-white students-dropdown-btn admin-dropdown"}*/}
+                        {/*        onClick={() => {*/}
+                        {/*            setModalType("Add");*/}
+                        {/*            setModalShow(true)*/}
+                        {/*        }}>*/}
+                        {/*    <FeatherIcon className={"admin-action-icons text-white me-1"} icon={"plus"}/>*/}
+                        {/*    Add*/}
+                        {/*</button>*/}
                     </div>
                 </div>
                 <div className={"table-container admin-table"}>

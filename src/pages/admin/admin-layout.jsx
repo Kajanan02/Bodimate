@@ -73,7 +73,7 @@ function AdminLayout() {
                     </div>
                     <div
                         className="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 text-white pt-4">
-                        <div className={"w-100 px-sm-2"}>
+                        {userDetail?.role !== "user" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to="/admin" end>
@@ -82,7 +82,7 @@ function AdminLayout() {
                                     {!toggle && <div className={'trans-1'}>Home</div>}
                                 </div>
                             </NavLink>
-                        </div>
+                        </div>:null}
                         {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
@@ -98,7 +98,7 @@ function AdminLayout() {
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/admin/university"}>
                                 <div className={'d-flex'}>
-                                    <FeatherIcon icon="list" className={!toggle ? 'me-2' : "ms-1"}/>
+                                    <FeatherIcon icon="shield" className={!toggle ? 'me-2' : "ms-1"}/>
                                     {!toggle && <div className={''}>University</div>}
                                 </div>
                             </NavLink>
@@ -203,7 +203,7 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
-                        <div className={"w-100 px-sm-2"}>
+                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
                                 to={"/admin/contact"}>
@@ -212,7 +212,7 @@ function AdminLayout() {
                                     {!toggle && <div className={''}>Contact</div>}
                                 </div>
                             </NavLink>
-                        </div>
+                        </div>:null}
                         <div className={'w-100 border-bottom-d1d1d1 mb-3'}/>
                         <div className={"w-100 px-sm-2"}>
                             <NavLink onClick={() => localStorage.clear()}
@@ -234,11 +234,18 @@ function AdminLayout() {
                             </button>
                             <div className="collapse navbar-collapse" id="">
                                 <ul className="navbar-nav ms-auto align-items-center flex-row">
+                                    {userDetail.role === "user"? <li className="admin-nav-item px-2">
+                                        <a className={"btn login-btn w-100 fw-semibold p-2"} aria-current="page"
+                                           href="/">
+                                            <div>Home</div>
+                                        </a>
+                                    </li> : null}
                                     <li className="admin-nav-item px-2">
                                         <a className="admin-nav-link position-relative" aria-current="page" href="#">
                                             <img src={Msg} alt="Messages"/>
                                         </a>
                                     </li>
+
                                     <li className="admin-nav-item px-2">
                                         <a className="position-relative p-0" aria-current="page"
                                            href="#">
@@ -247,9 +254,9 @@ function AdminLayout() {
                                         </a>
                                     </li>
                                     <li className="admin-nav-item px-2 flex-column nav-profile">
-                                        <p className="nav-profileName mb-0">{userDetail?.lastName ||"Guest"}<br/>
+                                        <p className="nav-profileName mb-0">{userDetail?.lastName || "Guest"}<br/>
                                             <small
-                                                className="text-muted mt-0 mb-0 py-0 nav-profileName nav-profileRole">{userDetail?.role ||"Guest"}</small>
+                                                className="text-muted mt-0 mb-0 py-0 nav-profileName nav-profileRole">{userDetail?.role || "Guest"}</small>
                                         </p>
                                     </li>
                                     <li className="nav-item">

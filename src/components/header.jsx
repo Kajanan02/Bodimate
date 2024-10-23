@@ -3,6 +3,7 @@ import './styles.css';
 import logo from '../../src/assets/logo.png';
 import FeatherIcon from "feather-icons-react";
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 
 
@@ -10,6 +11,8 @@ function Header() {
 
 
     const [username, setUsername] = React.useState(localStorage.getItem('LAST_NAME'));
+    const userDetail = useSelector(state => state.userData.userDetails);
+
 
     return (
 
@@ -81,7 +84,7 @@ function Header() {
                                     {!username ? <li><NavLink className="dropdown-item dropdown-detail" to={"/login"}>Log
                                         In</NavLink></li> : null}
                                     {username &&<li><NavLink className="dropdown-item dropdown-detail"
-                                                  to={"/admin"}>Profile</NavLink></li>}
+                                                  to={userDetail.role === "user"? "/admin/bookings":"/admin"}>Profile</NavLink></li>}
                                     {username &&<li>
                                         <div className="dropdown-item dropdown-detail" onClick={()=>{
                                             localStorage.clear();

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "./admin-Setting.css"
-import profileImage from "../../../assets/admin-setting/admin-profile.png"
+import profileImage from "../../../assets/admin-layout/DefaultProfile.jpg"
 import {FileUploader} from "react-drag-drop-files";
 import {Col, Form, FormControl, Row} from "react-bootstrap";
 import PasswordSetting from "./password-Setting.jsx";
@@ -70,7 +70,7 @@ function AdminSetting() {
                                 <div className={"col-md-6 px-0 profile-image"}>
                                     <div className={"settings-profile-photo"}>
                                         {!selectedImage ? <img src={profileImage}
-                                                               className={"admin-profileImageDisplay mb-1"}/> :
+                                                               className={"admin-profileImageDisplay mb-3"}/> :
                                             <img src={selectedImage}
                                                  className={"admin-profileImageDisplay mb-3"}/>}
                                     </div>
@@ -113,32 +113,32 @@ function AdminSetting() {
                                         <p className={"error-message text-danger"}>{errors.lastName}</p>}
                                 </Col>
                             </Row>
-                            <Row className={"mb-lg-3"}>
-                                <Col md={6} className={"ps-3 pe-lg-5"}>
-                                    <h6><label htmlFor="boardingName" className="">Date of Birth</label></h6>
-                                    <FormControl id="dob"
-                                                 type={"date"}
-                                                 className={`input-border-color ${errors.dob ? "border-danger" : ""}`}
-                                                 onChange={handleChange}
-                                                 value={values.dob || ""}
-                                                 placeholder="Enter Date of Birth" name={"dob"}
-                                    />
-                                    {errors.dob &&
-                                        <p className={"error-message text-danger"}>{errors.dob}</p>}
-                                </Col>
-                                <Col md={6} className={"ps-3 ps-lg-5"}>
-                                    <h6><label htmlFor="boardingNo" className="">NIC No</label></h6>
-                                    <FormControl id="nicNo" name={"nicNo"}
-                                                 className={`input-border-color ${errors.nicNo ? "border-danger" : ""}`}
-                                                 placeholder="Enter NIC No"
-                                                 onChange={handleChange}
-                                                 value={values.nicNo || ""}
-                                    />
-                                    {errors.nicNo &&
-                                        <p className={"error-message text-danger"}>{errors.nicNo}</p>}
+                            {/*<Row className={"mb-lg-3"}>*/}
+                            {/*    <Col md={6} className={"ps-3 pe-lg-5"}>*/}
+                            {/*        <h6><label htmlFor="boardingName" className="">Date of Birth</label></h6>*/}
+                            {/*        <FormControl id="dob"*/}
+                            {/*                     type={"date"}*/}
+                            {/*                     className={`input-border-color ${errors.dob ? "border-danger" : ""}`}*/}
+                            {/*                     onChange={handleChange}*/}
+                            {/*                     value={values.dob || ""}*/}
+                            {/*                     placeholder="Enter Date of Birth" name={"dob"}*/}
+                            {/*        />*/}
+                            {/*        {errors.dob &&*/}
+                            {/*            <p className={"error-message text-danger"}>{errors.dob}</p>}*/}
+                            {/*    </Col>*/}
+                            {/*    <Col md={6} className={"ps-3 ps-lg-5"}>*/}
+                            {/*        <h6><label htmlFor="boardingNo" className="">NIC No</label></h6>*/}
+                            {/*        <FormControl id="nicNo" name={"nicNo"}*/}
+                            {/*                     className={`input-border-color ${errors.nicNo ? "border-danger" : ""}`}*/}
+                            {/*                     placeholder="Enter NIC No"*/}
+                            {/*                     onChange={handleChange}*/}
+                            {/*                     value={values.nicNo || ""}*/}
+                            {/*        />*/}
+                            {/*        {errors.nicNo &&*/}
+                            {/*            <p className={"error-message text-danger"}>{errors.nicNo}</p>}*/}
 
-                                </Col>
-                            </Row>
+                            {/*    </Col>*/}
+                            {/*</Row>*/}
                             <Row className={"mb-lg-3"}>
                                 <Col md={6} className={"ps-3 pe-lg-5"}>
                                     <h6><label htmlFor="boardingNo" className="">Email</label></h6>
@@ -175,64 +175,64 @@ function AdminSetting() {
                                     {errors.address &&
                                         <p className={"error-message text-danger"}>{errors.address}</p>}
                                 </Col>
-                                <Col md={6} className={"ps-3 ps-lg-5"}>
-                                    <h6><label htmlFor="address" className="">Gender</label></h6>
+                                {/*<Col md={6} className={"ps-3 ps-lg-5"}>*/}
+                                {/*    <h6><label htmlFor="address" className="">Gender</label></h6>*/}
 
-                                    <div className={"boarding-type-home-button pb-2"}>
-                                        <Form.Check
-                                            type="radio"
-                                            name="gender"
-                                            onChange={handleChange}
-                                            label={<div
-                                                className={"boarding-type-home-container w-100 ps-3"}>
-                                                <div
-                                                    className={`boarding-type-home ps-3 fw-semibold ${errors.gender ? "border-danger" : ""}`}>
-                                                    <div>
-                                                        <div>Male</div>
-                                                        <div className={"radio-btn"}>Select if you are male
-                                                        </div>
-                                                    </div>
+                                {/*    <div className={"boarding-type-home-button pb-2"}>*/}
+                                {/*        <Form.Check*/}
+                                {/*            type="radio"*/}
+                                {/*            name="gender"*/}
+                                {/*            onChange={handleChange}*/}
+                                {/*            label={<div*/}
+                                {/*                className={"boarding-type-home-container w-100 ps-3"}>*/}
+                                {/*                <div*/}
+                                {/*                    className={`boarding-type-home ps-3 fw-semibold ${errors.gender ? "border-danger" : ""}`}>*/}
+                                {/*                    <div>*/}
+                                {/*                        <div>Male</div>*/}
+                                {/*                        <div className={"radio-btn"}>Select if you are male*/}
+                                {/*                        </div>*/}
+                                {/*                    </div>*/}
 
-                                                    <div className={"ps-5 pe-2"}><img src={maleIcon}
-                                                                                      alt={"home"}/>
-                                                    </div>
-                                                </div>
+                                {/*                    <div className={"ps-5 pe-2"}><img src={maleIcon}*/}
+                                {/*                                                      alt={"home"}/>*/}
+                                {/*                    </div>*/}
+                                {/*                </div>*/}
 
-                                            </div>}
-                                            id="formHorizontalRadios4"
-                                        />
-                                    </div>
+                                {/*            </div>}*/}
+                                {/*            id="formHorizontalRadios4"*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
 
-                                    <div className={"boarding-type-home-button pb-2"}
-                                         style={{width: "100%"}}>
-                                        <Form.Check
-                                            type="radio"
-                                            name="gender"
-                                            onChange={handleChange}
-                                            label={<div
-                                                className={"boarding-type-home-container w-100 ps-3"}>
-                                                <div
-                                                    className={`boarding-type-home ps-3 fw-semibold ${errors.gender ? "border-danger" : ""}`}>
-                                                    <div>
-                                                        <div>Female</div>
-                                                        <div className={"radio-btn"}>Select if you are female
-                                                        </div>
-                                                    </div>
-                                                    <div className={"ps-5 pe-2"}><img src={femaleIcon}
-                                                                                      alt={"home"}/>
-                                                    </div>
-                                                </div>
+                                {/*    <div className={"boarding-type-home-button pb-2"}*/}
+                                {/*         style={{width: "100%"}}>*/}
+                                {/*        <Form.Check*/}
+                                {/*            type="radio"*/}
+                                {/*            name="gender"*/}
+                                {/*            onChange={handleChange}*/}
+                                {/*            label={<div*/}
+                                {/*                className={"boarding-type-home-container w-100 ps-3"}>*/}
+                                {/*                <div*/}
+                                {/*                    className={`boarding-type-home ps-3 fw-semibold ${errors.gender ? "border-danger" : ""}`}>*/}
+                                {/*                    <div>*/}
+                                {/*                        <div>Female</div>*/}
+                                {/*                        <div className={"radio-btn"}>Select if you are female*/}
+                                {/*                        </div>*/}
+                                {/*                    </div>*/}
+                                {/*                    <div className={"ps-5 pe-2"}><img src={femaleIcon}*/}
+                                {/*                                                      alt={"home"}/>*/}
+                                {/*                    </div>*/}
+                                {/*                </div>*/}
 
-                                            </div>}
-                                            id="formHorizontalRadios5"
-                                            className={"w-100"}
-                                        />
-                                    </div>
+                                {/*            </div>}*/}
+                                {/*            id="formHorizontalRadios5"*/}
+                                {/*            className={"w-100"}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
 
-                                    {errors.gender &&
-                                        <p className={"error-message text-danger"}>{errors.gender}</p>}
+                                {/*    {errors.gender &&*/}
+                                {/*        <p className={"error-message text-danger"}>{errors.gender}</p>}*/}
 
-                                </Col>
+                                {/*</Col>*/}
 
 
                             </Row>

@@ -155,9 +155,9 @@ export function validatePersonalSettings(values) {
     } else if (!/^([+]\d{2})?\d{10}$/.test(values.phoneNo)) {
         errors.phoneNo = 'Contact No is not valid';
     }
-    if (!values.dob) {
-        errors.dob = "Date of Birth is Required";
-    }
+    // if (!values.dob) {
+    //     errors.dob = "Date of Birth is Required";
+    // }
     if (!values.homeNo) {
         errors.homeNo = "Home No is Required";
     }
