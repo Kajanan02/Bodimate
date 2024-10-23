@@ -93,6 +93,16 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>:null}
+                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
+                            <NavLink
+                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
+                                to={"/admin/university"}>
+                                <div className={'d-flex'}>
+                                    <FeatherIcon icon="list" className={!toggle ? 'me-2' : "ms-1"}/>
+                                    {!toggle && <div className={''}>University</div>}
+                                </div>
+                            </NavLink>
+                        </div>:null}
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
@@ -163,26 +173,26 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
-                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
-                            <NavLink
-                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/admin/analytics"}>
-                                <div className={'d-flex'}>
-                                    <FeatherIcon icon="pie-chart" className={!toggle ? 'me-2' : "ms-1"}/>
-                                    {!toggle && <div className={''}>Analytics</div>}
-                                </div>
-                            </NavLink>
-                        </div>:null}
-                        {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
-                            <NavLink
-                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/admin/payments"}>
-                                <div className={'d-flex'}>
-                                    <FeatherIcon icon="credit-card" className={!toggle ? 'me-2' : "ms-1"}/>
-                                    {!toggle && <div className={''}>Payments</div>}
-                                </div>
-                            </NavLink>
-                        </div>:null}
+                        {/*{userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>*/}
+                        {/*    <NavLink*/}
+                        {/*        className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}*/}
+                        {/*        to={"/admin/analytics"}>*/}
+                        {/*        <div className={'d-flex'}>*/}
+                        {/*            <FeatherIcon icon="pie-chart" className={!toggle ? 'me-2' : "ms-1"}/>*/}
+                        {/*            {!toggle && <div className={''}>Analytics</div>}*/}
+                        {/*        </div>*/}
+                        {/*    </NavLink>*/}
+                        {/*</div>:null}*/}
+                        {/*{userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>*/}
+                        {/*    <NavLink*/}
+                        {/*        className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}*/}
+                        {/*        to={"/admin/payments"}>*/}
+                        {/*        <div className={'d-flex'}>*/}
+                        {/*            <FeatherIcon icon="credit-card" className={!toggle ? 'me-2' : "ms-1"}/>*/}
+                        {/*            {!toggle && <div className={''}>Payments</div>}*/}
+                        {/*        </div>*/}
+                        {/*    </NavLink>*/}
+                        {/*</div>:null}*/}
                         <div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}

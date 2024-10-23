@@ -656,20 +656,19 @@ export function validateUserRegistration(values) {
         errors.nicNo = "NIC Number is Not Valid";
     }
 
+    return errors;
+}
 
-    // if (!values.nicFront) {
-    //     errors.nicFront = "NIC Front is Required";
-    // }
-    //
-    //
-    // if (!values.nicBack) {
-    //     errors.nicBack = "NIC Back is Required";
-    // }
-    //
-    //
-    // if (!values.profilePic) {
-    //     errors.profilePic = "Profile Picture is Required";
-    // }
+export function validateUniversity(values) {
+    let errors = {};
+
+    if (!values.universityName) {
+        errors.universityName = "University Name is Required";
+    }
+    if (!values.district) {
+        errors.district = "District is Required";
+    }
 
     return errors;
+
 }

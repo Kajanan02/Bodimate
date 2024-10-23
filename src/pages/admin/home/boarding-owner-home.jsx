@@ -4,6 +4,8 @@ import ListingsForm from "../listings/listingsForm.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import axiosInstance from "../../../utils/axiosInstance.js";
 import {setLoading} from "../../../redux/features/loaderSlice.js";
+import {toast} from "react-toastify";
+import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
 
 function BoardingOwnerHome(props) {
 
@@ -14,10 +16,22 @@ function BoardingOwnerHome(props) {
     const [selectedListings, setSelectedListings] = useState(null);
     const [isEdit, setIsEdit] = useState({});
     const [isDelete, setIsDelete] = useState(null);
+    const [deletedId, setDeletedId] = useState(null);
 
     const userDetail = useSelector(state => state.userData.userDetails);
+    const confirmationDialog = useSelector(state => state.confirmationDialog);
 
     const dispatch = useDispatch();
+
+    function handleDelete(id) {
+        dispatch(toggleConfirmationDialog({
+            isVisible: true,
+            confirmationHeading: 'ARE YOU SURE YOU WANT TO DELETE THIS BOARDING DATA',
+            confirmationDescription: 'THE DELETE ACTION WILL REMOVE THIS BOARDING DATA',
+            onSuccess: false // Ensure this is added to track success
+        }));
+        setDeletedId(id);
+    }
 
 
     useEffect(() => {
@@ -42,6 +56,30 @@ function BoardingOwnerHome(props) {
     }, [userDetail,update]);
 
 
+    useEffect(() => {
+        if (!confirmationDialog || !confirmationDialog.confirmationDialog.onSuccess || !deletedId) {
+            console.log("Deletion conditions not met");
+            return;
+        }
+
+        dispatch(setLoading(true)); // Optional: set loading state if needed
+
+        // Axios delete request
+        axiosInstance.delete(`/boardings/deleteBoarding/${deletedId}`)
+            .then((res) => {
+                setUpdate(!update); // Trigger re-render of updated listings
+                toast.success('Successfully Deleted'); // Optional: Toast notification
+            })
+            .catch((err) => {
+                console.log("Delete error:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Optional: remove loading state
+                setDeletedId(null); // Reset after deletion
+            });
+    }, [confirmationDialog, deletedId]);
+
+
     return (
         <div className={"p-5"}>
             <div className={"container"}>
@@ -59,7 +97,7 @@ function BoardingOwnerHome(props) {
                                 setModalType("Edit");
                                 setSelectedListings(data);
                                 setIsOpened(true);
-                            }} deleteItem={()=> setIsDelete(data._id)}/>
+                            }} deleteItem={()=> handleDelete(data._id)}/>
 
                         </div>) : <h1>No Boarding Found</h1>}
                 </div>
