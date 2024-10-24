@@ -19,6 +19,7 @@ function Home() {
     const dispatch = useDispatch();
     const [listingsList, setListingsList] = useState([]);
     const [universityList, setUniversityList] = useState([]);
+    const [favouriteList, setFavouriteList] = useState([]);
     const [universityAllList, setUniversityAllList] = useState([]);
     const navigate = useNavigate();
     const nearestUniversity = [
@@ -88,6 +89,21 @@ function Home() {
     }, [update]);
 
 
+    useEffect(() => {
+        axiosInstance.get("/favourite/getAllFavourite")
+            .then((res) => {
+                console.log(res.data);
+                setFavouriteList(res.data);
+            })
+            .catch((err) => {
+                console.error("Error fetching boardings:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, [update]);
+
+
 
     return (
 
@@ -107,7 +123,7 @@ function Home() {
                     {listingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
 
                         <div key={index + "asd"} className="col-12 col-md-6 col-lg-3 mb-4">
-                            <BoardingCard data={data} />
+                            <BoardingCard data={data} update={()=>setUpdate(!update)} favourite={favouriteList} />
                         </div>
 
                 ))}

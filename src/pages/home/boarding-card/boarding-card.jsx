@@ -1,18 +1,100 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import verifiedIcon from "../../../assets/boarding-details/verified.svg";
 import heartIcon from "../../../assets/home/heart.svg";
 import heartFilledIcon from "../../../assets/home/heart1.svg";
 import FeatherIcon from "feather-icons-react";
 import './boarding-card.css';
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance.js";
+import {toast} from "react-toastify";
+import {setLoading} from "../../../redux/features/loaderSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {pluck} from "underscore";
 
 const BoardingCard = ({ data, from = "", ...props }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [active, setActive] = useState(false);
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [values, setValues] = useState({});
+
+    const userDetail = useSelector(state => state.userData.userDetails);
+
 
     const handleClick = () => {
         setActive(!active);
+        // Prepare the values object with necessary data
+        const favouriteData = {
+            boardingId: data._id,
+            isFavourite: !active,
+        };
+        setValues(favouriteData);
+        setIsSubmit(true);
+        dispatch(setLoading(true)); // Start loading
     };
+
+
+    function favourite() {
+        let dataa={
+            userId:userDetail._id,
+            boardingId: data._id
+        }
+        axiosInstance.post(`/favourite/createFavourite`, dataa)
+            .then((res) => {
+                console.log(res.data);
+                props?.update();
+                toast.success(`Successfully Favourite Created`);
+            })
+            .catch((err) => {
+                toast.error("Something Went Wrong");
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Stop loading
+                setIsSubmit(false);
+            });
+    }
+
+    function unFavourite(id) {
+        let dataa={
+            userId:userDetail._id,
+            boardingId: data._id
+        }
+        axiosInstance.delete(`/favourite/deleteFavourite/${id}`, dataa)
+            .then((res) => {
+                console.log(res.data);
+                props?.update();
+                toast.success(`Successfully Un Favourite`);
+            })
+            .catch((err) => {
+                toast.error("Something Went Wrong");
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Stop loading
+                setIsSubmit(false);
+            });
+    }
+
+    useEffect(() => {
+        if (!isSubmit) {
+            return;
+        }
+        axiosInstance.post(`/favourite/createFavourite`, values)
+            .then((res) => {
+                console.log(res.data);
+                props.update();
+                toast.success(`Successfully Favourite Created`);
+            })
+            .catch((err) => {
+                toast.error("Something Went Wrong");
+            })
+            .finally(() => {
+                dispatch(setLoading(false)); // Stop loading
+                setIsSubmit(false);
+            });
+    }, [isSubmit, values, props]);
+
+    console.log(props.favourite);
+
 
     return (
         <div>
@@ -42,11 +124,27 @@ const BoardingCard = ({ data, from = "", ...props }) => {
                     <div className="heart-icon">
                         <button
                             className="btn btn-heart ms-auto p-0"
-                            onClick={handleClick}
+                            onClick={()=> {
+                                if(pluck(props.favourite,"boardingId").includes(data._id)){
+                                    console.log(props.favourite);
+                                    console.log(data._id);
+                                    let id =props?.favourite?.find((data)=> data.boardingId === data._id)?._id
+                                    console.log(id)
+                                    let dasd = props?.favourite?.find((daa)=> daa.boardingId === data._id)
+                                    console.log(dasd)
+                                    console.log(dasd._id)
+                                    unFavourite(dasd._id)
+                                    // let id =props?.favourite?.find((data)=> data.boardingId === data._id)?.id
+                                    // unFavourite()
+                                }else {
+                                    favourite()
+                                }
+
+                            }}
                             style={{ width: "1.5rem", border: "none", outline: "none", background: "transparent" }}
                         >
                             <img
-                                src={active ? heartFilledIcon : heartIcon}
+                                src={pluck(props.favourite,"boardingId").includes(data._id) ? heartFilledIcon : heartIcon}
                                 alt="Heart Icon"
                                 className="heart-image"
                             />
