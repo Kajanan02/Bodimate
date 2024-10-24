@@ -83,6 +83,7 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>:null}
+
                         {userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>
                             <NavLink
                                 className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
@@ -113,6 +114,16 @@ function AdminLayout() {
                                 </div>
                             </NavLink>
                         </div>
+                        {userDetail?.role === "user" ?<div className={"w-100 px-sm-2"}>
+                            <NavLink
+                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
+                                to="/admin/favourite" end>
+                                <div className={'d-flex'}>
+                                    <FeatherIcon icon="home" className={!toggle ? 'me-2' : "ms-1"}/>
+                                    {!toggle && <div className={'trans-1'}>Favourite</div>}
+                                </div>
+                            </NavLink>
+                        </div>:null}
                         {userDetail.role === "admin" ? <div className={"w-100 px-sm-2"}>
                             <div
                                 className={`side-menu-item d-flex justify-content-between align-items-center ${isUsersActive ? 'side-menu-active' : ''}`}
