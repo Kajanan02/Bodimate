@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import descriptionImg from "../../assets/boarding-details/description.jpg";
 import FeatherIcon from 'feather-icons-react';
 import verifiedIcon from "../../assets/boarding-details/verified.svg"
 import ownerProfile from "../../assets/boarding-details/OwnerProfile.jpg"
@@ -9,7 +8,7 @@ import axiosInstance from "../../utils/axiosInstance.js";
 import {useParams} from "react-router-dom";
 // import Heart from "react-heart";
 import axios from "axios";
-import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
+// import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
 import {setLoading} from "../../redux/features/loaderSlice.js";
 import {DirectionsRenderer, LoadScript,GoogleMap} from "@react-google-maps/api";
 
@@ -43,6 +42,10 @@ function BoardingDetails() {
     const [universityList, setUniversityList] = useState([])
 
     const calculateDistance = (originLatLng, destinationLatLng) => {
+        if (!window.google || !window.google.maps) {
+            console.error('Google Maps API is not loaded');
+            return;
+        }
         const directionsService = new window.google.maps.DirectionsService();
         directionsService.route(
             {
@@ -104,36 +107,36 @@ function BoardingDetails() {
 
     async function checkout(hash, amount, orderId) {
         // using async await
-        try {
-            const customerAttributes = {
-                first_name: userDetail?.firstName,
-                last_name: userDetail?.lastName,
-                phone: userDetail?.contactNo,
-                email: userDetail?.email,
-                address: userDetail?.address,
-                city: userDetail?.address,
-                country: 'Sri Lanka',
-            };
-            const customer = new Customer(customerAttributes);
-
-
-            const checkoutData = new CheckoutParams({
-                returnUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                cancelUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                notifyUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                order_id: orderId,
-                itemTitle: 'Boarding Fees',
-                currency: CurrencyType.LKR,
-                amount: amount,
-                hash: hash,
-            });
-
-
-            const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
-            checkout.start();
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     const customerAttributes = {
+        //         first_name: userDetail?.firstName,
+        //         last_name: userDetail?.lastName,
+        //         phone: userDetail?.contactNo,
+        //         email: userDetail?.email,
+        //         address: userDetail?.address,
+        //         city: userDetail?.address,
+        //         country: 'Sri Lanka',
+        //     };
+        //     const customer = new Customer(customerAttributes);
+        //
+        //
+        //     const checkoutData = new CheckoutParams({
+        //         returnUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         cancelUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         notifyUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         order_id: orderId,
+        //         itemTitle: 'Boarding Fees',
+        //         currency: CurrencyType.LKR,
+        //         amount: amount,
+        //         hash: hash,
+        //     });
+        //
+        //
+        //     const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
+        //     checkout.start();
+        // } catch (err) {
+        //     console.log(err);
+        // }
     }
 
 
@@ -383,7 +386,7 @@ function BoardingDetails() {
                     <div className="col d-flex align-items-center justify-content-between">
                         <div>
                             <div className="owner-text fw-bolder">
-                                <p>Boarding hosted by {List.ownerName}</p>
+                                <p>Boarding hosted by {List?.boardingOwner?.lastName}</p>
                             </div>
                             <div className="owner-text-des">
                                 <p>{List.membersCount} guests · {List.noOfRooms} bedroom · {List.membersCount} bed · 1
@@ -577,17 +580,18 @@ function BoardingDetails() {
             <div className="row mb-5">
                 <h3 className="review-heading pb-3">Location</h3>
 
-                {import.meta.env.VITE_REACT_APP_GOOGLE_MAP ? <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
-                    <GoogleMap mapContainerStyle={{
-                        width: '100%',
-                        height: '400px',
-                    }} center={{lat: 6.927079, lng: 79.861244}} zoom={10}>
-                        {directions && (
-                            <DirectionsRenderer directions={directions}/>
-                        )}
-                    </GoogleMap>
-                    {distance && <div className={"fs-6 mt-2 text-dark fw-semibold"}>Distance: {distance}</div>}
-                </LoadScript>: null}
+                {import.meta.env.VITE_REACT_APP_GOOGLE_MAP ? (
+                    <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
+                        <GoogleMap
+                            mapContainerStyle={{ width: '100%', height: '400px' }}
+                            center={{ lat: 6.927079, lng: 79.861244 }}
+                            zoom={10}
+                        >
+                            {directions && <DirectionsRenderer directions={directions} />}
+                        </GoogleMap>
+                        {distance && <div className="fs-6 mt-2 text-dark fw-semibold">Distance: {distance}</div>}
+                    </LoadScript>
+                ) : null}
 
 
             </div>

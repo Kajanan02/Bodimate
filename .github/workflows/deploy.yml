@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ deploy ]
 
 jobs:
   build-and-deploy:
@@ -25,25 +25,16 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Clear NPM Cache
-        run: npm cache clean --force
-
-      - name: Install Dependencies and React-is
-        run: |
-          npm install --legacy-peer-deps
-
-      - name: Clear Vite Cache
-        run: rm -rf node_modules/.vite
+      - name: Install Dependencies
+        run: npm install
 
       - name: Build Application
         env:
           VITE_REACT_APP_HOST: ${{ secrets.VITE_REACT_APP_HOST }}
-          VITE_REACT_APP_PAYHERE_MERCHANT_ID: ${{ secrets.VITE_REACT_APP_PAYHERE_MERCHANT_ID }}
-          VITE_REACT_APP_GOOGLE_MAP: ${{ secrets.VITE_REACT_APP_GOOGLE_MAP }}
         run: npm run build
 
       - name: Prepare Deployment Package
-        run: zip -r deploy.zip . -x "node_modules/*" -x ".git/*" -x ".env*" -x "*.md" -x "src/*" -x "tests/*"
+        run: zip -r deploy.zip . -x "node_modules/*" -x "deploy.zip" -x ".git/*" -x ".github/*" -x ".gitignore" -x "README.md" -x "LICENSE" -x ".idea/*" -x "src/*" -x "public/*" -x ".env*" -x "vercel.json" -x ".eslintrc.cjs"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -57,9 +48,9 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: 'ap-south-1'
+          region: 'ap-south-1'  # Your AWS region
           application_name: 'front-bodimate'
-          environment_name: 'Front-bodimate-env'
+          environment_name: 'Front-bodimate-env'  # Your Elastic Beanstalk environment name
           version_label: ${{ github.sha }}-${{ github.run_id }}
           deployment_package: deploy.zip
           use_existing_version_if_available: true

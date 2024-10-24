@@ -311,38 +311,38 @@ function BookingsForm(props) {
                                     </div>
                                 </div>
                                 <h5 className={'mb-3 admin-form-head fw-semibold'}>Boarding Owner</h5>
-                                <div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
-                                            Owner Name</label>
-                                        <input name={"boardingOwnerName"} placeholder={"Enter Boarding Owner Name"}
-                                               className={`form-control ${errors.boardingOwnerName ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.boardingOwnerName || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.boardingOwnerName &&
-                                            <p className={"admin-text-red"}>{errors.boardingOwnerName}</p>}
-                                    </div>
-                                </div>
-                                <div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
-                                            Owner Contact No</label>
-                                        <input name={"boardingOwnerContactNo"} placeholder={"Enter Boarding Owner Name"}
-                                               className={`form-control ${errors.boardingOwnerContactNo ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.boardingOwnerContactNo || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.boardingOwnerContactNo &&
-                                            <p className={"admin-text-red"}>{errors.boardingOwnerContactNo}</p>}
-                                    </div>
-                                </div>
+                                {/*<div className={"col-md-6"}>*/}
+                                {/*    <div className="mb-3">*/}
+                                {/*        <label htmlFor="exampleInputEmail1"*/}
+                                {/*               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding*/}
+                                {/*            Owner Name</label>*/}
+                                {/*        <input name={"boardingOwnerName"} placeholder={"Enter Boarding Owner Name"}*/}
+                                {/*               className={`form-control ${errors.boardingOwnerName ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                {/*               id="exampleInputEmail5"*/}
+                                {/*               onChange={handleChange}*/}
+                                {/*               value={values.boardingOwnerName || ""}*/}
+                                {/*               disabled={["View", "State"].includes(props.type)}*/}
+                                {/*        />*/}
+                                {/*        {errors.boardingOwnerName &&*/}
+                                {/*            <p className={"admin-text-red"}>{errors.boardingOwnerName}</p>}*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className={"col-md-6"}>*/}
+                                {/*    <div className="mb-3">*/}
+                                {/*        <label htmlFor="exampleInputEmail1"*/}
+                                {/*               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding*/}
+                                {/*            Owner Contact No</label>*/}
+                                {/*        <input name={"boardingOwnerContactNo"} placeholder={"Enter Boarding Owner Name"}*/}
+                                {/*               className={`form-control ${errors.boardingOwnerContactNo ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                {/*               id="exampleInputEmail5"*/}
+                                {/*               onChange={handleChange}*/}
+                                {/*               value={values.boardingOwnerContactNo || ""}*/}
+                                {/*               disabled={["View", "State"].includes(props.type)}*/}
+                                {/*        />*/}
+                                {/*        {errors.boardingOwnerContactNo &&*/}
+                                {/*            <p className={"admin-text-red"}>{errors.boardingOwnerContactNo}</p>}*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                                 <hr/>
                                 <div className={"col-md-6"}>
                                     <div className="mb-3">
