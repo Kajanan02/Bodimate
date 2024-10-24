@@ -43,6 +43,10 @@ function BoardingDetails() {
     const [universityList, setUniversityList] = useState([])
 
     const calculateDistance = (originLatLng, destinationLatLng) => {
+        if (!window.google || !window.google.maps) {
+            console.error('Google Maps API is not loaded');
+            return;
+        }
         const directionsService = new window.google.maps.DirectionsService();
         directionsService.route(
             {
@@ -577,17 +581,18 @@ function BoardingDetails() {
             <div className="row mb-5">
                 <h3 className="review-heading pb-3">Location</h3>
 
-                {import.meta.env.VITE_REACT_APP_GOOGLE_MAP ? <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
-                    <GoogleMap mapContainerStyle={{
-                        width: '100%',
-                        height: '400px',
-                    }} center={{lat: 6.927079, lng: 79.861244}} zoom={10}>
-                        {directions && (
-                            <DirectionsRenderer directions={directions}/>
-                        )}
-                    </GoogleMap>
-                    {distance && <div className={"fs-6 mt-2 text-dark fw-semibold"}>Distance: {distance}</div>}
-                </LoadScript>: null}
+                {import.meta.env.VITE_REACT_APP_GOOGLE_MAP ? (
+                    <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
+                        <GoogleMap
+                            mapContainerStyle={{ width: '100%', height: '400px' }}
+                            center={{ lat: 6.927079, lng: 79.861244 }}
+                            zoom={10}
+                        >
+                            {directions && <DirectionsRenderer directions={directions} />}
+                        </GoogleMap>
+                        {distance && <div className="fs-6 mt-2 text-dark fw-semibold">Distance: {distance}</div>}
+                    </LoadScript>
+                ) : null}
 
 
             </div>
