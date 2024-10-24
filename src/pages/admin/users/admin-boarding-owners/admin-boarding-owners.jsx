@@ -118,6 +118,7 @@ function AdminBoardingOwners() {
                             <th scope="col">Last Name</th>
                             <th scope="col">NIC No</th>
                             <th scope="col">Gender</th>
+                            <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -130,6 +131,14 @@ function AdminBoardingOwners() {
                                 <td>{data.lastName}</td>
                                 <td>{data.role}</td>
                                 <td>{data.gender}</td>
+                                {data.isVerified == true ?
+                                    <td><span className="badge text-bg-primary">Activate</span></td> :
+                                    <td><span className="badge text-bg-danger"
+                                              onClick={() =>{
+                                                  setModalType("State");
+                                                  setSelectedBoardingOwners(data);
+                                                  setModalShow(true)}}
+                                    >Deactivate</span></td>}
                                 <td>
                                     <FeatherIcon className={"admin-action-icons"} icon={"eye"}
                                                  onClick={() => {
@@ -138,9 +147,6 @@ function AdminBoardingOwners() {
                                                      setModalShow(true)
                                                  }}/>
 
-                                    <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
-                                                 onClick={() => handleDelete(data._id)}
-                                    />
                                 </td>
                             </tr>))}
                         </tbody>
