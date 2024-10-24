@@ -31,7 +31,6 @@ jobs:
       - name: Install Dependencies and React-is
         run: |
           npm install --legacy-peer-deps
-          npm install react-is
 
       - name: Clear Vite Cache
         run: rm -rf node_modules/.vite
