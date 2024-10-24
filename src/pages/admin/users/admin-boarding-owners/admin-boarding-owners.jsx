@@ -137,12 +137,6 @@ function AdminBoardingOwners() {
                                                      setSelectedBoardingOwners(data)
                                                      setModalShow(true)
                                                  }}/>
-                                    <FeatherIcon className={"admin-action-icons"} icon={"edit"}
-                                                 onClick={() => {
-                                                     setSelectedBoardingOwners(data)
-                                                     setModalType("Edit");
-                                                     setModalShow(true)
-                                                 }}/>
 
                                     <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
                                                  onClick={() => handleDelete(data._id)}
