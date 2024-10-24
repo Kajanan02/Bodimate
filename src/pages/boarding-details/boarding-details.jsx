@@ -9,7 +9,7 @@ import axiosInstance from "../../utils/axiosInstance.js";
 import {useParams} from "react-router-dom";
 // import Heart from "react-heart";
 import axios from "axios";
-import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
+// import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
 import {setLoading} from "../../redux/features/loaderSlice.js";
 import {DirectionsRenderer, LoadScript,GoogleMap} from "@react-google-maps/api";
 
@@ -104,36 +104,36 @@ function BoardingDetails() {
 
     async function checkout(hash, amount, orderId) {
         // using async await
-        try {
-            const customerAttributes = {
-                first_name: userDetail?.firstName,
-                last_name: userDetail?.lastName,
-                phone: userDetail?.contactNo,
-                email: userDetail?.email,
-                address: userDetail?.address,
-                city: userDetail?.address,
-                country: 'Sri Lanka',
-            };
-            const customer = new Customer(customerAttributes);
-
-
-            const checkoutData = new CheckoutParams({
-                returnUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                cancelUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                notifyUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
-                order_id: orderId,
-                itemTitle: 'Boarding Fees',
-                currency: CurrencyType.LKR,
-                amount: amount,
-                hash: hash,
-            });
-
-
-            const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
-            checkout.start();
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     const customerAttributes = {
+        //         first_name: userDetail?.firstName,
+        //         last_name: userDetail?.lastName,
+        //         phone: userDetail?.contactNo,
+        //         email: userDetail?.email,
+        //         address: userDetail?.address,
+        //         city: userDetail?.address,
+        //         country: 'Sri Lanka',
+        //     };
+        //     const customer = new Customer(customerAttributes);
+        //
+        //
+        //     const checkoutData = new CheckoutParams({
+        //         returnUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         cancelUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         notifyUrl: window.location.hostname === "localhost"? 'http://localhost:3000/payment-complete':`${window.location.protocol}//${window.location.hostname}/payment-complete`,
+        //         order_id: orderId,
+        //         itemTitle: 'Boarding Fees',
+        //         currency: CurrencyType.LKR,
+        //         amount: amount,
+        //         hash: hash,
+        //     });
+        //
+        //
+        //     const checkout = new PayhereCheckout(customer, checkoutData, onPayhereCheckoutError);
+        //     checkout.start();
+        // } catch (err) {
+        //     console.log(err);
+        // }
     }
 
 

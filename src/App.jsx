@@ -29,14 +29,14 @@ import Analytics from "./pages/admin/analytics/analytics.jsx";
 import ConfirmationDialog from "./components/confirmation-dialog.jsx";
 import Register_Now from "./pages/Bodimate-your-home/bodimte-register-now.jsx";
 import Owner_Register from "./pages/Bodimate-your-home/bodimate-owner-register.jsx";
-import {AccountCategory, Payhere} from "@payhere-js-sdk/client";
+// import {AccountCategory, Payhere} from "@payhere-js-sdk/client";
 import {useDispatch} from "react-redux";
 import {userUpdate} from "./redux/features/userDataSlice.js";
 import PaymentComplete from "./pages/payment-complete/payment-complete.jsx";
 import Contact from "./pages/admin/contact/contact.jsx";
 import AdminUniversity from "./pages/admin/university/university.jsx";
 
-Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
+// Payhere.init(import.meta.env.VITE_REACT_APP_PAYHERE_MERCHANT_ID, AccountCategory.SANDBOX);
 
 
 function App() {
