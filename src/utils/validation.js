@@ -207,12 +207,12 @@ export function validateListings(values) {
     if (!values.boardingName) {
         errors.boardingName = "Boarding Name is Required"
     }
-    if (!values.ownerName) {
-        errors.ownerName = "Boarding Owner Name is Required"
-    }
-    if (!values.ownerNIC) {
-        errors.ownerNIC = "Boarding Owner NIC No is Required"
-    }
+    // if (!values.ownerName) {
+    //     errors.ownerName = "Boarding Owner Name is Required"
+    // }
+    // if (!values.ownerNIC) {
+    //     errors.ownerNIC = "Boarding Owner NIC No is Required"
+    // }
     if (!values.street) {
         errors.street = "Street Address is Required"
     }
@@ -367,9 +367,9 @@ export function validateBookings(values) {
     if (!values.studentNicNo) {
         errors.studentNicNo = "Student NIC No is Required"
     }
-    if (!values.boardingOwnerName) {
-        errors.boardingOwnerName = "Boarding Owner Name is Required"
-    }
+    // if (!values.boardingOwnerName) {
+    //     errors.boardingOwnerName = "Boarding Owner Name is Required"
+    // }
     if (!values.boardingOwnerContactNo) {
         errors.boardingOwnerContactNo = 'Student Contact No is Required';
     } else if (!/^([+]\d{2})?\d{10}$/.test(values.boardingOwnerContactNo)) {
@@ -541,9 +541,9 @@ export function validatePayments(values) {
     if (!values.boardingName) {
         errors.boardingName = "Boarding Name is Required"
     }
-    if (!values.boardingOwnerName) {
-        errors.boardingOwnerName = "Boarding Owner Name is Required"
-    }
+    // if (!values.boardingOwnerName) {
+    //     errors.boardingOwnerName = "Boarding Owner Name is Required"
+    // }
     if (!values.paymentReceipt) {
         errors.paymentReceipt = "Payment Receipt is Required"
     }

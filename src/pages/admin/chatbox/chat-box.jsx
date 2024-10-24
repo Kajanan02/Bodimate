@@ -213,17 +213,13 @@ function ChatBox() {
                 setAllMessages(res.data)
                 let tmp = [...res.data]
                 let data = tmp.filter(message => {
-                    // Check if the role is admin
                     if (role === "admin") {
-                        // If role is admin, check sender or receiver matches the adminId
-
                         return message.senderId === selectedUser._id && message.receiverId === adminId || message.senderId === adminId && message.receiverId === selectedUser._id;
                     } else {
-                        // If role is not admin, check sender or receiver matches the userId
-                        return message.senderId === adminId && message.receiverId === userId || message.senderId === userId && message.receiverId === adminId;
+                        return [message.senderId,message.receiverId].includes(userId)
                     }
                 });
-                console.log(data)
+                console.log("data",data)
                 setMessages(data)
             }).catch(err => {
             console.log(err.response.data)

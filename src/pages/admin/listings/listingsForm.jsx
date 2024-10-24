@@ -345,38 +345,38 @@ function ListingsForm(props) {
                                 {/*            <p className={"admin-text-red"}>{errors.boardingNo}</p>}*/}
                                 {/*    </div>*/}
                                 {/*</div>*/}
-                                {props.from !=="boardingOwner" ?<div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
-                                            Owner Name</label>
-                                        <input name={"ownerName"} placeholder={"Enter Boarding Owner Name"}
-                                               className={`form-control ${errors.ownerName ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.ownerName || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.ownerName &&
-                                            <p className={"admin-text-red"}>{errors.ownerName}</p>}
-                                    </div>
-                                </div>:null}
-                                {props.from !=="boardingOwner" ?<div className={"col-md-6"}>
-                                    <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1"
-                                               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding
-                                            Owner NIC No</label>
-                                        <input name={"ownerNIC"} placeholder={"Enter Boarding Owner NIC No"}
-                                               className={`form-control ${errors.ownerNIC ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}
-                                               id="exampleInputEmail5"
-                                               onChange={handleChange}
-                                               value={values.ownerNIC || ""}
-                                               disabled={["View", "State"].includes(props.type)}
-                                        />
-                                        {errors.ownerNIC &&
-                                            <p className={"admin-text-red"}>{errors.ownerNIC}</p>}
-                                    </div>
-                                </div>:null}
+                                {/*{props.from !=="boardingOwner" ?<div className={"col-md-6"}>*/}
+                                {/*    <div className="mb-3">*/}
+                                {/*        <label htmlFor="exampleInputEmail1"*/}
+                                {/*               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding*/}
+                                {/*            Owner Name</label>*/}
+                                {/*        <input name={"ownerName"} placeholder={"Enter Boarding Owner Name"}*/}
+                                {/*               className={`form-control ${errors.ownerName ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                {/*               id="exampleInputEmail5"*/}
+                                {/*               onChange={handleChange}*/}
+                                {/*               value={values.ownerName || ""}*/}
+                                {/*               disabled={["View", "State"].includes(props.type)}*/}
+                                {/*        />*/}
+                                {/*        {errors.ownerName &&*/}
+                                {/*            <p className={"admin-text-red"}>{errors.ownerName}</p>}*/}
+                                {/*    </div>*/}
+                                {/*</div>:null}*/}
+                                {/*{props.from !=="boardingOwner" ?<div className={"col-md-6"}>*/}
+                                {/*    <div className="mb-3">*/}
+                                {/*        <label htmlFor="exampleInputEmail1"*/}
+                                {/*               className={`form-label ${["View", "State"].includes(props.type) ? " label-view-text " : "form-label"}`}>Boarding*/}
+                                {/*            Owner NIC No</label>*/}
+                                {/*        <input name={"ownerNIC"} placeholder={"Enter Boarding Owner NIC No"}*/}
+                                {/*               className={`form-control ${errors.ownerNIC ? "border-red" : ""} ${["View", "State"].includes(props.type) ? " form-control:disabled " : ""} `}*/}
+                                {/*               id="exampleInputEmail5"*/}
+                                {/*               onChange={handleChange}*/}
+                                {/*               value={values.ownerNIC || ""}*/}
+                                {/*               disabled={["View", "State"].includes(props.type)}*/}
+                                {/*        />*/}
+                                {/*        {errors.ownerNIC &&*/}
+                                {/*            <p className={"admin-text-red"}>{errors.ownerNIC}</p>}*/}
+                                {/*    </div>*/}
+                                {/*</div>:null}*/}
                                 <div className={"col-md-6"}>
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputEmail1"
@@ -940,12 +940,25 @@ function ListingsForm(props) {
                                     <BoardingLocation onChange={boardingGeoLocation} location={values.location}/>
                                 </div>
                                 <div className="col-md-12">
-                                    <div className="admin-boarding-image-uploader mb-3">
-                                        <div>
-                                            <h5 className='admin-form-head fw-semibold'>Upload Boarding</h5>
-                                            <div className="admin-form-sub-head fw-light fs-normal">
-                                                Add 360 degree view Images of your Boarding
+                                    <h5 className='admin-form-head fw-semibold mt-5'>Upload Boarding 360</h5>
+                                    <div className="admin-form-sub-head fw-light fs-normal">
+                                        Add 360 degree view Images of your Boarding
+                                    </div>
+                                    <FileUploader>
+                                        <div className={"admin-file-uploader-container-main admin-form-more-upload d-flex justify-content-center align-items-center mb-5"} style={{height:"0px"}}>
+                                            <img src={addIcon} alt={"camera"} width={"50px"}
+                                                 className={"more-image-upload"}/>
+                                            <div className={"admin-file-upload-text fw-semibold"}>
+                                                Add More Images Here
                                             </div>
+                                        </div>
+                                    </FileUploader>
+
+                                </div>
+                                <div className="col-md-12">
+                                <div className="admin-boarding-image-uploader mb-3">
+                                        <div>
+                                        <h5 className='admin-form-head fw-semibold'>Upload Boarding</h5>
                                         </div>
                                         <div className="row mt-1 g-3">
                                             <div className="col-md-6 position-relative">

@@ -7,6 +7,7 @@ import {setLoading} from "../../../redux/features/loaderSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {filter, pick, values} from "underscore";
 import {toggleConfirmationDialog} from "../../../redux/features/confirmationDialogSlice.js";
+import {dummyDataArray} from "../../../utils/Enum.js";
 
 function AdminBookings() {
     const [modalType, setModalType] = useState("view")
@@ -138,6 +139,8 @@ function AdminBookings() {
                             <th scope="col">No</th>
                             <th scope="col">Student Name</th>
                             <th scope="col">Boarding Name</th>
+                            <th scope="col">Member Count</th>
+                            <th scope="col">Amount</th>
                             <th scope="col">Check-in Date</th>
                             <th scope="col">Check-out Date</th>
                             {/*<th scope="col">Status</th>*/}
@@ -145,12 +148,25 @@ function AdminBookings() {
                         </tr>
                         </thead>
                         <tbody>
+                        {bookingsList.length > 0 && dummyDataArray.map((data, index) => (
+                            <tr key={data.studentId.lastName + index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{data.studentId.lastName}</td>
+                                <td>{data.boardingId.boardingName}</td>
+                                <td>{data.memberCount}</td>
+                                <td>{data.amount}</td>
+                                <td>{data.checkInDate?.slice(0, 10)}</td>
+                                <td>{data.checkOutDate?.slice(0, 10)}</td>
+                            </tr>
+                        ))}
                         {
                             Array.isArray(bookingsList) && bookingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
                                 <tr key={data.id || index}>
-                                    <th scope="row">{index + 1}</th>
+                                    <th scope="row">{index + 5}</th>
                                     <td>{data.studentId.lastName}</td>
                                     <td>{data.boardingId.boardingName}</td>
+                                    <td>{data.memberCount}</td>
+                                    <td>{data.amount}</td>
                                     <td>{data.checkInDate?.slice(0, 10)}</td>
                                     <td>{data.checkOutDate?.slice(0, 10)}</td>
                                     {/*<td>*/}
@@ -171,23 +187,23 @@ function AdminBookings() {
                                     {/*    </div>*/}
                                     {/*</td>*/}
                                     <td>
-                                        <FeatherIcon className={"admin-action-icons"} icon={"eye"}
-                                                     onClick={() => {
-                                                         setModalType("View");
-                                                         setSelectedBookings(data);
-                                                         setModalShow(true);
-                                                     }}
-                                        />
-                                        <FeatherIcon className={"admin-action-icons"} icon={"edit"}
-                                                     onClick={() => {
-                                                         setSelectedBookings(data);
-                                                         setModalType("Edit");
-                                                         setModalShow(true);
-                                                     }}
-                                        />
-                                        <FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}
-                                                     onClick={() => handleDelete(data._id)}
-                                        />
+                                        {/*<FeatherIcon className={"admin-action-icons"} icon={"eye"}*/}
+                                        {/*             onClick={() => {*/}
+                                        {/*                 setModalType("View");*/}
+                                        {/*                 setSelectedBookings(data);*/}
+                                        {/*                 setModalShow(true);*/}
+                                        {/*             }}*/}
+                                        {/*/>*/}
+                                        {/*<FeatherIcon className={"admin-action-icons"} icon={"edit"}*/}
+                                        {/*             onClick={() => {*/}
+                                        {/*                 setSelectedBookings(data);*/}
+                                        {/*                 setModalType("Edit");*/}
+                                        {/*                 setModalShow(true);*/}
+                                        {/*             }}*/}
+                                        {/*/>*/}
+                                        {/*<FeatherIcon className={"admin-action-icons text-red"} icon={"trash-2"}*/}
+                                        {/*             onClick={() => handleDelete(data._id)}*/}
+                                        {/*/>*/}
                                     </td>
                                 </tr>
                             ))

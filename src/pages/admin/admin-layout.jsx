@@ -241,9 +241,14 @@ function AdminLayout() {
                                         </a>
                                     </li> : null}
                                     <li className="admin-nav-item px-2">
-                                        <a className="admin-nav-link position-relative" aria-current="page" href="#">
-                                            <img src={Msg} alt="Messages"/>
-                                        </a>
+                                        <NavLink
+                                            className={({isActive}) => isActive ? "side-menu-item mb-0" : "side-menu-item mb-0"}
+                                            to={"/admin/chat-box"}>
+                                            <div className={'d-flex'}>
+                                                <img src={Msg} alt="Messages"/>
+                                            </div>
+                                        </NavLink>
+
                                     </li>
 
                                     <li className="admin-nav-item px-2">

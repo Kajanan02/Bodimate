@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import descriptionImg from "../../assets/boarding-details/description.jpg";
 import FeatherIcon from 'feather-icons-react';
 import verifiedIcon from "../../assets/boarding-details/verified.svg"
 import ownerProfile from "../../assets/boarding-details/OwnerProfile.jpg"
@@ -387,7 +386,7 @@ function BoardingDetails() {
                     <div className="col d-flex align-items-center justify-content-between">
                         <div>
                             <div className="owner-text fw-bolder">
-                                <p>Boarding hosted by {List.ownerName}</p>
+                                <p>Boarding hosted by {List?.boardingOwner?.lastName}</p>
                             </div>
                             <div className="owner-text-des">
                                 <p>{List.membersCount} guests · {List.noOfRooms} bedroom · {List.membersCount} bed · 1
