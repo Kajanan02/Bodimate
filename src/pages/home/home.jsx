@@ -18,6 +18,8 @@ function Home() {
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
     const [listingsList, setListingsList] = useState([]);
+    const [universityList, setUniversityList] = useState([]);
+    const [universityAllList, setUniversityAllList] = useState([]);
     const navigate = useNavigate();
     const nearestUniversity = [
         "Eastern University, Sri Lanka (EUSL)",
@@ -68,6 +70,23 @@ function Home() {
             });
     }, [update]);
 
+    useEffect(() => {
+        dispatch(setLoading(true));
+
+        axiosInstance.get("/university/getAllUniversity")
+            .then((res) => {
+                console.log(res.data);
+                setUniversityList(res.data);
+                setUniversityAllList(res.data);
+            })
+            .catch((err) => {
+                console.error("Error fetching boardings:", err);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
+            });
+    }, [update]);
+
 
 
     return (
@@ -106,15 +125,15 @@ function Home() {
                     <div className="subheading mt-5">Explore nearby universities</div>
                     <div className="row">
                         <div className="row">
-                            {uniqueUniversitiesList
+                            {universityList
                                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                                 .slice(0, 4)
                                 .map((data, index) => (
-                                    <div className="col-12 col-md-6 col-lg-3 mb-4 cursor-pointer" key={index + "asd"} onClick={() => navigate("/nearby-university/" + data.nearestUniversity)}>
+                                    <div className="col-12 col-md-6 col-lg-3 mb-4 cursor-pointer" key={index + "asd"} onClick={() => navigate("/nearby-university/" + data.universityName)}>
                                         <div className="university-card d-flex align-items-center">
-                                            <img src={uva} alt={data.nearestUniversity} className="university-image"/>
+                                            <img src={data.universityImg} alt={data.universityName} className="university-image"/>
                                             <div className="ms-2">
-                                                <h5 className="university-name">{data.nearestUniversity}</h5>
+                                                <h5 className="university-name">{data.universityName}</h5>
                                                 <p className="university-drive">15 minute drive</p>
                                             </div>
                                         </div>

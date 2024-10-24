@@ -48,34 +48,34 @@ function BoardingOwnerForm(props) {
     // }, [])
 
     useEffect(() => {
-        if (["View", "Edit"].includes(props.type) && !isEmpty(props.selectedBoardingOwners)) {
+        if (["View", "Edit", "State"].includes(props.type) && !isEmpty(props.selectedBoardingOwners)) {
             initForm(props.selectedBoardingOwners)
         }
     }, [props.type, props.selectedBoardingOwners])
 
     console.log(props.selectedBoardingOwners)
 
-    useEffect(() => {
-        if (!isSubmit || props.type !== "Edit") {
-            return
-        }
-        dispatch(setLoading(true))
-
-        axiosInstance.put(`/admin/users-boarding-owner/${values.id}`,values)
-            .then((res) => {
-                console.log(res.data)
-                toast.success(`Successfully Updated`)
-                props.update()
-            }).catch((err) => {
-            toast.error("Something Went Wrong")
-        }).finally(() => {
-            // dispatch(setLoading(false))
-            setIsSubmit(false)
-            resetForm()
-            props.onHide()
-        })
-
-    }, [isSubmit])
+    // useEffect(() => {
+    //     if (!isSubmit || props.type !== "Edit") {
+    //         return
+    //     }
+    //     dispatch(setLoading(true))
+    //
+    //     axiosInstance.put(`/admin/users-boarding-owner/${values.id}`,values)
+    //         .then((res) => {
+    //             console.log(res.data)
+    //             toast.success(`Successfully Updated`)
+    //             props.update()
+    //         }).catch((err) => {
+    //         toast.error("Something Went Wrong")
+    //     }).finally(() => {
+    //         // dispatch(setLoading(false))
+    //         setIsSubmit(false)
+    //         resetForm()
+    //         props.onHide()
+    //     })
+    //
+    // }, [isSubmit])
 
     const dispatch = useDispatch();
 
