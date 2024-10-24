@@ -28,8 +28,13 @@ jobs:
       - name: Clear NPM Cache
         run: npm cache clean --force
 
-      - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+      - name: Install Dependencies and React-is
+        run: |
+          npm install --legacy-peer-deps
+          npm install react-is
+
+      - name: Clear Vite Cache
+        run: rm -rf node_modules/.vite
 
       - name: Build Application
         env:
@@ -53,9 +58,9 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: 'ap-south-1'  # Your AWS region
+          region: 'ap-south-1'
           application_name: 'front-bodimate'
-          environment_name: 'Front-bodimate-env'  # Your Elastic Beanstalk environment name
+          environment_name: 'Front-bodimate-env'
           version_label: ${{ github.sha }}-${{ github.run_id }}
           deployment_package: deploy.zip
           use_existing_version_if_available: true
