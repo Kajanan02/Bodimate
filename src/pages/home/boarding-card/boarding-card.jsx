@@ -121,35 +121,35 @@ const BoardingCard = ({ data, from = "", ...props }) => {
                         )}
                     </div>
                     <img src={data.boardingPic[0]} alt="Listing" className="img-fluid w-100 h-auto" />
-                    <div className="heart-icon">
+                    {from !== "boardingOwner" ?<div className="heart-icon">
                         <button
                             className="btn btn-heart ms-auto p-0"
-                            onClick={()=> {
-                                if(pluck(props.favourite,"boardingId").includes(data._id)){
+                            onClick={() => {
+                                if (pluck(props.favourite, "boardingId").includes(data._id)) {
                                     console.log(props.favourite);
                                     console.log(data._id);
-                                    let id =props?.favourite?.find((data)=> data.boardingId === data._id)?._id
+                                    let id = props?.favourite?.find((data) => data.boardingId === data._id)?._id
                                     console.log(id)
-                                    let dasd = props?.favourite?.find((daa)=> daa.boardingId === data._id)
+                                    let dasd = props?.favourite?.find((daa) => daa.boardingId === data._id)
                                     console.log(dasd)
                                     console.log(dasd._id)
                                     unFavourite(dasd._id)
                                     // let id =props?.favourite?.find((data)=> data.boardingId === data._id)?.id
                                     // unFavourite()
-                                }else {
+                                } else {
                                     favourite()
                                 }
 
                             }}
-                            style={{ width: "1.5rem", border: "none", outline: "none", background: "transparent" }}
+                            style={{width: "1.5rem", border: "none", outline: "none", background: "transparent"}}
                         >
                             <img
-                                src={pluck(props.favourite,"boardingId").includes(data._id) ? heartFilledIcon : heartIcon}
+                                src={pluck(props.favourite, "boardingId").includes(data._id) ? heartFilledIcon : heartIcon}
                                 alt="Heart Icon"
                                 className="heart-image"
                             />
                         </button>
-                    </div>
+                    </div>:null}
                 </div>
                 <div className="p-3 cursor-pointer" onClick={() => navigate("/boarding-details/" + data._id)}>
                     <h6 className="review-rating p-0 m-0">
