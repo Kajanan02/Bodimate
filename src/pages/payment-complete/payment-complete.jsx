@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from "feather-icons-react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance.js";
 import {setLoading} from "../../redux/features/loaderSlice.js";
 import {useDispatch} from "react-redux";
+import {Button} from "react-bootstrap";
 
 function PaymentComplete(props) {
 
@@ -20,6 +21,8 @@ function PaymentComplete(props) {
 
     const { orderId } = getQueryParams(location.search);
 
+
+    const navigate = useNavigate()
     console.log(orderId)
 
 
@@ -54,7 +57,11 @@ function PaymentComplete(props) {
                     <h5>Ref.Number : {orderData?._id}</h5>
 
                 </div>
+                <div className={"mt-5"}>
+                    <Button className={"btn btn-secondary students-dropdown-btn"} onClick={()=> navigate("/")}>Go To Home</Button>
+                </div>
             </div>
+
         </div>
     );
 }

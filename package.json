@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@payhere-js-sdk/client": "^1.0.4",
     "@react-google-maps/api": "^2.20.3",
     "@reduxjs/toolkit": "^2.2.4",
     "apexcharts": "^3.49.1",
@@ -33,6 +34,7 @@
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
     "socket.io-client": "^4.8.0",
+    "t-matrix": "^1.1.2",
     "underscore": "^1.13.7"
   },
   "devDependencies": {

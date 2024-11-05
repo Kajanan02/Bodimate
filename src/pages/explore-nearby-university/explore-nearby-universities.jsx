@@ -87,9 +87,9 @@ function ExploreNearbyUniversities() {
 
     const uniqueUniversitiesList = Array.from(uniqueUniversitiesMap.values());
     return (
-        <div className="explore-container mt-5 padx-sm-3 padx-md-4 pad-lg-20 my-5">
+        <div className="explore-container mt-5 padx-sm-3 padx-md-4 pad-lg-20 my-5 py-5">
             <div className="container">
-                <div className="collection-subheading mt-5">Explore nearby universities</div>
+                <div className="collection-subheading ">Explore nearby universities</div>
                 <div className="row">
                     {universityList
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by createdAt date

@@ -49,9 +49,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: rgba(255, 255, 255, 0.80);
-    background-color: rgba(108, 117, 125, 0.71);
+    background-color: rgb(49 49 49);
     padding: 6px;
     border-radius: 15px;
+    min-height: 54px;
 }
 
 .university-image {
@@ -64,5 +65,5 @@
 .university-name {
     font-size: 1rem;
     font-weight: bold;
-    /*color: white;*/
+    color: white;
 }

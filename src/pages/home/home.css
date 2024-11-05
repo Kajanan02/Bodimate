@@ -111,6 +111,7 @@
     align-items: center;
     width: 100%;
     gap: 15px;
+    min-height: 79px;
 }
 
 .university-image {

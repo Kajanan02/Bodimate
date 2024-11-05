@@ -24,6 +24,8 @@ function AdminBookings() {
     //     return state.setting.confirmationDialog
     // });
     const confirmationDialog = useSelector(state => state.confirmationDialog);
+    const userDetail = useSelector(state => state.userData.userDetails);
+
 
 
     function handleDelete(id) {
@@ -105,6 +107,8 @@ function AdminBookings() {
         }
     }
 
+    console.log(userDetail.role)
+
     return (
         <div className={"container mb-4 p-5"}>
             <div className={""}>
@@ -148,7 +152,7 @@ function AdminBookings() {
                         </tr>
                         </thead>
                         <tbody>
-                        {bookingsList.length > 0 && dummyDataArray.map((data, index) => (
+                        {bookingsList.length > 0  && userDetail.role !=="user" && dummyDataArray.map((data, index) => (
                             <tr key={data.studentId.lastName + index}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{data.studentId.lastName}</td>
@@ -162,7 +166,7 @@ function AdminBookings() {
                         {
                             Array.isArray(bookingsList) && bookingsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((data, index) => (
                                 <tr key={data.id || index}>
-                                    <th scope="row">{index + 5}</th>
+                                    <th scope="row">{index + (userDetail.role ==="user" ? 1 : 5)}</th>
                                     <td>{data.studentId.lastName}</td>
                                     <td>{data.boardingId.boardingName}</td>
                                     <td>{data.memberCount}</td>
