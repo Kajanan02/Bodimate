@@ -59,7 +59,6 @@ function Home() {
 
         axiosInstance.get("/boardings/getAllBoarding")
             .then((res) => {
-                console.log(res.data);
                 setListingsList(res.data);
                 setListingsAllList(res.data);
             })

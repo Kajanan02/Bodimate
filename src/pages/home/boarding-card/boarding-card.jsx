@@ -125,6 +125,10 @@ const BoardingCard = ({ data, from = "", ...props }) => {
                         <button
                             className="btn btn-heart ms-auto p-0"
                             onClick={() => {
+                                if(!userDetail._id) {
+                                    toast.error("Please Login First");
+                                    return;
+                                }
                                 if (pluck(props.favourite, "boardingId").includes(data._id)) {
                                     console.log(props.favourite);
                                     console.log(data._id);

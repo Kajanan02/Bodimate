@@ -174,16 +174,16 @@ function AdminLayout() {
                                 </div>
                             )}
                         </div> : null}
-                        <div className={"w-100 px-sm-2"}>
-                            <NavLink
-                                className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}
-                                to={"/admin/chat-box"}>
-                                <div className={'d-flex'}>
-                                    <FeatherIcon icon="message-circle" className={!toggle ? 'me-2' : "ms-1"}/>
-                                    {!toggle && <div className={''}>Chat Box</div>}
-                                </div>
-                            </NavLink>
-                        </div>
+                        {/*<div className={"w-100 px-sm-2"}>*/}
+                        {/*    <NavLink*/}
+                        {/*        className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}*/}
+                        {/*        to={"/admin/chat-box"}>*/}
+                        {/*        <div className={'d-flex'}>*/}
+                        {/*            <FeatherIcon icon="message-circle" className={!toggle ? 'me-2' : "ms-1"}/>*/}
+                        {/*            {!toggle && <div className={''}>Chat Box</div>}*/}
+                        {/*        </div>*/}
+                        {/*    </NavLink>*/}
+                        {/*</div>*/}
                         {/*{userDetail.role === "admin" ?<div className={"w-100 px-sm-2"}>*/}
                         {/*    <NavLink*/}
                         {/*        className={({isActive}) => isActive ? "side-menu-item side-menu-active" : "side-menu-item"}*/}
@@ -252,13 +252,13 @@ function AdminLayout() {
                                         </a>
                                     </li> : null}
                                     <li className="admin-nav-item px-2">
-                                        <NavLink
-                                            className={({isActive}) => isActive ? "side-menu-item mb-0" : "side-menu-item mb-0"}
-                                            to={"/admin/chat-box"}>
-                                            <div className={'d-flex'}>
-                                                <img src={Msg} alt="Messages"/>
-                                            </div>
-                                        </NavLink>
+                                        {/*<NavLink*/}
+                                        {/*    className={({isActive}) => isActive ? "side-menu-item mb-0" : "side-menu-item mb-0"}*/}
+                                        {/*    to={"/admin/chat-box"}>*/}
+                                        {/*    <div className={'d-flex'}>*/}
+                                        {/*        <img src={Msg} alt="Messages"/>*/}
+                                        {/*    </div>*/}
+                                        {/*</NavLink>*/}
 
                                     </li>
 

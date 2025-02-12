@@ -587,7 +587,7 @@ function BoardingDetails() {
                             center={{ lat: 6.927079, lng: 79.861244 }}
                             zoom={10}
                         >
-                            {directions && <DirectionsRenderer directions={directions} />}
+                            {/*{directions && <DirectionsRenderer directions={directions} />}*/}
                         </GoogleMap>
                         {distance && <div className="fs-6 mt-2 text-dark fw-semibold">Distance: {distance}</div>}
                     </LoadScript>

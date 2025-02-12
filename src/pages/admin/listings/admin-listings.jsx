@@ -172,7 +172,10 @@ function AdminListings() {
                                     <td>{data.nearestUniversity}</td>
                                     <td>{data.pricePerMonth}</td>
                                     {data.isVerified == true ?
-                                        <td><span className="badge text-bg-primary">Verified</span></td> :
+                                        <td><span className="badge text-bg-primary"  onClick={() =>{
+                                            setModalType("State");
+                                            setSelectedListings(data);
+                                            setModalShow(true)}}>Verified</span></td> :
                                         <td><span className="badge text-bg-danger"
                                                   onClick={() =>{
                                                       setModalType("State");

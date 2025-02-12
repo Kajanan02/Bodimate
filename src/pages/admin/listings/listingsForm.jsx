@@ -69,8 +69,8 @@ function ListingsForm(props) {
     }
 
     function verified() {
-        values.isVerified = true
-        axiosInstance.put(`/boardings/editBoarding/${values._id}`, values)
+        values.isVerified = !values.isVerified
+        axiosInstance.put(`/boardings/verifyBoarding/${values._id}/${values.isVerified}`, values)
             .then((res) => {
                 console.log(res.data);
                 toast.success('Successfully Updated');
@@ -1139,7 +1139,7 @@ function ListingsForm(props) {
                     className={"btn btn-secondary students-dropdown-btn"}
                     onClick={verified}
                 >
-                    Verified
+                    {values.isVerified ? "UnVerify":"Verify"}
                 </button>}
             </Modal.Footer>
         </Modal>

@@ -62,8 +62,11 @@ function Login() {
     return (
         <div className="container-fluid align-middle">
             <div className="row align-items-center login-container">
-                <div
-                    className="col-lg-6 col-md-12 login-left bg-white d-flex align-items-center justify-content-center pt-5">
+                <div className="col-lg-6 col-md-12 login-right bg-white justify-content-center d-none d-sm-block">
+                    <img src={LoginBanner} alt="Login Banner" className="banner-image image-fluid mx-auto"/>
+                </div>
+
+                <div className="col-lg-6 col-md-12 login-left bg-white d-flex align-items-center justify-content-center pt-5">
                     <div className="col-lg-6 col-md-12">
                         <div className="row d-flex justify-content-center">
                             <div className="col d-flex align-items-center pb-5">
@@ -125,21 +128,18 @@ function Login() {
                                 </div>
                             </div>
                         </form>
-                        <div className="signin-with d-flex justify-content-center pb-2">
-                            <p>or continue with</p>
-                        </div>
-                        <div className="icon-container pb-2">
-                            <button className="icon-button">
-                                <FeatherIcon className="action-icons-color" icon="mail"/>
-                            </button>
-                            <button className="icon-button">
-                                <FeatherIcon className="action-icons-color" icon="facebook"/>
-                            </button>
-                        </div>
+                        {/*<div className="signin-with d-flex justify-content-center pb-2">*/}
+                        {/*    <p>or continue with</p>*/}
+                        {/*</div>*/}
+                        {/*<div className="icon-container pb-2">*/}
+                        {/*    <button className="icon-button">*/}
+                        {/*        <FeatherIcon className="action-icons-color" icon="mail"/>*/}
+                        {/*    </button>*/}
+                        {/*    <button className="icon-button">*/}
+                        {/*        <FeatherIcon className="action-icons-color" icon="facebook"/>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </div>
-                </div>
-                <div className="col-lg-6 col-md-12 login-right bg-white justify-content-center d-none d-sm-block">
-                    <img src={LoginBanner} alt="Login Banner" className="banner-image image-fluid mx-auto"/>
                 </div>
             </div>
         </div>
