@@ -148,7 +148,7 @@ function Home() {
                                         <div className="university-card d-flex align-items-center">
                                             <img src={data.universityImg} alt={data.universityName} className="university-image"/>
                                             <div className="ms-2">
-                                                <h5 className="university-name">{data.universityName}</h5>
+                                                <h5 className="university-name text-black">{data.universityName}</h5>
                                                 <p className="university-drive">15 minute drive</p>
                                             </div>
                                         </div>

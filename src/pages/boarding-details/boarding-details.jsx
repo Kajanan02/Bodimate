@@ -10,7 +10,8 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import {CheckoutParams, CurrencyType, Customer, PayhereCheckout} from "@payhere-js-sdk/client";
 import {setLoading} from "../../redux/features/loaderSlice.js";
-import {DirectionsRenderer, LoadScript,GoogleMap} from "@react-google-maps/api";
+import {DirectionsRenderer, LoadScript, GoogleMap, Marker} from "@react-google-maps/api";
+import {values} from "underscore";
 
 function BoardingDetails() {
 
@@ -584,13 +585,19 @@ function BoardingDetails() {
                     <LoadScript googleMapsApiKey={import.meta.env.VITE_REACT_APP_GOOGLE_MAP}>
                         <GoogleMap
                             mapContainerStyle={{ width: '100%', height: '400px' }}
-                            center={{ lat: 6.927079, lng: 79.861244 }}
+                            center={List.location ? List.location : { lat: 6.927079, lng: 79.861244 }}
                             zoom={10}
                         >
+                            <Marker
+                                position={List.location}
+                                draggable={false}
+                                // onDragEnd={props.onMarkerDragEnd}
+                            />
+
+
                             {/*{directions && <DirectionsRenderer directions={directions} />}*/}
                         </GoogleMap>
-                        {distance && <div className="fs-6 mt-2 text-dark fw-semibold">Distance: {distance}</div>}
-                    </LoadScript>
+                      </LoadScript>
                 ) : null}
 
 
